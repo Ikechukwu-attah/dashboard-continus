@@ -54,7 +54,7 @@ const Login = () => {
                     type="text"
                     placeholder="Enter username"
                     required
-                    padding="2.5rem"
+                    padding="2.3rem"
                     fontSize="2.3rem"
                   />
                 </StyledDivFlex>
@@ -65,7 +65,7 @@ const Login = () => {
                     type="password"
                     placeholder="Enter password"
                     required
-                    padding="2.5rem"
+                    padding="2.3rem"
                     fontSize="2.3rem"
                   />
                 </StyledDivFlex>

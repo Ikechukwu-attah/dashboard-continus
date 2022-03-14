@@ -8,6 +8,7 @@ export const Theme = {
         progressBarColor2: "#E8743B",
         progressBarColor3: "#19A979",
         neutralColor: "#fff",
+        neutralColor2: "#000000"
 
 
     }
