@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 
 export const StyledBox = styled.div `
-width: 80%;
+width: ${({width})=>width};
+height: ${({minHeight})=>minHeight};
+background-color: ${({background})=> background};
+
 
 `

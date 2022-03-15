@@ -12,7 +12,7 @@ const Navbar = () => {
       background={Theme.colors.neutralColor}
       gap="20rem"
       alignItems="center"
-      padding="1rem 8rem 1rem 8rem"
+      padding="1rem 8rem "
     >
       <StyledTextHeading
         textTransform="uppercase"
