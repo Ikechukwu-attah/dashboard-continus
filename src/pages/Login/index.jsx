@@ -88,7 +88,7 @@ const Login = () => {
               <StyledButton
                 padding="1.5rem"
                 marginTop="2rem"
-                borderRaduis="5rem"
+                borderRadius="5rem"
                 fontSize="2.4rem"
               >
                 Login

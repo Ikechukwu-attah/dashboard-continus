@@ -1,13 +1,12 @@
 import React from "react";
-
 import DashboardLayout from "../../../components/Layouts/DashboardLayout";
 
-const Co2Reduction = () => {
+const OccupancyJournal = () => {
   return (
     <DashboardLayout>
-      <h1>Hello Co2Reduction</h1>
+      <h1>Hello Company Journey</h1>
     </DashboardLayout>
   );
 };
 
-export default Co2Reduction;
+export default OccupancyJournal;
