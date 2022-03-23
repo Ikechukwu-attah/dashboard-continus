@@ -15,6 +15,8 @@ import OccupancyJournal from "./pages/Dashboard/OccupancyJournal";
 import Driver from "./pages/Dashboard/Driver";
 import UserManagement from "./pages/Dashboard/UserManagement";
 import AddUser from "./pages/Dashboard/AddUser";
+import ResetPassword from "./pages/ResetPassword";
+import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path="/user-management" element={<UserManagement />} />
           <Route path="/driver" element={<Driver />} />
           <Route path="/add-user" element={<AddUser />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

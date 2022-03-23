@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export const globalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
-  const [isAdmin] = useState(false);
+  const [isAdmin] = useState(true);
   const [pageName, setPageName] = useState(
     isAdmin ? "User Management" : "General Dashboard"
   );
