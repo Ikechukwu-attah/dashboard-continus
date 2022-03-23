@@ -11,8 +11,9 @@ import { StyledTextHeading } from "../../common/Basics/Heading";
 const DashboardLayout = ({ children }) => {
   const { pageName } = useContext(globalContext);
   return (
-    <StyledDivFlex>
+    <StyledDivFlex maxHeight="100vh" overflow="hidden">
       <SideBar />
+
       <StyledBox width="80%">
         <Navbar />
 

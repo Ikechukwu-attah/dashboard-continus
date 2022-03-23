@@ -8,6 +8,7 @@ export const StyledInput = styled.input `
    border: none;
    outline: none;
    font-size: ${({fontSize})=>fontSize};
+   transform: scale(${({scale}) => scale});
 
 
 
@@ -23,7 +24,10 @@ export const StyledInput = styled.input `
 
 
 export const StyledLabel = styled.label `
-  font-size: 2.4rem;
-  color: ${({theme})=>theme.colors.secondaryColor};
+  font-size: ${({fontSize})=>fontSize||"2.4rem" };
+  color: ${({theme, color})=>color || theme.colors.secondaryColor};
   font-weight: 400;
+  cursor:${({cursor})=>cursor};
+  position: ${({position})=>position};
+  ${({customCSS}) => customCSS}
 `

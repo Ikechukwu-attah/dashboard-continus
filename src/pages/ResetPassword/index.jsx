@@ -11,13 +11,17 @@ import { StyledText } from "../../components/common/Basics/StyledText";
 import { Theme } from "../../Theme";
 import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
-const Login = () => {
+import TogglePassword from "../../components/TogglePassword";
+
+const ResetPassword = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
     navigate("/home");
   };
+
+  const [icons, InputType] = TogglePassword();
   return (
     <StyledDivFlex>
       <StyledDivFlex
@@ -44,7 +48,7 @@ const Login = () => {
             fontWeight="400"
             color="#F3EFE9"
           >
-            Login your details
+            Reset Your Password
           </StyledTextHeading>
           <StyledForm onSubmit={handleSubmit}>
             <StyledDivFlex
@@ -54,51 +58,48 @@ const Login = () => {
               marginTop="2rem"
               padding="0rem 4rem 0rem 4rem"
             >
-              <StyledDivFlex flexDirection="column" gap="1rem">
-                <StyledLabel>Username</StyledLabel>
-                <StyledInput
-                  type="text"
-                  placeholder="Enter username"
-                  required
-                  padding="2.3rem"
-                  fontSize="2.3rem"
-                />
-              </StyledDivFlex>
-
-              <StyledDivFlex flexDirection="column" gap="1rem">
+              <StyledDivFlex
+                flexDirection="column"
+                gap="1rem"
+                postion="relative"
+              >
                 <StyledLabel>Password</StyledLabel>
                 <StyledInput
-                  type="password"
+                  type={InputType}
                   placeholder="Enter password"
                   required
                   padding="2.3rem"
                   fontSize="2.3rem"
                 />
+                <StyledText
+                  position="absolute"
+                  color="#606060"
+                  Right="30rem"
+                  Top="31rem"
+                  //   fontSize="1rem"
+                >
+                  {icons}
+                </StyledText>
               </StyledDivFlex>
 
-              <StyledDivFlex gap="2rem">
-                <StyledText fontSize="1.5rem" fontWeight="400">
-                  Forget password?{" "}
-                </StyledText>
-                <StyledText fontSize="1.5rem" fontWeight="400">
-                  <Link
-                    to="/"
-                    style={{
-                      textDecoration: "underline",
-                      color: "#F3EFE9",
-                    }}
-                  >
-                    Contact admin
-                  </Link>
-                </StyledText>
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel>Confirm Password</StyledLabel>
+                <StyledInput
+                  type="password"
+                  placeholder="confirm password"
+                  required
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                />
               </StyledDivFlex>
+
               <StyledButton
                 padding="1.5rem"
                 marginTop="2rem"
                 borderRadius="5rem"
                 fontSize="2.4rem"
               >
-                Login
+                Reset Password
               </StyledButton>
             </StyledDivFlex>
           </StyledForm>
@@ -108,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;
