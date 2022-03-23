@@ -19,7 +19,7 @@ const ImageUpload = ({ onChange }) => {
       return setErrorMessage("Valid image is required");
     }
 
-    if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    if (!file.name.match(/\.(jpg|jpeg|png|gif|PNG)$/)) {
       return setErrorMessage("Valid image is required");
     }
     onChange(objectUrl);
@@ -82,6 +82,7 @@ const ImageUpload = ({ onChange }) => {
         type="file"
         id="file"
         required
+        accept=".png,.gif,.svg, .jpg, .jpeg, .jfif, .pjpeg, .pjp,.webp"
         padding="2.3rem"
         fontSize="2.3rem"
         style={{ display: "none" }}

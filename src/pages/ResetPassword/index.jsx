@@ -18,7 +18,7 @@ const ResetPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    navigate("/home");
+    navigate("/");
   };
 
   const [icons, InputType] = TogglePassword();

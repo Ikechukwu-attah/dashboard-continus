@@ -17,7 +17,7 @@ const ForgetPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    navigate("/home");
+    navigate("/");
   };
   return (
     <StyledDivFlex>

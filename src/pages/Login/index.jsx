@@ -77,9 +77,17 @@ const Login = () => {
               </StyledDivFlex>
 
               <StyledDivFlex gap="2rem">
-                <StyledText fontSize="1.5rem" fontWeight="400">
-                  Forget password?{" "}
-                </StyledText>
+                <Link
+                  to="/forget-password"
+                  style={{
+                    textDecoration: "underline",
+                    color: "#F3EFE9",
+                  }}
+                >
+                  <StyledText fontSize="1.5rem" fontWeight="400">
+                    Forget password?{" "}
+                  </StyledText>
+                </Link>
                 <StyledText fontSize="1.5rem" fontWeight="400">
                   <Link
                     to="/"
