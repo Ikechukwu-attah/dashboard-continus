@@ -1,4 +1,16 @@
 import React, { useState } from "react";
+import {
+  BarChart,
+  Bar,
+  Label,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -12,6 +24,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledButton } from "../../../components/common/Button/style";
+import { dummyShockingData } from "../../../DUMMYDATACHART.js";
 
 const ShockingSense = () => {
   const [activeButton, setActiveButton] = useState("Table");
@@ -116,6 +129,43 @@ const ShockingSense = () => {
               </StyledDivFlex>
             }
           />
+
+          {/* BARCHART STARTS FROM HERE  */}
+          <StyledBox marginTop="3rem" padding="1rem 8rem" height="60vh">
+            <ResponsiveContainer width="100%">
+              <BarChart
+                // width={10}
+                // height={500}
+                data={dummyShockingData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" stroke="#000000" tick={{ fontSize: 10 }}>
+                  <Label value="Trucks" offset={0} position="insideBottom" />
+                </XAxis>
+                <YAxis
+                  label={{
+                    value: "Percentage",
+                    angle: -90,
+                    position: "insideLeft",
+                  }}
+                  stroke="#000000"
+                  domain={[0, "dataMax + 0"]}
+                  tickCount={8}
+                />
+                <Tooltip cursor={{ fill: "transparent" }} />
+                <Legend />
+
+                <Bar dataKey="bis" fill="#E8743B" />
+              </BarChart>
+            </ResponsiveContainer>
+          </StyledBox>
+          {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

@@ -44,8 +44,8 @@ export const sideBarData = [{
 
     {
         id: 6,
-        title: "Energy ",
-        link: "/energy"
+        title: "Battery ",
+        link: "/battery"
     },
 
     {
@@ -87,6 +87,12 @@ export const adminNavbarData = [
         id: 2,
         title: "Client Management ",
         link: "/client-management"
+    },
+
+    {
+        id: 3,
+        title: "Add Company ",
+        link: "/#"
     },
 
 ]

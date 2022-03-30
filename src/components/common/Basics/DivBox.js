@@ -17,7 +17,13 @@ top: ${({Top})=>Top};
 bottom: ${({Bottom})=>Bottom};
 right: ${({Right})=>Right};
 left: ${({Left})=>Left};
-cursor:${({cursor})=>cursor}
+cursor:${({cursor})=>cursor};
+background-image: url(${({backgroundImage})=>backgroundImage});
+background-repeat:${({backgroundRepeat})=>backgroundRepeat};
+background-position:${({backgroundPosition})=>backgroundPosition};
+background-size:${({backgroundSize})=>backgroundSize};
+
+
 
 
 `

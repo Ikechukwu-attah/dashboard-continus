@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { Theme } from "../../Theme";
-import { StyledBox } from "../common/Basics/DivBox";
-import { StyledDivFlex } from "../common/Basics/DivFlex";
-import { StyledText } from "../common/Basics/StyledText";
+// import { Theme } from "../../Theme";
+
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import { borderRadius, height } from "@mui/system";
-import { StyledCircle } from "../common/Basics/Circle";
 
-const CardWidget = ({
+import MiniDropDown from "../MiniDropDown";
+import { StyledText } from "../../common/Basics/StyledText";
+import { StyledDivFlex } from "../../common/Basics/DivFlex";
+import { Theme } from "../../../Theme";
+import { StyledBox } from "../../common/Basics/DivBox";
+import WidgetMenu from "../MiniDropDown";
+
+const WidgetWithDropdown = ({
   width = "33.333%", //default width incase no width was passed
-  icon,
-
   label,
   count,
-  miniDropDown,
-  background,
+  onView,
+  onRemove,
 }) => {
   return (
     <StyledDivFlex
@@ -68,16 +69,11 @@ const CardWidget = ({
           Download report
         </StyledText>
       </StyledBox>
-      <StyledBox position="absolute" Top="2px" Right="1rem" cursor="ponter">
-        <StyledText cursor="pointer" color="black">
-          {icon}
-        </StyledText>
-      </StyledBox>
-      <StyledBox position="absolute" Top="2px" Right="0rem" cursor="ponter">
-        {miniDropDown}
+      <StyledBox cursor="pointer" position="absolute" Top="2rem" Right="2rem">
+        <WidgetMenu onRemove={onRemove} onView={onView} />
       </StyledBox>
     </StyledDivFlex>
   );
 };
 
-export default CardWidget;
+export default WidgetWithDropdown;

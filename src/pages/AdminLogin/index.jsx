@@ -12,13 +12,14 @@ import { Theme } from "../../Theme";
 import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
 
-const ForgetPassword = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    navigate("/");
+    navigate("/home");
   };
+
   return (
     <StyledDivFlex>
       <StyledDivFlex
@@ -49,11 +50,8 @@ const ForgetPassword = () => {
             fontWeight="400"
             color="#F3EFE9"
           >
-            Forgot Your Password
+            Admin Login
           </StyledTextHeading>
-          <StyledText textAlign="center" fontSize="1.3rem">
-            You will recieve a link via email to create a new password
-          </StyledText>
           <StyledForm onSubmit={handleSubmit}>
             <StyledDivFlex
               flexDirection="column"
@@ -63,23 +61,58 @@ const ForgetPassword = () => {
               padding="0rem 4rem 0rem 4rem"
             >
               <StyledDivFlex flexDirection="column" gap="1rem">
-                <StyledLabel>Email</StyledLabel>
+                <StyledLabel>Username</StyledLabel>
                 <StyledInput
-                  type="email"
-                  placeholder="Enter your email"
+                  type="text"
+                  placeholder="Enter username"
                   required
                   padding="2.3rem"
                   fontSize="2.3rem"
                 />
               </StyledDivFlex>
 
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel>Password</StyledLabel>
+                <StyledInput
+                  type="password"
+                  placeholder="Enter password"
+                  required
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                />
+              </StyledDivFlex>
+
+              <StyledDivFlex gap="2rem">
+                <Link
+                  to="/forget-password"
+                  style={{
+                    textDecoration: "underline",
+                    color: "#F3EFE9",
+                  }}
+                >
+                  <StyledText fontSize="1.5rem" fontWeight="400">
+                    Forget password?{" "}
+                  </StyledText>
+                </Link>
+                <StyledText fontSize="1.5rem" fontWeight="400">
+                  <Link
+                    to="/"
+                    style={{
+                      textDecoration: "underline",
+                      color: "#F3EFE9",
+                    }}
+                  >
+                    Contact admin
+                  </Link>
+                </StyledText>
+              </StyledDivFlex>
               <StyledButton
                 padding="1.5rem"
                 marginTop="2rem"
                 borderRadius="5rem"
                 fontSize="2.4rem"
               >
-                Forgot Password
+                Login
               </StyledButton>
             </StyledDivFlex>
           </StyledForm>
@@ -89,4 +122,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default AdminLogin;

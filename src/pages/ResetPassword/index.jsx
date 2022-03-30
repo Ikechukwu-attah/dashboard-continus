@@ -31,8 +31,12 @@ const ResetPassword = () => {
         justifyContent="center"
         alignItems="center"
         flex="40%"
+        backgroundImage={`url('./assets/lift.png')`}
+        backgroundSize="cover"
+        backgroundPosition="center center"
+        backgroundRepeat="no-repeat"
       >
-        <StyledImage src="/assets/bisedge-logo.svg" alt="bisedge logo" />
+        <StyledImage src="/assets/bisedge-logo1.png" alt="bisedge logo" />
       </StyledDivFlex>
       <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
         <StyledDivFlex
@@ -75,7 +79,7 @@ const ResetPassword = () => {
                   position="absolute"
                   color="#606060"
                   Right="30rem"
-                  Top="31rem"
+                  Top="34rem"
                   //   fontSize="1rem"
                 >
                   {icons}

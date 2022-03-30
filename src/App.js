@@ -1,44 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import GeneralDashboard from "./pages/Dashboard/GeneralDashboard";
-import ClientManagment from "./pages/Dashboard/ClientManagment";
-import Co2Reduction from "./pages/Dashboard/Co2Reduction";
-import Energy from "./pages/Dashboard/Energy";
-import Maintenance from "./pages/Dashboard/Maintenance";
-import MonthlyAvaliablity from "./pages/Dashboard/MonthlyAvaliablity";
-import ShockingSense from "./pages/Dashboard/ShockingSensing";
-import TruckUsage from "./pages/Dashboard/TruckUsage";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Redire,
+  useNavigate,
+} from "react-router-dom";
 import GlobalProvider from "./Context/GlobalContext";
-import OccupancyJournal from "./pages/Dashboard/OccupancyJournal";
-import Driver from "./pages/Dashboard/Driver";
-import UserManagement from "./pages/Dashboard/UserManagement";
-import AddUser from "./pages/Dashboard/AddUser";
-import ResetPassword from "./pages/ResetPassword";
-import ForgetPassword from "./pages/ForgetPassword";
+import jwt_decode from "jwt-decode";
+
+import { publicRoutes, protectedRoutes } from "./Routes/Routes";
+import { Login } from "@mui/icons-material";
+
+import { ProtectedRouteGaurd, PublicRouteGaurd } from "./Routes/Gaurd";
 
 function App() {
+  // const decodedToken = jwt_decode(
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWFyZCI6ImFkbWluIiwidXNlciI6eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJkYXRhIjp7ImZpcnN0bmFtZSI6ImYuYWRtaW4iLCJsYXN0bmFtZSI6ImwuYWRtaW4iLCJwaG9uZSI6IisyMzQ4MTIzNDU2Nzg5In0sImNyZWF0ZWRfYXQiOiIyMDIyLTAzLTE2VDExOjM4OjIwLjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMi0wMy0xOFQxMzoxMTozOS4wMDBaIn0sImlhdCI6MTY0ODU2NzAyOSwiZXhwIjoxNjU2MzQzMDI5fQ.aomHJt-NGf_9jrQB3PSicJTpy5ZVYewBoYWS3e-o3Mo"
+  // );
+
+  // console.log("decodedToken", decodedToken);
   return (
     <GlobalProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<GeneralDashboard />} />
-          <Route path="/client-management" element={<ClientManagment />} />
-          <Route path="/co2-reduction" element={<Co2Reduction />} />
-          <Route path="/occupancy-journal" element={<OccupancyJournal />} />
-          <Route path="/client-management" element={<ClientManagment />} />
-          <Route path="/energy" element={<Energy />} />
-          <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/monthly-avaliablity" element={<MonthlyAvaliablity />} />
-          <Route path="/shocking-sense" element={<ShockingSense />} />
-          <Route path="/truck-usage" element={<TruckUsage />} />
-          <Route path="/user-management" element={<UserManagement />} />
-          <Route path="/driver" element={<Driver />} />
-          <Route path="/add-user" element={<AddUser />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
+          {publicRoutes.map(({ path, component }) => (
+            <Route
+              path={path}
+              element={<PublicRouteGaurd>{component}</PublicRouteGaurd>}
+            />
+          ))}
+          {protectedRoutes.map(({ path, component }) => (
+            <Route
+              path={path}
+              element={<ProtectedRouteGaurd>{component}</ProtectedRouteGaurd>}
+            />
+          ))}
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

@@ -27,8 +27,8 @@ const PlusSquare = (color = "#606060", size) => {
         d="M8 12H16"
         stroke={color}
         strokeWidth="2"
-        strokeWinecap="round"
-        strokeWinejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

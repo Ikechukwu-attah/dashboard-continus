@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -15,8 +16,14 @@ import CardWidget from "../../../components/Widget";
 import { StyledText } from "../../../components/common/Basics/StyledText";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import CalendarCheck from "../../../components/Widget/Calendar";
+import MiniDropDown from "../../../components/Widget/MiniDropDown";
+import WidgetWithDropdown from "../../../components/Widget/WidgetWithDropdown";
+import { generalDashbordCardItem } from "../../../DUMMYDATA";
 
 const GeneralDashboard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log("isOpen", isOpen);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -64,7 +71,7 @@ const GeneralDashboard = () => {
           />
         </StyledDivFlex>
 
-        <StyledBox padding="1rem 8rem" marginTop="2rem">
+        <StyledBox padding="1rem 8rem" marginTop="2rem" position="relative">
           <StyledText
             fontSize="2.4rem"
             fontWeight="500"
@@ -73,39 +80,20 @@ const GeneralDashboard = () => {
             Year 2022
           </StyledText>
           <StyledDivFlex gap="2rem" marginTop="2rem">
-            <CardWidget
-              label="Number of Operators"
-              count="60"
-              icon={
-                <MoreHorizOutlinedIcon
-                  fontSize="large"
-                  color={Theme.colors.neutralColor6}
+            {generalDashbordCardItem.map((item) => {
+              return (
+                <WidgetWithDropdown
+                  key={item.id}
+                  label={item.label}
+                  count={item.count}
+                  onRemove={() => console.log("removed called")}
+                  onView={() => console.log("view called")}
                 />
-              }
-            />
-            <CardWidget
-              label="Activated Trucks"
-              count="70"
-              icon={
-                <MoreHorizOutlinedIcon
-                  fontSize="large"
-                  color={Theme.colors.neutralColor6}
-                />
-              }
-            />
-            <CardWidget
-              label="Overall Uptime (Hours)"
-              count="2556"
-              icon={
-                <MoreHorizOutlinedIcon
-                  fontSize="large"
-                  color={Theme.colors.neutralColor6}
-                />
-              }
-            />
+              );
+            })}
           </StyledDivFlex>
-          // table
-          <StyledText fontSize="20rem">This is tanle</StyledText>
+
+          <CalendarCheck />
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

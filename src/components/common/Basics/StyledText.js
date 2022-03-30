@@ -17,9 +17,11 @@ export const StyledText = styled.span `
    right: ${({Right})=>Right};
    top: ${({Top})=>Top};
    width: ${({width})=>width};
+   height: ${({height})=>height};
    cursor: ${({cursor})=>cursor};
    display:${({Display})=>Display};
-   text-align:${({textAlign})=>textAlign}
+   text-align:${({textAlign})=>textAlign};
+   background-color:${({background})=>background};
    
    
 `

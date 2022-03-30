@@ -16,6 +16,10 @@ import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { StyledDivGrid } from "../../../components/common/Basics/DivGrid";
 import { StyledSpinning } from "../../../components/common/SpinningLoader/style";
 import Droplet from "../../../Icons/Droplet";
+import Cloud from "../../../Icons/Cloud";
+import CloudGreen from "../../../Icons/CloudGreen";
+import CloudBlue from "../../../Icons/CloudBlue";
+import { Co2DataItem } from "../../../DUMMYDATA";
 
 const Co2Reduction = () => {
   return (
@@ -87,46 +91,25 @@ const Co2Reduction = () => {
           count="25 Trucks"
         />
 
-        <StyledDivFlex
+        <StyledDivGrid
           padding="1rem 8rem"
           marginTop="3rem"
           gap="2rem"
           width="100%"
           // flexWrap="wrap"
         >
-          <CardWidget
-            label="Disel consumption per forklift (liters)"
-            count="2900"
-            background="#5899DA"
-            icon2={
-              <Droplet fontSize="large" color={Theme.colors.neutralColor6} />
-            }
-          />
-
-          <CardWidget
-            label="Disel consumption per forklift (liters)"
-            count="2900"
-            background="#5899DA"
-            icon2={
-              <MoreHorizOutlinedIcon
-                fontSize="large"
-                color={Theme.colors.neutralColor6}
+          {Co2DataItem.map((item) => {
+            return (
+              <CardWidget
+                label={item.title}
+                count={item.count}
+                // background="#5899DA"
+                icon={item.icon}
+                width="100%"
               />
-            }
-          />
-
-          <CardWidget
-            label="Disel consumption per forklift (liters)"
-            count="2900"
-            background="#5899DA"
-            icon1={
-              <MoreHorizOutlinedIcon
-                fontSize="large"
-                color={Theme.colors.neutralColor6}
-              />
-            }
-          />
-        </StyledDivFlex>
+            );
+          })}
+        </StyledDivGrid>
       </StyledDashboardContentWrapper>
     </DashboardLayout>
   );

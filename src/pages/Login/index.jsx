@@ -18,6 +18,7 @@ const Login = () => {
 
     navigate("/home");
   };
+
   return (
     <StyledDivFlex>
       <StyledDivFlex
@@ -27,8 +28,12 @@ const Login = () => {
         justifyContent="center"
         alignItems="center"
         flex="40%"
+        backgroundImage={`url('./assets/lift.png')`}
+        backgroundSize="cover"
+        backgroundPosition="center center"
+        backgroundRepeat="no-repeat"
       >
-        <StyledImage src="/assets/bisedge-logo.svg" alt="bisedge logo" />
+        <StyledImage src="/assets/bisedge-logo1.png" alt="bisedge logo" />
       </StyledDivFlex>
       <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
         <StyledDivFlex

@@ -1,9 +1,7 @@
 import React from "react";
 import {
-  BarChart,
-  Bar,
-  Label,
-  Cell,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -13,21 +11,19 @@ import {
 } from "recharts";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
+import Dropdown from "../../../components/common/Dropdown";
 import PageHeadingButtons from "../../../components/common/PageButton";
 import DashboardLayout from "../../../components/Layouts/DashboardLayout";
 import PageHeaderLayout from "../../../components/Layouts/HeaderLayout";
-import Dropdown from "../../../components/common/Dropdown";
 import { locations, period, trucks } from "../../../DUMMYDATA";
 import { Theme } from "../../../Theme";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
-import MiniDropDown from "../../../components/Widget/MiniDropDown";
-import { dummyTruckData } from "../../../DUMMYDATACHART.js";
+import { batteryUsage } from "../../../DUMMYDATACHART.js";
 import { StyledText } from "../../../components/common/Basics/StyledText";
-
-const TruckUsage = () => {
+const Battery = () => {
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -93,50 +89,19 @@ const TruckUsage = () => {
         <StyledBox background={Theme.colors.neutralColor}>
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
-            text="Truck Usage for the period:"
+            text="Energy for the period:"
             date="1 Feb, 2022 - 28th Feb, 2022"
-            count="25 Trucks"
           />
 
           <StyledDivFlex
             padding="1rem 8rem"
             justifyContent="flex-end"
-            gap="1rem"
+            gap="2rem"
           >
             <StyledDivFlex alignItems="center" gap="1rem">
               <StyledText
-                height="28px"
-                width="28px"
-                background="#E8743B"
-              ></StyledText>
-              <StyledText
-                fontSize="1.8rem"
-                fontWeight="500"
-                color={Theme.colors.neutralColor2}
-              >
-                Active usage
-              </StyledText>
-            </StyledDivFlex>
-
-            <StyledDivFlex alignItems="center" gap="1rem">
-              <StyledText
-                height="28px"
-                width="28px"
-                background="#5899DA"
-              ></StyledText>
-              <StyledText
-                fontSize="1.8rem"
-                fontWeight="500"
-                color={Theme.colors.neutralColor2}
-              >
-                Driving
-              </StyledText>
-            </StyledDivFlex>
-
-            <StyledDivFlex alignItems="center" gap="1rem">
-              <StyledText
-                height="28px"
-                width="28px"
+                height="2px"
+                width="80px"
                 background="#19A979"
               ></StyledText>
               <StyledText
@@ -144,7 +109,22 @@ const TruckUsage = () => {
                 fontWeight="500"
                 color={Theme.colors.neutralColor2}
               >
-                Lifting
+                Low energy State
+              </StyledText>
+            </StyledDivFlex>
+
+            <StyledDivFlex alignItems="center" gap="1rem">
+              <StyledText
+                height="2px"
+                width="80px"
+                background="#E8743B"
+              ></StyledText>
+              <StyledText
+                fontSize="1.8rem"
+                fontWeight="500"
+                color={Theme.colors.neutralColor2}
+              >
+                Critical energy state
               </StyledText>
             </StyledDivFlex>
           </StyledDivFlex>
@@ -156,11 +136,11 @@ const TruckUsage = () => {
             background={Theme.colors.neutralColor}
             height="60vh"
           >
-            <ResponsiveContainer width="100%">
-              <BarChart
-                // width={1000}
-                // height={500}
-                data={dummyTruckData}
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                width={500}
+                height={300}
+                data={batteryUsage}
                 margin={{
                   top: 5,
                   right: 30,
@@ -169,24 +149,37 @@ const TruckUsage = () => {
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" stroke="#000000">
-                  <Label value="Trucks" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis
-                  label={{
-                    value: "Percentage",
-                    angle: -90,
-                    position: "insideLeft",
-                  }}
-                  domain={[0, "dataMax + 0"]}
-                />
+                <XAxis dataKey="time" />
+                <YAxis />
                 <Tooltip />
                 <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="bat"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                  strokeWidth={1}
+                  dot={false}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="critical"
+                  stroke="#E8743B"
+                  strokeWidth={1.5}
+                  dot={false}
+                  // strokeDasharray="3 3"
+                />
 
-                <Bar dataKey="bis" fill="#E8743B" />
-                <Bar dataKey="nb" fill="#5899DA" />
-                <Bar dataKey="yu" fill="#19A979" />
-              </BarChart>
+                <Line
+                  type="monotone"
+                  dataKey="low"
+                  stroke="#19A979"
+                  strokeWidth={1.5}
+                  dot={false}
+
+                  // strokeDasharray="3 3"
+                />
+              </LineChart>
             </ResponsiveContainer>
           </StyledBox>
           {/* BARCHART ENDS HERE */}
@@ -196,4 +189,4 @@ const TruckUsage = () => {
   );
 };
 
-export default TruckUsage;
+export default Battery;
