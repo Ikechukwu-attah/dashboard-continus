@@ -1,11 +1,13 @@
 import React, { createContext, useState } from "react";
+import MapTokenToUser from "../Authorization/MapTokenToUser";
 
 export const globalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
-  const [isAdmin] = useState(false);
+  const user = MapTokenToUser();
+  const [isAdmin] = useState(user.guard === "admin");
   const [pageName, setPageName] = useState(
-    isAdmin ? "User Management" : "General Dashboard"
+    isAdmin ? "Client Management" : "General Dashboard"
   );
   console.log("pageName", pageName);
 
@@ -14,7 +16,6 @@ const GlobalProvider = ({ children }) => {
       value={{
         pageName,
         setPageName,
-
         isAdmin,
       }}
     >

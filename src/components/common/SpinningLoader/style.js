@@ -8,13 +8,13 @@ export const StyledSpinning = styled.div `
 
    ::after{
       content : "";
-      width: 5rem;
-      height: 5rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border: 10px solid #dddddd;
       border-top-color: #009579;
       border-bottom-color: #009579;
       border-radius: 50%;
-      animation: loading .5s linear infinite;
+      animation: loading ${({speed}) => speed} linear infinite;
    }
 
    @keyframes loading {

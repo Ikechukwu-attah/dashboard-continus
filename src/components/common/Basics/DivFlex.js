@@ -30,6 +30,8 @@ left: ${({Left})=>Left};
 flex-wrap:${({flexWrap})=>flexWrap};
 max-width: ${({maxWidth})=>maxWidth};
 min-width: ${({minWidth})=>minWidth};
+cursor: ${({cursor})=>cursor};
+
 
 ${({customCSS}) => customCSS}
 

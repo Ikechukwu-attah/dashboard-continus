@@ -5,6 +5,7 @@ import { CheckLoginStatus } from "../Authorization/UserAuthentication";
 //  Route protection
 
 const isLoggedIn = CheckLoginStatus();
+console.log("isLoggedin", isLoggedIn);
 
 // If a user is not logged in he/she will not access certain pages............
 export const ProtectedRouteGaurd = ({ children }) => {
@@ -18,12 +19,15 @@ export const ProtectedRouteGaurd = ({ children }) => {
 };
 // .........................................................
 
-// Public route gaurd protection(If a user is logged in, he/she should be redirected to come before the token expires)............
+// Public route gaurd protection(If a user is logged in, he/she should be redirected )............
 export const PublicRouteGaurd = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) return navigate("/home");
+    if (isLoggedIn)
+      return navigate(
+        isLoggedIn.guard === "admin" ? "/client-management" : "/home"
+      );
   }, []);
 
   return <>{children}</>;

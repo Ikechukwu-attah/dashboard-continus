@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { StyledDivFlex } from "../../components/common/Basics/DivFlex";
@@ -11,14 +11,32 @@ import { StyledText } from "../../components/common/Basics/StyledText";
 import { Theme } from "../../Theme";
 import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
-
+import { useAdminLogin } from "./hooks/UseAdminLogin";
+import ButtonGroup from "../../components/common/Button";
+import feedbackMessage from "../../components/common/Basics/FeedbackMessage";
+import { successMessage } from "../../components/common/Basics/FeedbackMessage";
 const AdminLogin = () => {
-  const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const { isLoading, error, loginAdmin } = useAdminLogin();
+  const [adminData, setAdminData] = useState({});
 
-    navigate("/home");
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setAdminData({ ...adminData, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { ...adminData, guard: "admin" };
+    console.log("data...............", data);
+    loginAdmin(data);
+
+    // navigate("/home");
+  };
+
+  // useEffect(() => {
+  //   console.log("called");
+  //   successMessage(error);
+  // }, [error]);
 
   return (
     <StyledDivFlex>
@@ -61,13 +79,16 @@ const AdminLogin = () => {
               padding="0rem 4rem 0rem 4rem"
             >
               <StyledDivFlex flexDirection="column" gap="1rem">
-                <StyledLabel>Username</StyledLabel>
+                <StyledLabel>Email</StyledLabel>
                 <StyledInput
-                  type="text"
-                  placeholder="Enter username"
+                  type="email"
+                  placeholder="Enter email"
                   required
                   padding="2.3rem"
                   fontSize="2.3rem"
+                  name="email"
+                  value={adminData.email}
+                  onChange={handleChange}
                 />
               </StyledDivFlex>
 
@@ -77,6 +98,9 @@ const AdminLogin = () => {
                   type="password"
                   placeholder="Enter password"
                   required
+                  name="password"
+                  onChange={handleChange}
+                  value={adminData.password}
                   padding="2.3rem"
                   fontSize="2.3rem"
                 />
@@ -106,14 +130,10 @@ const AdminLogin = () => {
                   </Link>
                 </StyledText>
               </StyledDivFlex>
-              <StyledButton
-                padding="1.5rem"
-                marginTop="2rem"
-                borderRadius="5rem"
-                fontSize="2.4rem"
-              >
-                Login
-              </StyledButton>
+              <StyledText color="red" fontSize="1.3rem">
+                {error}
+              </StyledText>
+              <ButtonGroup text="Login" isLoading={isLoading} />
             </StyledDivFlex>
           </StyledForm>
         </StyledDivFlex>

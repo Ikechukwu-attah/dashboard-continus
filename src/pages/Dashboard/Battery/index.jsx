@@ -158,7 +158,7 @@ const Battery = () => {
                   dataKey="bat"
                   stroke="#8884d8"
                   activeDot={{ r: 8 }}
-                  strokeWidth={1}
+                  strokeWidth={2}
                   dot={false}
                 />
                 <Line

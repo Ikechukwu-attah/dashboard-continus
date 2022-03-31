@@ -49,8 +49,8 @@ const WidgetWithDropdown = ({
       <StyledText
         fontSize="2.2rem"
         fontWeight="400"
-        color={Theme.colors.primaryColor}
-        width="40%"
+        color={Theme.colors.neutralColor2}
+        width="43%"
         margin="0 1rem 0 0"
         textAlign="end"
         // padding="0rem 10rem 0rem 0rem"

@@ -5,12 +5,13 @@ import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledText } from "../common/Basics/StyledText";
 import { StyledInput, StyledLabel } from "../common/Input";
 
-const ImageUpload = ({ onChange }) => {
+const ImageUpload = ({ name, onImageChange }) => {
   const [imgUrl, setImgUrl] = useState(null);
   const [errorMessage, setErrorMessage] = useState();
 
   const handleChange = (event) => {
     const file = event.target.files[0];
+
     const objectUrl = URL.createObjectURL(file);
     setImgUrl(objectUrl);
 
@@ -22,7 +23,23 @@ const ImageUpload = ({ onChange }) => {
     if (!file.name.match(/\.(jpg|jpeg|png|gif|PNG)$/)) {
       return setErrorMessage("Valid image is required");
     }
-    onChange(objectUrl);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+
+    reader.onload = () => {
+      // this is the base64 data
+      const fileRes = reader && window.btoa(reader.result);
+      const imageString = `data:image/jpg;base64,${fileRes}`;
+      onImageChange({
+        name,
+        value: imageString,
+      });
+    };
+
+    reader.onerror = () => {
+      console.log("There is a problem while uploading...");
+    };
+
     setErrorMessage("");
   };
 

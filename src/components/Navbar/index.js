@@ -4,8 +4,11 @@ import { StyledTextHeading } from "../common/Basics/Heading";
 import { StyledImage } from "../common/Basics/StyledImage";
 import { StyledText } from "../common/Basics/StyledText";
 import { Theme } from "../../Theme";
+import MapTokenToUser from "../../Authorization/MapTokenToUser";
 
 const Navbar = () => {
+  const user = MapTokenToUser();
+  console.log("user", user);
   return (
     <StyledDivFlex
       justifyContent="flex-end"
@@ -31,7 +34,7 @@ const Navbar = () => {
           borderRadius="50%"
         />
         <StyledDivFlex
-          alignItems="center"
+          alignItems="start"
           flexDirection="column"
           justifyContent="center"
         >
@@ -41,7 +44,7 @@ const Navbar = () => {
             fontWeight="500"
             lineHeight="2.7rem"
           >
-            Ifeoluwa Olagbemi
+            {user?.user?.data?.firstname}
           </StyledText>
           <StyledText
             color={Theme.colors.neutralColor2}

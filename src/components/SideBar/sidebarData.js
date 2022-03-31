@@ -78,21 +78,17 @@ export const adminNavbarData = [
 
     {
         id: 1,
-        title: "User Management ",
-        link: "/user-management",
+        title: "Client Management ",
+        link: "/client-management"
     },
 
 
     {
         id: 2,
-        title: "Client Management ",
-        link: "/client-management"
+        title: "User Management ",
+        link: "/user-management",
     },
 
-    {
-        id: 3,
-        title: "Add Company ",
-        link: "/#"
-    },
+
 
 ]

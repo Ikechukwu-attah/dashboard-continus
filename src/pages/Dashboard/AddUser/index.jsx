@@ -12,6 +12,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ImageUpload from "../../../components/ImageUpload";
 
 const AddUser = ({ setShowUserList }) => {
+  const [signUpData, setSignUpData] = useState({});
+
+  const handleChange = ({ name, value }) => {
+    setSignUpData({ ...signUpData, [name]: value });
+    console.log("value", value);
+  };
   return (
     <StyledBox
       padding="2.5rem 8rem"
@@ -36,7 +42,7 @@ const AddUser = ({ setShowUserList }) => {
           <StyledDivFlex left="1" flexDirection="column" flex="1" gap="2rem">
             <StyledDivFlex flexDirection="column">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Name
+                FirstName
               </StyledLabel>
               <StyledInput
                 type="text"
@@ -44,6 +50,14 @@ const AddUser = ({ setShowUserList }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                name="firstname"
+                value={signUpData.firstname}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
               />
             </StyledDivFlex>
 
@@ -53,7 +67,7 @@ const AddUser = ({ setShowUserList }) => {
               // gap="1rem"
             >
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Username
+                LastName
               </StyledLabel>
               <StyledInput
                 type="text"
@@ -61,12 +75,20 @@ const AddUser = ({ setShowUserList }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                name="lastname"
+                value={signUpData.lastname}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
               />
             </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Phone number
+                Phone Number
               </StyledLabel>
               <StyledInput
                 type="tel"
@@ -74,6 +96,9 @@ const AddUser = ({ setShowUserList }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                name="phone"
+                value={signUpData.phone}
+                onChange={handleChange}
               />
             </StyledDivFlex>
 
@@ -87,11 +112,19 @@ const AddUser = ({ setShowUserList }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                name="email"
+                value={signUpData.email}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
               />
             </StyledDivFlex>
           </StyledDivFlex>
           <StyledDivFlex right="1" flexDirection="column" gap="2rem" flex="1">
-            <StyledDivFlex flexDirection="column" gap="1rem">
+            {/* <StyledDivFlex flexDirection="column" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
                 Role
               </StyledLabel>
@@ -103,14 +136,12 @@ const AddUser = ({ setShowUserList }) => {
                 data={roleData}
                 icon={<KeyboardArrowDownIcon fontSize="large" />}
               />
-            </StyledDivFlex>
+            </StyledDivFlex> */}
             <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor}>
               Upload Image
             </StyledLabel>
 
-            <ImageUpload
-              onChange={(imageUrl) => console.log("image", imageUrl)}
-            />
+            <ImageUpload onImageChange={handleChange} />
             {/* ADD THE COMPONENT HERE */}
 
             <StyledDivFlex
