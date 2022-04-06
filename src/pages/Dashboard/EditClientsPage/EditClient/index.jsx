@@ -1,47 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { StyledBox } from "../../../components/common/Basics/DivBox";
-import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
-import { StyledText } from "../../../components/common/Basics/StyledText";
-import { StyledButton } from "../../../components/common/Button/style";
-import { StyledForm } from "../../../components/common/Form/style";
-import { StyledInput, StyledLabel } from "../../../components/common/Input";
-import { Theme } from "../../../Theme";
-import Dropdown from "../../../components/common/Dropdown";
-import { roleData } from "../../../DUMMYDATA";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ImageUpload from "../../../components/ImageUpload";
-import { useCreateUser } from "./hooks/UseCreateUser";
-import ButtonGroup from "../../../components/common/Button";
-import useMessages from "../../../components/common/messages/hooks/useMessages";
+import { css } from "styled-components";
+import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { StyledDivFlex } from "../../../../components/common/Basics/DivFlex";
+import { StyledText } from "../../../../components/common/Basics/StyledText";
+import { StyledButton } from "../../../../components/common/Button/style";
+import { StyledForm } from "../../../../components/common/Form/style";
+import { StyledInput, StyledLabel } from "../../../../components/common/Input";
+import ImageUpload from "../../../../components/ImageUpload";
+import { Theme } from "../../../../Theme";
+import ButtonGroup from "../../../../components/common/Button";
 
-const AddUser = ({ setShowUserList, getAllUsers }) => {
-  const [signUpData, setSignUpData] = useState({});
-  const { createUser, data, isLoading, error } = useCreateUser();
-  const { notify, ToastContainer } = useMessages();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const EditClient = ({ setShowClientList, getAllClient }) => {
+  // const [imgUrl, setImgUrl] = useState(null);
+
+  const [signUpClientData, setSignUpClientData] = useState({});
 
   const handleChange = ({ name, value }) => {
-    setSignUpData({ ...signUpData, [name]: value });
-    // console.log("value", value);
+    // setSignUpClientData({ ...signUpClientData, [name]: value });
+    // console.log("data=>=>=>", signUpClientData);
   };
 
-  const onHandleSubmit = () => {
-    // event.preventDefault();
-    const data = { ...signUpData, guard: "admin" };
-    createUser(data);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // const data = { ...signUpClientData, guard: "user" };
   };
-  useEffect(() => {
-    console.log("data444", data);
-    if (data) {
-      setShowUserList(true);
-      getAllUsers();
-    }
-  }, [data]);
+
   return (
     <StyledBox
       padding="2.5rem 8rem"
@@ -56,7 +39,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
       >
         Add user now
       </StyledText>
-      <StyledForm onSubmit={handleSubmit(onHandleSubmit)}>
+      <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
           gap="20rem"
           width="95%"
@@ -66,19 +49,16 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
           <StyledDivFlex left="1" flexDirection="column" flex="1" gap="2rem">
             <StyledDivFlex flexDirection="column">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                FirstName
+                Firstname
               </StyledLabel>
               <StyledInput
                 type="text"
                 placeholder="Enter name"
-                // required
+                required
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="firstname"
-                // {...register("firstname", {
-                //   required: "This field is required",
-                // })}
-                value={signUpData.firstname}
+                value={signUpClientData.firstname}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -86,15 +66,27 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                   })
                 }
               />
+            </StyledDivFlex>
 
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.firstname?.message}
-              </StyledText> */}
-              {/* {validateError && (
-                <StyledText color="red">
-                  {validateError.firstname} check
-                </StyledText>
-              )} */}
+            <StyledDivFlex flexDirection="column">
+              <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
+                Lastname
+              </StyledLabel>
+              <StyledInput
+                type="text"
+                placeholder="Enter name"
+                required
+                padding="2.3rem"
+                fontSize="2.3rem"
+                name="lastname"
+                value={signUpClientData.lastname}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
+              />
             </StyledDivFlex>
 
             <StyledDivFlex
@@ -103,19 +95,16 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
               // gap="1rem"
             >
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                LastName
+                Client Code
               </StyledLabel>
               <StyledInput
-                type="text"
-                placeholder="Enter Username"
-                // required
+                type="number"
+                placeholder="Enter Client Code"
+                required
                 padding="2.3rem"
                 fontSize="2.3rem"
-                name="lastname"
-                // {...register("lastname", {
-                //   required: "This field is required",
-                // })}
-                value={signUpData.lastname}
+                name="company_id"
+                value={signUpClientData.company_id}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -123,24 +112,20 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                   })
                 }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.lastname?.message}
-              </StyledText> */}
             </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Phone Number
+                Phone number
               </StyledLabel>
               <StyledInput
                 type="tel"
                 placeholder="Phone Number"
-                // required
+                required
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="phone"
-                // {...register("phone", { required: "This field is required" })}
-                value={signUpData.phone}
+                value={signUpClientData.phone}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -148,9 +133,6 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                   })
                 }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.phone?.message}
-              </StyledText> */}
             </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" gap="1rem">
@@ -160,12 +142,11 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
               <StyledInput
                 type="email"
                 placeholder="Email"
-                // required
+                required
                 padding="2.3rem"
                 fontSize="2.3rem"
-                // {...register("email", { required: "This field is required" })}
                 name="email"
-                value={signUpData.email}
+                value={signUpClientData.email}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -173,34 +154,37 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                   })
                 }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.email?.message}
-              </StyledText> */}
             </StyledDivFlex>
           </StyledDivFlex>
           <StyledDivFlex right="1" flexDirection="column" gap="2rem" flex="1">
-            {/* <StyledDivFlex flexDirection="column" gap="1rem">
+            <StyledDivFlex flexDirection="column" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Role
+                Company Address
               </StyledLabel>
-              <Dropdown
-                background={Theme.colors.secondaryColor}
-                name="role"
-                label="Role"
-                onChange={(data) => console.log("user selection", data)}
-                data={roleData}
-                icon={<KeyboardArrowDownIcon fontSize="large" />}
+              <StyledInput
+                type="text"
+                placeholder="Company Address"
+                required
+                padding="2.3rem"
+                fontSize="2.3rem"
+                name="company_address"
+                value={signUpClientData.company_address}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
               />
-            </StyledDivFlex> */}
-            <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor}>
+            </StyledDivFlex>
+            <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
               Upload Image
             </StyledLabel>
 
             <ImageUpload name="avatar_file" onImageChange={handleChange} />
-            {/* ADD THE COMPONENT HERE */}
 
             <StyledDivFlex
-              gap="4rem"
+              gap="1rem"
               marginTop="5rem"
               justifyContent="space-between"
             >
@@ -211,24 +195,23 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => setShowUserList(true)}
+                onClick={() => setShowClientList(true)}
               >
                 Cancel
               </StyledButton>
+
               <ButtonGroup
                 padding="1.2rem 5.7rem"
                 fontSize="1.8rem"
-                spinnerHeight="1.5rem"
-                spinnerWidth="1.5rem"
+                spinnerHeight="1rem"
+                spinnerWidth="1rem"
                 background={Theme.colors.primaryColor}
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                isLoading={isLoading}
-                // onClickMessage={error && <notify errorMessage={error} />}
+                // isLoading={isLoading}
               >
-                {/* {error && <ToastContainer />} */}
-                Add User
+                Add Client
               </ButtonGroup>
             </StyledDivFlex>
           </StyledDivFlex>
@@ -238,4 +221,4 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
   );
 };
 
-export default AddUser;
+export default EditClient;

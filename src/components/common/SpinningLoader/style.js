@@ -8,8 +8,8 @@ export const StyledSpinning = styled.div `
 
    ::after{
       content : "";
-      width: 2.5rem;
-      height: 2.5rem;
+      width: ${({width})=>width || "2.5rem"};
+      height: ${({height})=>height || "2.5rem"};
       border: 10px solid #dddddd;
       border-top-color: #009579;
       border-bottom-color: #009579;

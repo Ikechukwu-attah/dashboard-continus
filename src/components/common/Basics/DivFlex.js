@@ -7,6 +7,7 @@ justify-content:${({justifyContent})=>justifyContent};
 flex-direction: ${({flexDirection})=>flexDirection};
 gap:${({gap})=>gap};
 padding: ${({padding})=>padding};
+margin: ${({margin})=>margin};
 margin-top:${({marginTop})=>marginTop};
 background: ${({background})=>background};
 width: ${({width})=>width};

@@ -20,4 +20,7 @@ export const StyledButton = styled.button `
   &:active{
     outline: none;
   }
+
+  opacity: ${({disabled}) => disabled===true? .5 : 1};
+  pointer-events: ${({disabled}) => disabled ===true? "none":"initial"};
 `

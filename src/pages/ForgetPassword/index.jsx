@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { StyledDivFlex } from "../../components/common/Basics/DivFlex";
@@ -11,11 +11,23 @@ import { StyledText } from "../../components/common/Basics/StyledText";
 import { Theme } from "../../Theme";
 import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
+import { useForgetPassword } from "./hooks/useForgetPassword";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
+
+  const { error, data, forgetPassword, isLoading } = useForgetPassword();
+  const [forgetPasswordData, setForgetPasswordData] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForgetPasswordData({ ...forgetPasswordData, [name]: value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = { ...forgetPasswordData, guard: "admin" };
+    forgetPassword(data);
 
     navigate("/");
   };
@@ -70,6 +82,9 @@ const ForgetPassword = () => {
                   required
                   padding="2.3rem"
                   fontSize="2.3rem"
+                  name="email"
+                  value={forgetPasswordData.email}
+                  onChange={handleChange}
                 />
               </StyledDivFlex>
 

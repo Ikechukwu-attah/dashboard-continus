@@ -133,7 +133,15 @@ const AdminLogin = () => {
               <StyledText color="red" fontSize="1.3rem">
                 {error}
               </StyledText>
-              <ButtonGroup text="Login" isLoading={isLoading} />
+              <ButtonGroup
+                isLoading={isLoading}
+                padding="1.5rem"
+                marginTop="2rem"
+                borderRadius="5rem"
+                fontSize="2.4rem"
+              >
+                Login
+              </ButtonGroup>
             </StyledDivFlex>
           </StyledForm>
         </StyledDivFlex>

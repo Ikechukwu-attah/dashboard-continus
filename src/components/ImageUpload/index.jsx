@@ -98,7 +98,7 @@ const ImageUpload = ({ name, onImageChange }) => {
       <StyledInput
         type="file"
         id="file"
-        required
+        // required
         accept=".png,.gif,.svg, .jpg, .jpeg, .jfif, .pjpeg, .pjp,.webp"
         padding="2.3rem"
         fontSize="2.3rem"

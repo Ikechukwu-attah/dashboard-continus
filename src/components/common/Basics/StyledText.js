@@ -18,10 +18,12 @@ export const StyledText = styled.span `
    top: ${({Top})=>Top};
    width: ${({width})=>width};
    height: ${({height})=>height};
+   white-space: ${({whiteSpace})=>whiteSpace};
    cursor: ${({cursor})=>cursor};
    display:${({Display})=>Display};
    text-align:${({textAlign})=>textAlign};
    background-color:${({background})=>background};
+   font-weight: ${({fontWeight})=>fontWeight};
    
    
 `

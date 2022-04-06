@@ -5,6 +5,7 @@ import { StyledImage } from "../common/Basics/StyledImage";
 import { StyledText } from "../common/Basics/StyledText";
 import { Theme } from "../../Theme";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
+import Profile from "../Profile/Profile";
 
 const Navbar = () => {
   const user = MapTokenToUser();
@@ -32,6 +33,7 @@ const Navbar = () => {
           height="7.2rem"
           width="7.2rem"
           borderRadius="50%"
+          position="relative"
         />
         <StyledDivFlex
           alignItems="start"
@@ -55,7 +57,8 @@ const Navbar = () => {
             Bisedge personnel
           </StyledText>
         </StyledDivFlex>
-        <StyledImage />
+        {/* <Profile /> */}
+        {/* <StyledImage /> */}
       </StyledDivFlex>
     </StyledDivFlex>
   );

@@ -1,47 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { StyledBox } from "../../../components/common/Basics/DivBox";
-import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
-import { StyledText } from "../../../components/common/Basics/StyledText";
-import { StyledButton } from "../../../components/common/Button/style";
-import { StyledForm } from "../../../components/common/Form/style";
-import { StyledInput, StyledLabel } from "../../../components/common/Input";
-import { Theme } from "../../../Theme";
-import Dropdown from "../../../components/common/Dropdown";
-import { roleData } from "../../../DUMMYDATA";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ImageUpload from "../../../components/ImageUpload";
-import { useCreateUser } from "./hooks/UseCreateUser";
-import ButtonGroup from "../../../components/common/Button";
-import useMessages from "../../../components/common/messages/hooks/useMessages";
+import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { StyledDivFlex } from "../../../../components/common/Basics/DivFlex";
+import { StyledText } from "../../../../components/common/Basics/StyledText";
+import { StyledButton } from "../../../../components/common/Button/style";
+import { StyledForm } from "../../../../components/common/Form/style";
+import { StyledInput, StyledLabel } from "../../../../components/common/Input";
+import { Theme } from "../../../../Theme";
 
-const AddUser = ({ setShowUserList, getAllUsers }) => {
-  const [signUpData, setSignUpData] = useState({});
-  const { createUser, data, isLoading, error } = useCreateUser();
-  const { notify, ToastContainer } = useMessages();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+import ImageUpload from "../../../../components/ImageUpload";
+import ButtonGroup from "../../../../components/common/Button";
 
-  const handleChange = ({ name, value }) => {
-    setSignUpData({ ...signUpData, [name]: value });
-    // console.log("value", value);
-  };
-
-  const onHandleSubmit = () => {
-    // event.preventDefault();
-    const data = { ...signUpData, guard: "admin" };
-    createUser(data);
-  };
-  useEffect(() => {
-    console.log("data444", data);
-    if (data) {
-      setShowUserList(true);
-      getAllUsers();
-    }
-  }, [data]);
+const EditUser = () => {
+  const handleChange = () => {};
   return (
     <StyledBox
       padding="2.5rem 8rem"
@@ -56,7 +27,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
       >
         Add user now
       </StyledText>
-      <StyledForm onSubmit={handleSubmit(onHandleSubmit)}>
+      <StyledForm>
         <StyledDivFlex
           gap="20rem"
           width="95%"
@@ -75,26 +46,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="firstname"
-                // {...register("firstname", {
-                //   required: "This field is required",
-                // })}
-                value={signUpData.firstname}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
               />
-
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.firstname?.message}
-              </StyledText> */}
-              {/* {validateError && (
-                <StyledText color="red">
-                  {validateError.firstname} check
-                </StyledText>
-              )} */}
             </StyledDivFlex>
 
             <StyledDivFlex
@@ -112,20 +64,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="lastname"
-                // {...register("lastname", {
-                //   required: "This field is required",
-                // })}
-                value={signUpData.lastname}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.lastname?.message}
-              </StyledText> */}
             </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
@@ -139,18 +78,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="phone"
-                // {...register("phone", { required: "This field is required" })}
-                value={signUpData.phone}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.phone?.message}
-              </StyledText> */}
             </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" gap="1rem">
@@ -165,17 +93,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 fontSize="2.3rem"
                 // {...register("email", { required: "This field is required" })}
                 name="email"
-                value={signUpData.email}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
               />
-              {/* <StyledText color="yellow" fontSize="1.4rem">
-                {errors.email?.message}
-              </StyledText> */}
             </StyledDivFlex>
           </StyledDivFlex>
           <StyledDivFlex right="1" flexDirection="column" gap="2rem" flex="1">
@@ -211,7 +129,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => setShowUserList(true)}
+                // onClick={() => setShowUserList(true)}
               >
                 Cancel
               </StyledButton>
@@ -224,7 +142,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                isLoading={isLoading}
+                // isLoading={isLoading}
                 // onClickMessage={error && <notify errorMessage={error} />}
               >
                 {/* {error && <ToastContainer />} */}
@@ -238,4 +156,4 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
   );
 };
 
-export default AddUser;
+export default EditUser;

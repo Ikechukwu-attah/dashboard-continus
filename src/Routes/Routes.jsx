@@ -13,6 +13,8 @@ import ResetPassword from "../pages/ResetPassword";
 import ForgetPassword from "../pages/ForgetPassword";
 import AdminLogin from "../pages/AdminLogin";
 import Battery from "../pages/Dashboard/Battery";
+import EditUsersPage from "../pages/Dashboard/EditUsersPage";
+import EditClientsPage from "../pages/Dashboard/EditClientsPage";
 
 export const publicRoutes = [
   {
@@ -21,7 +23,7 @@ export const publicRoutes = [
   },
 
   {
-    path: "/reset-password",
+    path: "/reset-password/:token",
     component: <ResetPassword />,
   },
 
@@ -55,6 +57,10 @@ export const protectedRoutes = [
   { path: "/truck-usage", component: <TruckUsage /> },
 
   { path: "/user-management", component: <UserManagement /> },
+
+  { path: "/user-management/:id", component: <EditUsersPage /> },
+
+  { path: "/client-management/:id", component: <EditClientsPage /> },
 
   { path: "/driver", component: <Driver /> },
 ];
