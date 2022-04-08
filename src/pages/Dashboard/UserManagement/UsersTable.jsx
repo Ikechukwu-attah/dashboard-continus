@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
@@ -9,6 +10,7 @@ import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledButton } from "../../../components/common/Button/style";
 import { Theme } from "../../../Theme";
 import { useDeleteAdmin } from "../../AdminLogin/hooks/useAdminDelete";
+import { useGetAdmin } from "../../AdminLogin/hooks/useGetAdmin";
 
 const UsersTable = ({ data, getAllUsers }) => {
   // const [data, setData] = useState({});
@@ -41,22 +43,24 @@ const UsersTable = ({ data, getAllUsers }) => {
           justifyContent="center"
           marginTop=".5rem"
         >
-          <StyledButton
+          {/* <StyledButton
             background={Theme.colors.primaryColor}
             color="white"
             padding="0.5rem"
             borderRadius="2.5px"
           >
             View
-          </StyledButton>
-          <StyledButton
-            background="#0275d8"
-            color="white"
-            padding="0.5rem"
-            borderRadius="2.5px"
-          >
-            Edit
-          </StyledButton>
+          </StyledButton> */}
+          <Link to={`/user-management/${params.data.id}`}>
+            <StyledButton
+              background="#0275d8"
+              color="white"
+              padding="0.5rem"
+              borderRadius="2.5px"
+            >
+              Edit
+            </StyledButton>
+          </Link>
           <StyledButton
             color="white"
             padding="0.5rem"

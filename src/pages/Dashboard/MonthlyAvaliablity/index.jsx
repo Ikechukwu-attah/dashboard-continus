@@ -106,7 +106,7 @@ const MonthlyAvaliablity = () => {
             <StyledBox
               // padding="5rem"
               background={Theme.colors.neutralColor5}
-              width="24%"
+              minWidth="30%"
             >
               <StyledText
                 fontSize="2.4rem"
@@ -136,7 +136,7 @@ const MonthlyAvaliablity = () => {
             <StyledBox
               // padding="5rem"
               background={Theme.colors.neutralColor5}
-              width="24%"
+              minWidth="30%"
             >
               <StyledText
                 fontSize="2.4rem"

@@ -109,7 +109,7 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
                 Client Code
               </StyledLabel>
               <StyledInput
-                type="number"
+                type="text"
                 placeholder="Enter Client Code"
                 required
                 padding="2.3rem"

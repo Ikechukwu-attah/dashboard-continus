@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
@@ -8,11 +9,14 @@ import { getAllAdminAPI } from "../../../Authorization/ServerPaths";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledButton } from "../../../components/common/Button/style";
 import { Theme } from "../../../Theme";
+import { useDeleteClient } from "../../Login/hooks/useClientDelete";
 
-const ClientTable = ({ data }) => {
+const ClientTable = ({ data, getAllClient }) => {
   // const [data, setData] = useState({});
   // const [isLoading, setIsLoading] = useState(false);
   // const [error, setError] = useState();
+  const { deleteClient, error, isLoading } = useDeleteClient();
+  //   console.log("client delete", data);
 
   const [columnDefs] = useState([
     { field: "firstname", headerName: "First Name" },
@@ -29,27 +33,30 @@ const ClientTable = ({ data }) => {
           justifyContent="center"
           marginTop=".5rem"
         >
-          <StyledButton
+          {/* <StyledButton
             background={Theme.colors.primaryColor}
             color="white"
             padding="0.5rem"
             borderRadius="2.5px"
           >
             View
-          </StyledButton>
-          <StyledButton
-            background="#0275d8"
-            color="white"
-            padding="0.5rem"
-            borderRadius="2.5px"
-          >
-            Edit
-          </StyledButton>
+          </StyledButton> */}
+          <Link to={`/client-management/${params.data.id}`}>
+            <StyledButton
+              background="#0275d8"
+              color="white"
+              padding="0.5rem"
+              borderRadius="2.5px"
+            >
+              Edit
+            </StyledButton>
+          </Link>
           <StyledButton
             color="white"
             padding="0.5rem"
             borderRadius="2.5px"
             background="#d9534f"
+            onClick={() => deleteClient({ id: params.data?.id }, getAllClient)}
           >
             Delete
           </StyledButton>

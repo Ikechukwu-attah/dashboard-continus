@@ -5,7 +5,7 @@ import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledText } from "../common/Basics/StyledText";
 import { StyledInput, StyledLabel } from "../common/Input";
 
-const ImageUpload = ({ name, onImageChange }) => {
+const ImageUpload = ({ name, value, onImageChange }) => {
   const [imgUrl, setImgUrl] = useState(null);
   const [errorMessage, setErrorMessage] = useState();
 
@@ -61,7 +61,9 @@ const ImageUpload = ({ name, onImageChange }) => {
           flexDirection="column"
           background={Theme.colors.neutralColor3}
           border="1px dashed rgba(2, 115, 81, 0.5)"
-          backgroundImage={`url(${imgUrl})`}
+          backgroundImage={`url(${
+            imgUrl || `${process.env.REACT_APP_BASE_URL}/${value}`
+          })`}
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
           backgroundSize="cover"

@@ -20,13 +20,15 @@ export const useLoginClient = () => {
             setIsLoading(false)
             setData(response)
 
-            cookie.set('userToken', response.data.data.token, { expires: "0.1" });
+            cookie.set('userToken', response.data.data.token);
             navigate('/home')
             window.location.reload()
 
         } catch (error) {
             setIsLoading(false);
+            console.log("error message77S", error)
             setError(error.response.data.message)
+            console.log("ErrorMessage", error.response.data.message);
 
         }
 

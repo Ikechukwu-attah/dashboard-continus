@@ -42,7 +42,7 @@ const ClientManagment = () => {
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (
-            <ClientTable data={data} />
+            <ClientTable data={data} getAllClient={getAllClient} />
           )
         ) : (
           <AddClient

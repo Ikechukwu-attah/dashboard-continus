@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledTextHeading } from "../common/Basics/Heading";
 import { StyledImage } from "../common/Basics/StyledImage";
@@ -8,6 +8,7 @@ import MapTokenToUser from "../../Authorization/MapTokenToUser";
 import Profile from "../Profile/Profile";
 
 const Navbar = () => {
+  const [showProfile, setShowProfile] = useState(false);
   const user = MapTokenToUser();
   console.log("user", user);
   return (
@@ -27,7 +28,7 @@ const Navbar = () => {
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
-      <StyledDivFlex gap="1.5rem">
+      <StyledDivFlex gap="1.5rem" onClick={() => setShowProfile(!showProfile)}>
         <StyledImage
           src="/assets/7Up-logo.jpg"
           height="7.2rem"
@@ -57,7 +58,8 @@ const Navbar = () => {
             Bisedge personnel
           </StyledText>
         </StyledDivFlex>
-        {/* <Profile /> */}
+        {showProfile && <Profile />}
+
         {/* <StyledImage /> */}
       </StyledDivFlex>
     </StyledDivFlex>

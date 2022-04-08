@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../../components/common/Basics/DivFlex";
 import { StyledText } from "../../../../components/common/Basics/StyledText";
@@ -10,9 +11,43 @@ import { Theme } from "../../../../Theme";
 
 import ImageUpload from "../../../../components/ImageUpload";
 import ButtonGroup from "../../../../components/common/Button";
+import { useGetAdmin } from "../../../AdminLogin/hooks/useGetAdmin";
+import { useUpdateAdmin } from "../../../AdminLogin/hooks/useUpdateAdmin";
 
 const EditUser = () => {
-  const handleChange = () => {};
+  const [adminData, setAdminData] = useState({});
+  const navigate = useNavigate();
+
+  const { getAdmin, error, data, isLoading } = useGetAdmin();
+  const {
+    isLoading: isLoadingAdmin,
+    data: updateDate,
+    updateAdmin,
+    error: updateError,
+  } = useUpdateAdmin();
+
+  const { id } = useParams();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setAdminData({ ...adminData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = { ...adminData, id };
+    updateAdmin(data, () => navigate("/user-management"));
+  };
+
+  useEffect(() => {
+    getAdmin(id, setAdminData);
+  }, []);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setAdminData(data);
+  //   }
+  // }, [data]);
   return (
     <StyledBox
       padding="2.5rem 8rem"
@@ -25,9 +60,9 @@ const EditUser = () => {
         color={Theme.colors.neutralColor2}
         style={{ padding: "5rem 0rem" }}
       >
-        Add user now
+        Edit User
       </StyledText>
-      <StyledForm>
+      <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
           gap="20rem"
           width="95%"
@@ -41,7 +76,9 @@ const EditUser = () => {
               </StyledLabel>
               <StyledInput
                 type="text"
-                placeholder="Enter name"
+                placeholder="Enter first name"
+                value={adminData.firstname}
+                onChange={handleChange}
                 // required
                 padding="2.3rem"
                 fontSize="2.3rem"
@@ -59,7 +96,9 @@ const EditUser = () => {
               </StyledLabel>
               <StyledInput
                 type="text"
-                placeholder="Enter Username"
+                placeholder="Enter last name"
+                value={adminData.lastname}
+                onChange={handleChange}
                 // required
                 padding="2.3rem"
                 fontSize="2.3rem"
@@ -73,7 +112,9 @@ const EditUser = () => {
               </StyledLabel>
               <StyledInput
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="Enter phone number"
+                value={adminData.phone}
+                onChange={handleChange}
                 // required
                 padding="2.3rem"
                 fontSize="2.3rem"
@@ -88,6 +129,8 @@ const EditUser = () => {
               <StyledInput
                 type="email"
                 placeholder="Email"
+                value={adminData.email}
+                onChange={handleChange}
                 // required
                 padding="2.3rem"
                 fontSize="2.3rem"
@@ -114,7 +157,13 @@ const EditUser = () => {
               Upload Image
             </StyledLabel>
 
-            <ImageUpload name="avatar_file" onImageChange={handleChange} />
+            <ImageUpload
+              name="avatar_file"
+              value={adminData.avatar}
+              onImageChange={(imageUrl) =>
+                setAdminData({ ...adminData, avatar: imageUrl })
+              }
+            />
             {/* ADD THE COMPONENT HERE */}
 
             <StyledDivFlex

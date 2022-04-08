@@ -15,7 +15,9 @@ const Profile = () => {
       //   width="100%"
       background={Theme.colors.neutralColor}
       position="absolute"
+      Top="9rem"
       zIndex="2"
+      minWidth="15%"
     >
       <StyledDivFlex
         background={Theme.colors.secondaryColor}

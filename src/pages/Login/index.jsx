@@ -108,8 +108,8 @@ const Login = () => {
                   {...register("password", {
                     required: "This field is required",
                     minLength: {
-                      value: 5,
-                      message: "Minimum length is 5",
+                      value: 3,
+                      message: "Minimum length is 3",
                     },
                   })}
                   value={clientLoginData.password}

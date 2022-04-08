@@ -5,6 +5,7 @@ import styled from 'styled-components'
 export const StyledBox = styled.div `
 width: ${({width})=>width};
 min-height: ${({minHeight})=>minHeight};
+min-width: ${({minWidth})=>minWidth};
 height: ${({height})=>height};
 background-color: ${({background})=> background};
 padding: ${({padding})=>padding};

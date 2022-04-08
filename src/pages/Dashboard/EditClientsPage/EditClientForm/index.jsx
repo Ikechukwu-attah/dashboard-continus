@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { css } from "styled-components";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../../components/common/Basics/DivFlex";
@@ -9,21 +10,33 @@ import { StyledInput, StyledLabel } from "../../../../components/common/Input";
 import ImageUpload from "../../../../components/ImageUpload";
 import { Theme } from "../../../../Theme";
 import ButtonGroup from "../../../../components/common/Button";
+import { useGetClient } from "../../../Login/hooks/useGetClient";
+import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
+import { useUpdateClient } from "../../../Login/hooks/useUpdateClients";
 
 const EditClient = ({ setShowClientList, getAllClient }) => {
   // const [imgUrl, setImgUrl] = useState(null);
 
-  const [signUpClientData, setSignUpClientData] = useState({});
+  const [clientData, setClientData] = useState({});
+  const { isLoading, data, getClient, error } = useGetClient();
+  const { updateClient } = useUpdateClient();
+  const { id } = useParams();
 
   const handleChange = ({ name, value }) => {
-    // setSignUpClientData({ ...signUpClientData, [name]: value });
-    // console.log("data=>=>=>", signUpClientData);
+    setClientData({ ...clientData, [name]: value });
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const data = { ...signUpClientData, guard: "user" };
+    const data = { ...clientData, id };
+    updateClient(data, () => navigate("/client-management"));
   };
+
+  useEffect(() => {
+    getClient(id, setClientData);
+  }, []);
 
   return (
     <StyledBox
@@ -58,7 +71,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="firstname"
-                value={signUpClientData.firstname}
+                value={clientData.firstname}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -79,7 +92,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="lastname"
-                value={signUpClientData.lastname}
+                value={clientData.lastname}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -98,13 +111,13 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 Client Code
               </StyledLabel>
               <StyledInput
-                type="number"
+                type="text"
                 placeholder="Enter Client Code"
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="company_id"
-                value={signUpClientData.company_id}
+                value={clientData.company_id}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -125,7 +138,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="phone"
-                value={signUpClientData.phone}
+                value={clientData.phone}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -146,7 +159,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="email"
-                value={signUpClientData.email}
+                value={clientData.email}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -168,7 +181,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="company_address"
-                value={signUpClientData.company_address}
+                value={clientData.company_address}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -211,7 +224,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 color={Theme.colors.neutralColor}
                 // isLoading={isLoading}
               >
-                Add Client
+                Edit Client
               </ButtonGroup>
             </StyledDivFlex>
           </StyledDivFlex>

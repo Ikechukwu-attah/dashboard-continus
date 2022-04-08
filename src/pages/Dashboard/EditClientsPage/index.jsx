@@ -2,7 +2,7 @@ import { StyledDashboardContentWrapper } from "../../../components/common/Basics
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import DashboardLayout from "../../../components/Layouts/DashboardLayout";
 import PageHeaderLayout from "../../../components/Layouts/HeaderLayout";
-import EditClient from "./EditClient";
+import EditClient from "./EditClientForm";
 
 const EditClientsPage = () => {
   return (
