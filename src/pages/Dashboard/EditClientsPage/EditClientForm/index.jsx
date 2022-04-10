@@ -224,7 +224,7 @@ const EditClient = ({ setShowClientList, getAllClient }) => {
                 color={Theme.colors.neutralColor}
                 // isLoading={isLoading}
               >
-                Edit Client
+                Submit
               </ButtonGroup>
             </StyledDivFlex>
           </StyledDivFlex>

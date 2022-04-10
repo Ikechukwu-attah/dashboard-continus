@@ -5,7 +5,36 @@ import { StyledDivFlex } from "../../common/Basics/DivFlex";
 import { StyledText } from "../../common/Basics/StyledText";
 import { StyledButton } from "../../common/Button/style";
 
-const SubHeaderLayout = ({ buttons, text, date, count }) => {
+const SubHeaderLayout = ({ buttons, text, dateRange = [], count }) => {
+  const [date1, date2] = dateRange;
+
+  const formatDate = (date) => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    if (date) {
+      const dates = new Date(date.toString());
+      const day = dates.getDate();
+      const month = months[dates.getMonth()];
+      const year = dates.getFullYear();
+      return `${day} ${month}, ${year}`;
+    }
+  };
+
+  console.log("formated date", formatDate(date1));
+
   return (
     <StyledBox padding="1rem 8rem" background={Theme.colors.neutralColor}>
       <StyledDivFlex justifyContent="space-between">
@@ -33,7 +62,9 @@ const SubHeaderLayout = ({ buttons, text, date, count }) => {
             fontWeight="400"
             color={Theme.colors.neutralColor2}
           >
-            {date}
+            {dateRange?.length
+              ? `${formatDate(date1)} - ${formatDate(date2)}`
+              : null}
           </StyledText>
         </StyledDivFlex>
         <StyledText

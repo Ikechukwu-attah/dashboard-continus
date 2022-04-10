@@ -19,6 +19,7 @@ top: ${({Top})=>Top};
 bottom: ${({Bottom})=>Bottom};
 right: ${({Right})=>Right};
 left: ${({Left})=>Left};
+border:${({border})=>border};
 z-index: ${({zIndex})=>zIndex};
 cursor:${({cursor})=>cursor};
 background-image: url(${({backgroundImage})=>backgroundImage});

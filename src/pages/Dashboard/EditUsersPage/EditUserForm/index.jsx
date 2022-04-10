@@ -195,7 +195,7 @@ const EditUser = () => {
                 // onClickMessage={error && <notify errorMessage={error} />}
               >
                 {/* {error && <ToastContainer />} */}
-                Add User
+                Submit
               </ButtonGroup>
             </StyledDivFlex>
           </StyledDivFlex>

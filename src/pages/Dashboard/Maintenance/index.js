@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -13,9 +13,13 @@ import { StyledBox } from "../../../components/common/Basics/DivBox";
 import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
 import { useGetMaintenance } from "./hooks/useGetMaintenance";
 import MaintenanceTable from "./MaintenanceTable";
+import DateRangePicker from "../../../components/common/DatePicker";
+import PickDate from "../../../components/common/DatePicker";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data } = useGetMaintenance();
+  const [dateRange, setGetDate] = useState([]);
+
   useEffect(() => {
     getMaintenance();
   }, []);
@@ -66,7 +70,7 @@ const Maintenance = () => {
               />
             }
           />
-          <Dropdown
+          {/* <Dropdown
             // background={Theme.colors.secondaryColor}
             name="period"
             label="Time Period"
@@ -79,7 +83,8 @@ const Maintenance = () => {
                 style={{ color: "#606060" }}
               />
             }
-          />
+          /> */}
+          <PickDate onChange={(date) => setGetDate(date)} />
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -101,8 +106,9 @@ const Maintenance = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Occupancy Journal for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
             count="25 Trucks"
+            // 1 Feb, 2022 - 28th Feb, 2022
           />
         </StyledBox>
 
