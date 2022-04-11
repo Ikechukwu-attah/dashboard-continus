@@ -41,7 +41,7 @@ const UsersTable = ({ data, getAllUsers }) => {
           gap="1rem"
           alignItems="center"
           justifyContent="center"
-          marginTop=".5rem"
+          // marginTop=".5rem"
         >
           {/* <StyledButton
             background={Theme.colors.primaryColor}
@@ -55,7 +55,10 @@ const UsersTable = ({ data, getAllUsers }) => {
             <StyledButton
               background="#0275d8"
               color="white"
-              padding="0.5rem"
+              padding="0rem 0.8rem 0.5rem 0.8rem"
+              // marginTop="-1rem"
+              fontWeight="400"
+              fontSize="1.5rem"
               borderRadius="2.5px"
             >
               Edit
@@ -63,7 +66,10 @@ const UsersTable = ({ data, getAllUsers }) => {
           </Link>
           <StyledButton
             color="white"
-            padding="0.5rem"
+            padding="0rem 0.8rem 0.5rem 0.8rem"
+            // marginTop="-1rem"
+            fontWeight="400"
+            fontSize="1.5rem"
             borderRadius="2.5px"
             background="#d9534f"
             onClick={() => deleteAdmin({ id: params.data?.id }, getAllUsers)}

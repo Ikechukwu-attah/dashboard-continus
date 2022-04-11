@@ -10,6 +10,8 @@ import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledButton } from "../../../components/common/Button/style";
 import { Theme } from "../../../Theme";
 import { useDeleteClient } from "../../Login/hooks/useClientDelete";
+import { StyledText } from "../../../components/common/Basics/StyledText";
+import { StyledTextHeading } from "../../../components/common/Basics/Heading";
 
 const ClientTable = ({ data, getAllClient }) => {
   // const [data, setData] = useState({});
@@ -31,12 +33,12 @@ const ClientTable = ({ data, getAllClient }) => {
           gap="1rem"
           alignItems="center"
           justifyContent="center"
-          marginTop=".5rem"
+          // marginTop=".5rem"
         >
           {/* <StyledButton
             background={Theme.colors.primaryColor}
             color="white"
-            padding="0.5rem"
+            padding="0 0.5rem 0.5rem 0.5rem"
             borderRadius="2.5px"
           >
             View
@@ -45,15 +47,22 @@ const ClientTable = ({ data, getAllClient }) => {
             <StyledButton
               background="#0275d8"
               color="white"
-              padding="0.5rem"
+              padding="0rem 0.8rem 0.5rem 0.8rem"
+              // marginTop="-1rem"
+              fontWeight="400"
+              fontSize="1.5rem"
               borderRadius="2.5px"
             >
               Edit
             </StyledButton>
           </Link>
+
           <StyledButton
             color="white"
-            padding="0.5rem"
+            padding="0 0.8rem 0.5rem 0.8rem"
+            // marginTop="-1rem"
+            // fontWeight="400"
+            fontSize="1.5rem"
             borderRadius="2.5px"
             background="#d9534f"
             onClick={() => deleteClient({ id: params.data?.id }, getAllClient)}

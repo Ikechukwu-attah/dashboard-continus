@@ -222,7 +222,7 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
                 color={Theme.colors.neutralColor}
                 isLoading={isLoading}
               >
-                Add Client
+                Submit
               </ButtonGroup>
             </StyledDivFlex>
           </StyledDivFlex>
