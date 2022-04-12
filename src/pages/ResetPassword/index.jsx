@@ -55,7 +55,7 @@ const ResetPassword = () => {
         justifyContent="center"
         alignItems="center"
         flex="40%"
-        backgroundImage={`url('./assets/lift.png')`}
+        backgroundImage={`url('/assets/lift.png')`}
         backgroundSize="cover"
         backgroundPosition="center center"
         backgroundRepeat="no-repeat"
@@ -95,26 +95,27 @@ const ResetPassword = () => {
                   // postion="relative"
                 >
                   <StyledLabel>Password</StyledLabel>
-                  <StyledInput
-                    type={InputType}
-                    placeholder="Enter password"
-                    required
-                    padding="2.3rem"
-                    fontSize="2.3rem"
-                    name="new_password"
-                    value={passwordRestData.new_password}
-                    onChange={handleChange}
-                    position="relative"
-                  />
-                  <StyledText
-                    position="absolute"
-                    color="#606060"
-                    Right="30rem"
-                    Top="31rem"
-                    //   fontSize="1rem"
-                  >
-                    {icons}
-                  </StyledText>
+                  <StyledDivFlex position="relative" flexDirection="column">
+                    <StyledInput
+                      type={InputType}
+                      placeholder="Enter password"
+                      required
+                      padding="2.3rem"
+                      fontSize="2.3rem"
+                      name="new_password"
+                      value={passwordRestData.new_password}
+                      onChange={handleChange}
+                    />
+                    <StyledText
+                      position="absolute"
+                      color="#606060"
+                      Right="30rem"
+                      Top="31rem"
+                      //   fontSize="1rem"
+                    >
+                      {icons}
+                    </StyledText>
+                  </StyledDivFlex>
                 </StyledDivFlex>
 
                 <StyledDivFlex flexDirection="column" gap="1rem">
