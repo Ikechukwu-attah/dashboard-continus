@@ -18,6 +18,7 @@ const Dropdown = ({
   data,
   gap,
   icon,
+  maxWidth,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
@@ -41,8 +42,17 @@ const Dropdown = ({
       minHeight="7rem"
       gap={gap}
       onClick={() => setIsIOpen(!isOpen)}
+      width={maxWidth}
     >
-      <StyledText fontSize="1.8rem" color={textColor}>
+      <StyledText
+        fontSize="1.8rem"
+        color={textColor}
+        width={`calc($maxWidth - 1rem) !important`}
+        overFlow="hidden"
+        textOverFlow="ellipsis"
+        whiteSpace="nowrap"
+        Display="block"
+      >
         {selectedItem}
       </StyledText>
       {icon}
@@ -53,9 +63,11 @@ const Dropdown = ({
         Left="0"
         Right="0"
         background="rgba(0,0,0,0)"
-        overflow="hidden"
+        overFlow="auto"
+        height="15rem"
         borderRadius="1rem"
         scale={isOpen ? 1 : 0}
+        scrollBarWidth="0.3rem"
       >
         {data.map((item, index) => (
           <StyledList

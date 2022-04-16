@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BarChart,
   Bar,
   Label,
   Cell,
   XAxis,
+  LabelList,
   YAxis,
   CartesianGrid,
   Tooltip,
@@ -26,8 +27,15 @@ import SpinningLoader from "../../../components/common/SpinningLoader";
 import { StyledText } from "../../../components/common/Basics/StyledText";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { dummyDataChart } from "../../../DUMMYDATACHART.js";
+import { useMonthlyAvaliablity } from "./hooks/useMonthlyAvaliablity";
 
 const MonthlyAvaliablity = () => {
+  const { getMonthlyAvaliablity, data, error, isLoading } =
+    useMonthlyAvaliablity();
+
+  useEffect(() => {
+    getMonthlyAvaliablity();
+  }, []);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>

@@ -12,6 +12,7 @@ import { Theme } from "../../../Theme";
 import { useDeleteClient } from "../../Login/hooks/useClientDelete";
 import { StyledText } from "../../../components/common/Basics/StyledText";
 import { StyledTextHeading } from "../../../components/common/Basics/Heading";
+import Paginations from "../../../components/common/Paginations";
 
 const ClientTable = ({ data, getAllClient }) => {
   // const [data, setData] = useState({});
@@ -108,23 +109,26 @@ const ClientTable = ({ data, getAllClient }) => {
   };
 
   return (
-    <StyledBox
-      className="ag-theme-alpine"
-      style={{ height: "80vh", width: "100%" }}
-      padding="1rem 8rem"
-    >
-      {data && (
-        <AgGridReact
-          // rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          onGridReady={onGridReady}
-          pagination={true}
-          paginationPageSize={10}
-          getRowStyle={getRowStyle}
-        ></AgGridReact>
-      )}
-    </StyledBox>
+    <>
+      <StyledBox
+        className="ag-theme-alpine"
+        style={{ height: "100vh", width: "100%" }}
+        padding="1rem 8rem"
+      >
+        {data && (
+          <AgGridReact
+            // rowData={rowData}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            onGridReady={onGridReady}
+            pagination={false}
+            paginationPageSize={10}
+            getRowStyle={getRowStyle}
+          ></AgGridReact>
+        )}
+      </StyledBox>
+      <Paginations />
+    </>
   );
 };
 

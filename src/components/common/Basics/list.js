@@ -48,9 +48,16 @@ right: ${({Right})=>Right};
 opacity: ${({opacity})=>opacity};
 left: ${({Left})=>Left};
 width: ${({width})=>width};
+height: ${({height})=>height};
+overflow: ${({overFlow})=>overFlow};
 min-width: ${({minWidth})=>minWidth};
 list-style-type:  none;
 z-index: ${({zIndex}) => 10 || zIndex};
 transform: scale(${({scale}) => scale});
+
+
+::-webkit-scrollbar {
+    width: ${({scrollBarWidth, overFlow}) => overFlow && scrollBarWidth };
+  }
 
 `

@@ -13,14 +13,38 @@ import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { useGetDriver } from "./hooks/useGetDriver";
 import DriversTable from "./DriversTable";
+import Paginations from "../../../components/common/Paginations";
+import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 
 const Driver = () => {
   const [driverData, setDriverData] = useState();
-  const { data, isLoading, error, getDriver } = useGetDriver();
+  const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
+  const [locationData, setLocationData] = useState([]);
+  const [truckData, setTruckData] = useState([]);
+
+  console.log("location data", locationData);
 
   useEffect(() => {
     getDriver();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      const locationDropdownData = removeDuplicate(
+        data,
+        (allData) => allData.City
+      );
+      const truckDropdownData = removeDuplicate(
+        data,
+        (allData) => allData.Trucks
+      );
+      if (!locationData.length) {
+        setLocationData(locationDropdownData);
+        setTruckData(truckDropdownData);
+      }
+    }
+  }, [data]);
+
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -42,8 +66,14 @@ const Driver = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              console.log("user selection", data);
+              const { location } = data;
+              const filter = `?where=data.City:=:${location}`;
+              getDriver(filter);
+              console.log("filter", filter);
+            }}
+            data={locationData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -57,8 +87,14 @@ const Driver = () => {
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              console.log("user selection", data);
+              const { truck } = data;
+              console.log("truck", truck);
+              const filter = `?where=data.Trucks:=:${truck}`;
+              getDriver(filter);
+            }}
+            data={truckData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -73,11 +109,13 @@ const Driver = () => {
           <SubHeaderLayout
             text="Driver  Managment:"
             date="1 Feb, 2022 - 28th Feb, 2022"
+            count={data?.length}
           />
         </StyledBox>
 
         <StyledBox>
           <DriversTable data={data} />
+          <Paginations getData={getDriver} totalPages={totalPages} />
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

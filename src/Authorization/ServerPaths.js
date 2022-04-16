@@ -25,3 +25,4 @@ export const updateClientAPI = `${baseURL}/api/admin/client`
 export const driversManagmentAPI = `${baseURL}/api/user/driver_management`
 export const occupancyJournalAPI = `${baseURL}/api/user/occupancy_journal`
 export const maintenanceAPI = `${baseURL}/api/user/maintenance_report`
+export const monthlyAvaliablityAPI = `${baseURL}/api/user/monthly_availability`

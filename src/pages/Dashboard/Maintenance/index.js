@@ -15,14 +15,37 @@ import { useGetMaintenance } from "./hooks/useGetMaintenance";
 import MaintenanceTable from "./MaintenanceTable";
 import DateRangePicker from "../../../components/common/DatePicker";
 import PickDate from "../../../components/common/DatePicker";
+import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
+import Paginations from "../../../components/common/Paginations";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
 
 const Maintenance = () => {
-  const { getMaintenance, error, isLoading, data } = useGetMaintenance();
+  const { getMaintenance, error, isLoading, data, totalPages } =
+    useGetMaintenance();
+  const [maintenanceData, setMaintenanceData] = useState([]);
+  const [truckData, setTruckData] = useState([]);
   const [dateRange, setGetDate] = useState([]);
 
   useEffect(() => {
     getMaintenance();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      const maintenanceDropdownData = removeDuplicate(
+        data,
+        (allData) => allData.Maintenance
+      );
+      const truckDropdownData = removeDuplicate(
+        data,
+        (allData) => allData.Truck
+      );
+      if (!maintenanceData.length) {
+        setMaintenanceData(maintenanceDropdownData);
+        setTruckData(truckDropdownData);
+      }
+    }
+  }, [data]);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -43,10 +66,15 @@ const Maintenance = () => {
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
-            name="truck"
+            name="maintenance"
             label="Maintenance"
-            onChange={(data) => console.log("user selection", data)}
-            data={maintenance}
+            onChange={(data) => {
+              console.log("selection", data);
+              const { maintenance } = data;
+              const filter = `?where=data.Maintenance:=:${maintenance}`;
+              getMaintenance(filter);
+            }}
+            data={maintenanceData}
             gap="20rem"
             icon={
               <KeyboardArrowDownIcon
@@ -54,6 +82,7 @@ const Maintenance = () => {
                 style={{ color: "#606060" }}
               />
             }
+            maxWidth="40rem"
           />
 
           <Dropdown
@@ -90,8 +119,13 @@ const Maintenance = () => {
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              console.log("user selection", data);
+              const { truck } = data;
+              const filter = `?where=data.Truck:=:${truck}`;
+              getMaintenance(filter);
+            }}
+            data={truckData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -107,13 +141,21 @@ const Maintenance = () => {
           <SubHeaderLayout
             text="Occupancy Journal for the period:"
             dateRange={dateRange}
-            count="25 Trucks"
+            count={data?.length}
             // 1 Feb, 2022 - 28th Feb, 2022
           />
         </StyledBox>
 
         <StyledBox>
-          <MaintenanceTable data={data} />
+          {isLoading ? (
+            <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0 " />
+          ) : (
+            <>
+              <MaintenanceTable data={data} />
+
+              <Paginations getData={getMaintenance} totalPages={totalPages} />
+            </>
+          )}
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

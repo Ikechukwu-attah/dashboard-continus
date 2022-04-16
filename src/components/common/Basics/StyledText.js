@@ -24,6 +24,8 @@ export const StyledText = styled.span `
    text-align:${({textAlign})=>textAlign};
    background-color:${({background})=>background};
    font-weight: ${({fontWeight})=>fontWeight};
+  overflow: ${({overFlow})=>overFlow};
+  text-overflow: ${({textOverFlow})=>textOverFlow};
    
    
 `

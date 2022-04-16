@@ -1,33 +1,15 @@
-import React, { useState } from "react";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { AgGridReact } from "ag-grid-react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useTable, useFilters, useSortBy } from "react-table";
+import { StyledTable } from "../../../../components/common/Basics/StyledTable";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const DriversTable = ({ data }) => {
-  const [columnDefs] = useState([
-    { field: "First name", headerName: "First Name" },
-    { field: "Last name", headerName: "Last Name" },
-    { field: "RFID", headerName: "RFID Key" },
-    {
-      field: "RFID status",
-      headerName: "RFID Status",
-      suppressSizeToFit: true,
-      maxWidth: 150,
-    },
-    { field: "Role", headerName: "Role", maxWidth: 150 },
-    { field: "Trucks", headerName: "Assigned Trucks" },
-  ]);
+  const [driverData, setDriverData] = useState([]);
 
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    floatingFilter: true,
-    flex: 1,
-    cellStyle: { fontSize: "2rem" },
-  };
-
-  const onGridReady = (params) => {
+  useEffect(() => {
     if (data) {
       console.log("Is this actually working ");
       console.table("data table", data);
@@ -42,37 +24,90 @@ const DriversTable = ({ data }) => {
         return data;
       });
 
-      console.log("new data", newData);
+      console.log("newData driver", newData);
 
-      params.api.applyTransaction({
-        add: data.reverse(),
-      });
+      setDriverData(newData);
     }
-  };
+  }, [data]);
 
-  const getRowStyle = (params) => {
-    if (params.node.rowIndex % 2 === 0) {
-      return { background: "#fff" };
-    } else {
-      return { background: "rgba(2, 115, 81, 0.3)" };
-    }
-  };
+  const COLUMN = [
+    // {
+    //   Header: "Id",
+    //   accessor: "id",
+    //   Filter: ColumnFilter,
+    //   disableFilters: true,
+    // },
+    { Header: "First Name", accessor: "First name", Filter: ColumnFilter },
+    {
+      Header: "Last Name",
+      accessor: "Last name",
+      Filter: ColumnFilter,
+    },
+    { Header: "RFID Key", accessor: "RFID", Filter: ColumnFilter },
+    { Header: "RFID Status", accessor: "RFID status", Filter: ColumnFilter },
+    { Header: "Role", accessor: "Role", Filter: ColumnFilter },
+    { Header: "Assigned Trucks", accessor: "Trucks", Filter: ColumnFilter },
+  ];
+
+  const columns = useMemo(() => COLUMN, []);
+  const newDriverData = useMemo(() => driverData, [driverData, data]);
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        data: newDriverData,
+        columns: columns,
+      },
+
+      useFilters,
+      useSortBy
+    );
+
   return (
-    <StyledBox
-      className="ag-theme-alpine"
-      style={{ height: "80vh", width: "100%" }}
-      padding="1rem 8rem"
-    >
-      {data && (
-        <AgGridReact
-          // rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          onGridReady={onGridReady}
-          pagination={true}
-          paginationPageSize={10}
-          getRowStyle={getRowStyle}
-        ></AgGridReact>
+    <StyledBox padding="1rem 8rem">
+      {driverData && (
+        <StyledTable {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDropDownIcon fontSize="large" />
+                        ) : (
+                          <ArrowDropUpIcon fontSize="large" />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                    <div className="input-filter">
+                      {column.canFilter ? column.render("Filter") : null}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              console.log("row", row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </StyledTable>
       )}
     </StyledBox>
   );

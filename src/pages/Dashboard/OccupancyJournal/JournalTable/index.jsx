@@ -1,29 +1,15 @@
-import React, { useState } from "react";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { AgGridReact } from "ag-grid-react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useTable, useFilters, useSortBy } from "react-table";
+import { StyledTable } from "../../../../components/common/Basics/StyledTable";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
 
 const JournalTable = ({ data }) => {
-  const [columnDefs] = useState([
-    { field: "Date", headerName: "Date" },
-    { field: "Truck", headerName: "Truck" },
-    { field: "Truck chassis no", headerName: "Truck chassis no" },
-    { field: "Driver", headerName: "Driver" },
-    { field: "Logged in", headerName: "Logged in" },
-    { field: "Logged out", headerName: "Logged out" },
-    { field: "Duration", headerName: "Duration" },
-  ]);
+  const [journalData, setJournalData] = useState([]);
 
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    floatingFilter: true,
-    flex: 1,
-    cellStyle: { fontSize: "2rem" },
-  };
-
-  const onGridReady = (params) => {
+  useEffect(() => {
     if (data) {
       console.log("Is this actually working ");
       console.table("data table", data);
@@ -39,37 +25,103 @@ const JournalTable = ({ data }) => {
         return data;
       });
 
-      console.log("new data", newData);
+      console.log("newData", newData);
 
-      params.api.applyTransaction({
-        add: data.reverse(),
-      });
+      setJournalData(newData);
     }
-  };
+  }, [data]);
 
-  const getRowStyle = (params) => {
-    if (params.node.rowIndex % 2 === 0) {
-      return { background: "#fff" };
-    } else {
-      return { background: "rgba(2, 115, 81, 0.3)" };
-    }
-  };
+  const COLUMN = [
+    // {
+    //   Header: "Id",
+    //   accessor: "id",
+    //   Filter: ColumnFilter,
+    //   disableFilters: true,
+    // },
+    { Header: "Date", accessor: "Date", Filter: ColumnFilter },
+    {
+      Header: "Truck ",
+      accessor: "Truck",
+      Filter: ColumnFilter,
+    },
+    {
+      Header: "Truck chassis no",
+      accessor: "Truck chassis no",
+      Filter: ColumnFilter,
+    },
+    { Header: "Driver", accessor: "Driver", Filter: ColumnFilter },
+    { Header: "Logged in", accessor: "Logged in", Filter: ColumnFilter },
+    { Header: "Logged out", accessor: "Logged out", Filter: ColumnFilter },
+    { Header: "Duration", accessor: "Duration", Filter: ColumnFilter },
+  ];
+
+  const columns = useMemo(() => COLUMN, []);
+  const newJournalData = useMemo(() => journalData, [journalData, data]);
+
+  console.log("new journalData", newJournalData);
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        data: newJournalData,
+        columns: columns,
+      },
+
+      useFilters,
+      useSortBy
+    );
+
   return (
     <StyledBox
-      className="ag-theme-alpine"
-      style={{ height: "80vh", width: "100%" }}
-      padding="1rem 8rem"
+      padding="1rem 8rem "
+      // width="50rem"
+      // overFlow="hidden"
+      // background="blue"
+      // marginTop="20rem"
     >
-      {data && (
-        <AgGridReact
-          // rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          onGridReady={onGridReady}
-          pagination={true}
-          paginationPageSize={10}
-          getRowStyle={getRowStyle}
-        ></AgGridReact>
+      {journalData && (
+        <StyledTable {...getTableProps()} width="100% !important">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDropDownIcon fontSize="large" />
+                        ) : (
+                          <ArrowDropUpIcon fontSize="large" />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                    <div className="input-filter">
+                      {column.canFilter ? column.render("Filter") : null}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              console.log("row", row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </StyledTable>
       )}
     </StyledBox>
   );

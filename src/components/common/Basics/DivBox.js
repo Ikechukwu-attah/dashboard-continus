@@ -26,6 +26,7 @@ background-image: url(${({backgroundImage})=>backgroundImage});
 background-repeat:${({backgroundRepeat})=>backgroundRepeat};
 background-position:${({backgroundPosition})=>backgroundPosition};
 background-size:${({backgroundSize})=>backgroundSize};
+overflow: ${({overFlow})=>overFlow};
 
 
 

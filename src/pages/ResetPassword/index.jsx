@@ -109,8 +109,8 @@ const ResetPassword = () => {
                     <StyledText
                       position="absolute"
                       color="#606060"
-                      Right="30rem"
-                      Top="31rem"
+                      Right="3rem"
+                      Top="2.5rem"
                       //   fontSize="1rem"
                     >
                       {icons}
