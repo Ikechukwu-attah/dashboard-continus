@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledTextHeading } from "../common/Basics/Heading";
 import { StyledImage } from "../common/Basics/StyledImage";
 import { StyledText } from "../common/Basics/StyledText";
 import { Theme } from "../../Theme";
+import MapTokenToUser from "../../Authorization/MapTokenToUser";
+import Profile from "../Profile/Profile";
 
 const Navbar = () => {
+  const [showProfile, setShowProfile] = useState(false);
+  const user = MapTokenToUser();
+  console.log("user", user);
   return (
     <StyledDivFlex
       justifyContent="flex-end"
@@ -23,15 +28,16 @@ const Navbar = () => {
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
-      <StyledDivFlex gap="1.5rem">
+      <StyledDivFlex gap="1.5rem" onClick={() => setShowProfile(!showProfile)}>
         <StyledImage
           src="/assets/7Up-logo.jpg"
           height="7.2rem"
           width="7.2rem"
           borderRadius="50%"
+          position="relative"
         />
         <StyledDivFlex
-          alignItems="center"
+          alignItems="start"
           flexDirection="column"
           justifyContent="center"
         >
@@ -41,7 +47,7 @@ const Navbar = () => {
             fontWeight="500"
             lineHeight="2.7rem"
           >
-            Ifeoluwa Olagbemi
+            {user?.user?.data?.firstname}
           </StyledText>
           <StyledText
             color={Theme.colors.neutralColor2}
@@ -52,7 +58,9 @@ const Navbar = () => {
             Bisedge personnel
           </StyledText>
         </StyledDivFlex>
-        <StyledImage />
+        {showProfile && <Profile />}
+
+        {/* <StyledImage /> */}
       </StyledDivFlex>
     </StyledDivFlex>
   );

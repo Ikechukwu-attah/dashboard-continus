@@ -1,21 +1,32 @@
 import React, { useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { Theme } from "../../Theme";
 import { StyledBox } from "../common/Basics/DivBox";
 import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledList, StyledUl } from "../common/Basics/list";
 import { StyledImage } from "../common/Basics/StyledImage";
 import { sideBarData, adminNavbarData } from "./sidebarData";
-import { Link } from "react-router-dom";
+
 import { globalContext } from "../../Context/GlobalContext";
+import LogOutIcon from "../../Icons/LogOut";
+import { StyledText } from "../common/Basics/StyledText";
+import MapTokenToUser from "../../Authorization/MapTokenToUser";
+import cookie from "js-cookie";
 
 const SideBar = () => {
-  const [isAdmin] = useState(false);
-  const { setPageName } = useContext(globalContext);
+  const { setPageName, isAdmin } = useContext(globalContext);
   const location = useLocation();
   const activeUrl = location.pathname;
-
+  const user = MapTokenToUser();
   const menuData = isAdmin ? adminNavbarData : sideBarData;
+  const navigate = useNavigate();
+
+  const handleLogOut = (event) => {
+    event.preventDefault();
+    cookie.remove("userToken");
+    navigate(user.guard === "admin" ? "/admin-login" : "/");
+    window.location.reload();
+  };
   return (
     <StyledBox
       width="20%"
@@ -50,7 +61,7 @@ const SideBar = () => {
                 fontSize="1.8rem"
                 fontWeight="400"
                 lineHeight="2.7rem"
-                padding="1em 1rem 1rem 10.5rem"
+                padding="1rem 1rem 1rem 10.5rem"
                 color={
                   activeUrl === item.link
                     ? Theme.colors.primaryColor
@@ -61,7 +72,9 @@ const SideBar = () => {
                 background={
                   activeUrl === item.link && Theme.colors.secondaryColor
                 }
-                onClick={() => setPageName(item.title)}
+                onClick={() => {
+                  setPageName(item.title);
+                }}
               >
                 {item.title}
               </StyledList>
@@ -69,6 +82,22 @@ const SideBar = () => {
           );
         })}
       </StyledUl>
+
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <StyledDivFlex
+          alignItems="center"
+          padding="2rem 1rem 1rem 10.5rem"
+          gap="1rem"
+          cursor="pointer"
+          marginBottom="2rem"
+          onClick={handleLogOut}
+        >
+          <LogOutIcon />
+          <StyledText fontSize="1.8rem" fontWeight="500">
+            Logout
+          </StyledText>
+        </StyledDivFlex>
+      </Link>
     </StyledBox>
   );
 };

@@ -9,13 +9,18 @@ export const StyledButton = styled.button `
   border-radius: ${({borderRadius})=>borderRadius};
   font-size: ${({fontSize})=>fontSize};
   color:${({theme,color})=>color||theme.colors.primaryColor};
-  font-family: 'Poppins';
   font-style: normal;
+  width:${({width})=>width};
+  display: block;
   font-weight: ${({fontWeight})=>fontWeight||"600"};
   cursor: pointer;
-  border: none;
+  border: ${({border})=>border|| "none"};
   outline: none;
+  min-width: ${({minWidth}) => minWidth};
   &:active{
     outline: none;
   }
+
+  opacity: ${({disabled}) => disabled===true? .5 : 1};
+  pointer-events: ${({disabled}) => disabled ===true? "none":"initial"};
 `

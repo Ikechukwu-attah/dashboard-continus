@@ -8,30 +8,15 @@ import { StyledButton } from "../../common/Button/style";
 import { Theme } from "../../../Theme";
 import { StyledTextHeading } from "../../common/Basics/Heading";
 
-const DashboardLayout = ({ pageTitleButtons, children }) => {
+const DashboardLayout = ({ children }) => {
   const { pageName } = useContext(globalContext);
   return (
-    <StyledDivFlex>
+    <StyledDivFlex maxHeight="100vh" overflow="hidden">
       <SideBar />
+
       <StyledBox width="80%">
         <Navbar />
-        <StyledDivFlex
-          justifyContent="space-between"
-          padding="2rem 8rem"
-          background={Theme.colors.neutralColor}
-          marginTop="1rem"
-          alignItems="center"
-        >
-          <StyledTextHeading
-            color={Theme.colors.primaryColor}
-            fontSize="3.8rem"
-            fontWeight="500"
-          >
-            {pageName}
-          </StyledTextHeading>
 
-          {pageTitleButtons}
-        </StyledDivFlex>
         {children}
       </StyledBox>
     </StyledDivFlex>

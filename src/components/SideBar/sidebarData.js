@@ -1,3 +1,6 @@
+import React, { useContext } from "react"
+
+
 export const sideBarData = [{
         id: 1,
         title: "General Dashboard",
@@ -13,10 +16,16 @@ export const sideBarData = [{
     },
 
 
+    // {
+    //     id: 3,
+    //     title: "Driver Management ",
+    //     link: "/driver-management"
+    // },
+
     {
-        id: 3,
-        title: "Driver Management ",
-        link: "/driver-management"
+        id: 10,
+        title: "Driver Management",
+        link: "/driver"
     },
 
     {
@@ -35,8 +44,8 @@ export const sideBarData = [{
 
     {
         id: 6,
-        title: "Energy ",
-        link: "/energy"
+        title: "Battery ",
+        link: "/battery"
     },
 
     {
@@ -68,16 +77,18 @@ export const sideBarData = [{
 export const adminNavbarData = [
 
     {
-        id: 10,
-        title: "User Management ",
-        link: "/user-management"
+        id: 1,
+        title: "Client Management ",
+        link: "/client-management"
     },
 
 
     {
-        id: 11,
-        title: "Client Management ",
-        link: "/client-management"
+        id: 2,
+        title: "User Management ",
+        link: "/user-management",
     },
+
+
 
 ]
