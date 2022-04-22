@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
@@ -11,15 +11,23 @@ import AddUser from "../AddUser";
 import UsersTable from "./UsersTable";
 import { useGetAllUsers } from "./hooks/useGetUsers";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
-
+import AddClient from "../AddClient";
+import { StyledBox } from "../../../components/common/Basics/DivBox";
+import Paginations from "../../../components/common/Paginations";
+import { getUserFilter } from "../../../constants";
+// import { globalContext } from "../../../Context/GlobalContext";
 const UserManagement = () => {
   const [showUserList, setShowUserList] = useState(true);
+  // const{showList,setShowList}  = useContext(globalContext)
 
   console.log("showUserList", showUserList);
-  const { isLoading, getAllUsers, data } = useGetAllUsers();
+  const { isLoading, getAllUsers, data, totalPages } = useGetAllUsers();
+  console.log("data confirmation", data);
+
+  // const filter = "?where=data.role:in:admin,personnel";
 
   useEffect(() => {
-    getAllUsers();
+    getAllUsers(getUserFilter);
   }, []);
 
   return (
@@ -39,12 +47,18 @@ const UserManagement = () => {
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (
-            <UsersTable data={data} getAllUsers={getAllUsers} />
+            <StyledBox>
+              <UsersTable data={data} getAllUsers={getAllUsers} />
+              {data && (
+                <Paginations getData={getAllUsers} totalPages={totalPages} />
+              )}
+            </StyledBox>
           )
         ) : (
-          <AddUser
-            setShowUserList={setShowUserList}
-            getAllUsers={getAllUsers}
+          <AddClient
+            setShowList={setShowUserList}
+            getList={() => getAllUsers(getUserFilter)}
+            userType="admin"
           />
         )}
       </StyledDashboardContentWrapper>

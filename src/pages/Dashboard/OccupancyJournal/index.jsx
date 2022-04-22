@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -15,6 +15,7 @@ import { useOccupancyJournal } from "./hooks/useGetOccupancyJournal";
 import JournalTable from "./JournalTable";
 import Paginations from "../../../components/common/Paginations";
 import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 
 const OccupancyJournal = () => {
   const { getOccupancyJournal, error, isLoading, data, totalPages } =
@@ -23,26 +24,33 @@ const OccupancyJournal = () => {
   const [truckData, setTruckData] = useState([]);
   console.log("data journal", data);
 
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  console.log("truckdropDown", truckDropdownData);
+  console.log("locationdropDown", locationsDropdownData);
+
   useEffect(() => {
     getOccupancyJournal();
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      const locationDropdownData = removeDuplicate(
-        data,
-        (allData) => allData.City
-      );
-      const truckDropdownData = removeDuplicate(
-        data,
-        (allData) => allData.Truck
-      );
-      if (!locationData.length) {
-        setLocationData(locationDropdownData);
-        setTruckData(truckDropdownData);
-      }
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     const locationDropdownData = removeDuplicate(
+  //       data,
+  //       (allData) => allData.City
+  //     );
+  //     const truckDropdownData = removeDuplicate(
+  //       data,
+  //       (allData) => allData.Truck
+  //     );
+  //     if (!locationData.length) {
+  //       setLocationData(locationDropdownData);
+  //       setTruckData(truckDropdownData);
+  //     }
+  //   }
+  // }, [data]);
 
   return (
     <DashboardLayout>
@@ -63,7 +71,7 @@ const OccupancyJournal = () => {
           alignItems="center"
         >
           <Dropdown
-            background={Theme.colors.secondaryColor}
+            // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
             onChange={(data) => {
@@ -73,8 +81,9 @@ const OccupancyJournal = () => {
               getOccupancyJournal(filter);
               console.log("filter", filter);
             }}
-            data={locationData}
+            data={locationsDropdownData}
             gap="2rem"
+            minWidth="22rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -108,8 +117,9 @@ const OccupancyJournal = () => {
               const filter = `?where=data.Truck:=:${truck}`;
               getOccupancyJournal(filter);
             }}
-            data={truckData}
+            data={truckDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -127,7 +137,12 @@ const OccupancyJournal = () => {
         </StyledBox>
         <StyledBox>
           <JournalTable data={data} />
-          <Paginations totalPages={totalPages} getData={getOccupancyJournal} />
+          {data && (
+            <Paginations
+              totalPages={totalPages}
+              getData={getOccupancyJournal}
+            />
+          )}
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

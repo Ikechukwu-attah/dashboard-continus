@@ -6,9 +6,12 @@ import { StyledText } from "../common/Basics/StyledText";
 import { Theme } from "../../Theme";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
 import Profile from "../Profile/Profile";
+import Companies from "../Company";
+import { StyledBox } from "../common/Basics/DivBox";
+import { useDropDown } from "../../hooks/useHideDropDown";
 
 const Navbar = () => {
-  const [showProfile, setShowProfile] = useState(false);
+  const [showCompany, setShowCompany] = useState(false);
   const user = MapTokenToUser();
   console.log("user", user);
   return (
@@ -28,7 +31,7 @@ const Navbar = () => {
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
-      <StyledDivFlex gap="1.5rem" onClick={() => setShowProfile(!showProfile)}>
+      <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
         <StyledImage
           src="/assets/7Up-logo.jpg"
           height="7.2rem"
@@ -58,7 +61,20 @@ const Navbar = () => {
             Bisedge personnel
           </StyledText>
         </StyledDivFlex>
-        {showProfile && <Profile />}
+        <StyledBox
+          position="absolute"
+          Top="9rem"
+          zIndex="5"
+          minWidth="12%"
+          Right="10rem"
+          display={
+            user?.user?.data?.role === "personnel" && showCompany
+              ? "block"
+              : "none"
+          }
+        >
+          <Companies />
+        </StyledBox>
 
         {/* <StyledImage /> */}
       </StyledDivFlex>

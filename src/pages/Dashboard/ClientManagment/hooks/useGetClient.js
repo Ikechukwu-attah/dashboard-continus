@@ -8,14 +8,19 @@ export const useGetAllClient = () => {
     const [data, setData] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
-    const getAllClient = async() => {
+    const [totalPages, setTotalPages] = useState(0)
+
+    const getAllClient = async(searchFilter) => {
+        const url = searchFilter ? `${getAllClientAPI}/${searchFilter}` : getAllClientAPI
 
         setIsLoading(true)
         try {
-            const response = await axios.get(getAllClientAPI)
+            const response = await axios.get(url)
             setIsLoading(false)
             setData(response.data.data.clients)
             console.log("response=>clients", response.data.data.clients)
+            const { data: { pagination: { total_pages } } } = response.data
+            setTotalPages(total_pages)
 
         } catch (error) {
             setIsLoading(false);
@@ -25,5 +30,5 @@ export const useGetAllClient = () => {
     }
 
 
-    return { data, error, getAllClient, isLoading }
+    return { data, error, getAllClient, isLoading, totalPages }
 }

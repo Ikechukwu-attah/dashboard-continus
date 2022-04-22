@@ -4,7 +4,7 @@ import CloudGreen from "./Icons/CloudGreen";
 import Droplet from "./Icons/Droplet";
 
 export const roleData = [
-    "Admin", "Super Admin", "Client"
+    "admin", "personnel", "user"
 
 
 ]
@@ -67,4 +67,14 @@ export const generalDashbordCardItem = [{
         count: '2556'
 
     },
+];
+
+
+export const companies = [
+    "Etex",
+    "Heniken",
+    "Seven-Up",
+    "ABC",
+    "Coca-cola"
+
 ]

@@ -32,7 +32,7 @@ const Login = () => {
   };
   const handleLoginSubmit = (event) => {
     // event.preventDefault();
-    const data = { ...clientLoginData, guard: "user" };
+    const data = { ...clientLoginData };
     loginClient(data);
   };
 
@@ -134,7 +134,7 @@ const Login = () => {
                 </Link>
                 <StyledText fontSize="1.5rem" fontWeight="400">
                   <Link
-                    to="/"
+                    to="/contact-admin"
                     style={{
                       textDecoration: "underline",
                       color: "#F3EFE9",

@@ -15,6 +15,7 @@ import AdminLogin from "../pages/AdminLogin";
 import Battery from "../pages/Dashboard/Battery";
 import EditUsersPage from "../pages/Dashboard/EditUsersPage";
 import EditClientsPage from "../pages/Dashboard/EditClientsPage";
+import ContactAdmin from "../pages/ContactAdmin";
 
 export const publicRoutes = [
   {
@@ -35,6 +36,11 @@ export const publicRoutes = [
   {
     path: "/admin-login",
     component: <AdminLogin />,
+  },
+
+  {
+    path: "/contact-admin",
+    component: <ContactAdmin />,
   },
 ];
 export const protectedRoutes = [
@@ -58,9 +64,7 @@ export const protectedRoutes = [
 
   { path: "/user-management", component: <UserManagement /> },
 
-  { path: "/user-management/:id", component: <EditUsersPage /> },
-
-  { path: "/client-management/:id", component: <EditClientsPage /> },
+  { path: "/user-management/:userType/:id", component: <EditClientsPage /> },
 
   { path: "/driver", component: <Driver /> },
 ];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -15,35 +15,17 @@ import { useGetDriver } from "./hooks/useGetDriver";
 import DriversTable from "./DriversTable";
 import Paginations from "../../../components/common/Paginations";
 import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 
 const Driver = () => {
-  const [driverData, setDriverData] = useState();
   const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
-  const [locationData, setLocationData] = useState([]);
-  const [truckData, setTruckData] = useState([]);
-
-  console.log("location data", locationData);
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
 
   useEffect(() => {
     getDriver();
   }, []);
-
-  useEffect(() => {
-    if (data) {
-      const locationDropdownData = removeDuplicate(
-        data,
-        (allData) => allData.City
-      );
-      const truckDropdownData = removeDuplicate(
-        data,
-        (allData) => allData.Trucks
-      );
-      if (!locationData.length) {
-        setLocationData(locationDropdownData);
-        setTruckData(truckDropdownData);
-      }
-    }
-  }, [data]);
 
   return (
     <DashboardLayout>
@@ -64,6 +46,7 @@ const Driver = () => {
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
+
             name="location"
             label="Location"
             onChange={(data) => {
@@ -73,8 +56,9 @@ const Driver = () => {
               getDriver(filter);
               console.log("filter", filter);
             }}
-            data={locationData}
+            data={locationsDropdownData}
             gap="2rem"
+            minWidth="22rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -88,13 +72,12 @@ const Driver = () => {
             name="truck"
             label="Truck"
             onChange={(data) => {
-              console.log("user selection", data);
               const { truck } = data;
-              console.log("truck", truck);
               const filter = `?where=data.Trucks:=:${truck}`;
               getDriver(filter);
             }}
-            data={truckData}
+            minWidth="20rem"
+            data={truckDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon

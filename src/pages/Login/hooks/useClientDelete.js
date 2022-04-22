@@ -19,7 +19,6 @@ export const useDeleteClient = () => {
             console.log("delete client data", response.data)
 
             if (callback && typeof callback === "function") {
-                console.log("data555", response.data);
                 await callback()
             }
 

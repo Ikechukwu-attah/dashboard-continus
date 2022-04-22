@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { AgGridReact } from "ag-grid-react";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
+import { useTable, useFilters, useSortBy } from "react-table";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import axios from "../../../Authorization/Axios";
 import { getAllAdminAPI } from "../../../Authorization/ServerPaths";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
@@ -11,128 +11,175 @@ import { StyledButton } from "../../../components/common/Button/style";
 import { Theme } from "../../../Theme";
 import { useDeleteAdmin } from "../../AdminLogin/hooks/useAdminDelete";
 import { useGetAdmin } from "../../AdminLogin/hooks/useGetAdmin";
+import { ColumnFilter } from "../../../components/common/Basics/ColumnFilter";
+import { StyledTable } from "../../../components/common/Basics/StyledTable";
+import TableModal from "../../../components/common/Modal";
+import BackDrop from "../../../components/common/Backdrop/BackDrop";
+import Paginations from "../../../components/common/Paginations";
+import { useDeleteClient } from "../../Login/hooks/useClientDelete";
+import { getUserFilter } from "../../../constants";
 
 const UsersTable = ({ data, getAllUsers }) => {
-  // const [data, setData] = useState({});
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState();
+  const [userData, setUserData] = useState([]);
+  const [show, setShow] = useState(false);
+  const [idValue, setIdValue] = useState();
 
-  const { error, deleteAdmin, isLoading } = useDeleteAdmin();
-
-  const [columnDefs] = useState([
-    // {
-    //   field: "ID",
-    //   checkboxSelection: true,
-    //   cellRendererFramework: (row) => row.rowIndex + 1,
-    //   width: 5,
-    //   floatingFilter: false,
-    //   maxWidth: 100,
-    // },
-    { field: "firstname", cellStyle: { fontSize: "2rem" } },
-    { field: "lastname" },
-    { field: "email" },
-    { field: "phone" },
-
-    {
-      field: "Actions",
-      floatingFilter: false,
-      cellRendererFramework: (params) => (
-        <StyledDivFlex
-          gap="1rem"
-          alignItems="center"
-          justifyContent="center"
-          // marginTop=".5rem"
-        >
-          {/* <StyledButton
-            background={Theme.colors.primaryColor}
-            color="white"
-            padding="0.5rem"
-            borderRadius="2.5px"
-          >
-            View
-          </StyledButton> */}
-          <Link to={`/user-management/${params.data.id}`}>
-            <StyledButton
-              background="#0275d8"
-              color="white"
-              padding="0rem 0.8rem 0.5rem 0.8rem"
-              // marginTop="-1rem"
-              fontWeight="400"
-              fontSize="1.5rem"
-              borderRadius="2.5px"
-            >
-              Edit
-            </StyledButton>
-          </Link>
-          <StyledButton
-            color="white"
-            padding="0rem 0.8rem 0.5rem 0.8rem"
-            // marginTop="-1rem"
-            fontWeight="400"
-            fontSize="1.5rem"
-            borderRadius="2.5px"
-            background="#d9534f"
-            onClick={() => deleteAdmin({ id: params.data?.id }, getAllUsers)}
-          >
-            {console.log("params", params.data?.id)}
-            Delete
-          </StyledButton>
-        </StyledDivFlex>
-      ),
-    },
-  ]);
-
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    floatingFilter: true,
-    flex: 1,
-    rowSelection: "single",
-    cellStyle: { fontSize: "2rem" },
-  };
-
-  const getRowStyle = (params) => {
-    if (params.node.rowIndex % 2 === 0) {
-      return { background: "#fff" };
-    } else {
-      return { background: "rgba(2, 115, 81, 0.3)" };
-    }
-  };
-
-  console.log("all users data2", data);
-  const onGridReady = (params) => {
+  console.log("userData", userData);
+  const { error, deleteClient, isLoading } = useDeleteClient();
+  console.log("Is this actually working users table ");
+  useEffect(() => {
+    console.log("personnel data", data);
     if (data) {
-      console.log("all users data", data);
+      console.log("Is this actually working users table ");
+      console.table("data table", data);
       const newData = data.map((data) => {
         data.firstname = data.data.firstname;
         data.lastname = data.data.lastname;
         data.phone = data.data.phone;
+        data.role = data.data.role;
+
         return data;
       });
 
-      params.api.applyTransaction({
-        add: newData.reverse(),
-      });
+      console.log("admin", newData);
+
+      setUserData(newData);
     }
+  }, [data]);
+
+  const handleDelete = () => {
+    deleteClient({ id: Number(idValue) }, () => getAllUsers(getUserFilter));
+    setShow(false);
   };
 
+  const COLUMN = [
+    {
+      Header: "Id",
+      accessor: "id",
+      Filter: ColumnFilter,
+      disableFilters: true,
+    },
+    { Header: "First Name", accessor: "firstname", Filter: ColumnFilter },
+    { Header: "last Name", accessor: "lastname", Filter: ColumnFilter },
+    { Header: "Email", accessor: "email", Filter: ColumnFilter },
+    { Header: "Phone Number", accessor: "phone", Filter: ColumnFilter },
+    { Header: "Role", accessor: "role", Filter: ColumnFilter },
+    {
+      Header: "Action",
+      accessor: "action",
+      Cell: ({ row }) => (
+        <StyledDivFlex gap="1rem">
+          <Link to={`/user-management/admin/${row.values.id}`}>
+            <StyledButton
+              fontWeight="400"
+              fontSize="1.5rem"
+              borderRadius="2.5px"
+              background="#0275d8"
+              color="#fff"
+              padding="0.5rem"
+            >
+              Edit
+            </StyledButton>
+          </Link>
+
+          <StyledButton
+            onClick={() => {
+              setShow(true);
+              setIdValue(row.values.id);
+              console.log("rowsssss", row.values.id);
+            }}
+            fontWeight="400"
+            fontSize="1.5rem"
+            borderRadius="2.5px"
+            background="#d9534f"
+            color="#fff"
+            padding="0.5rem"
+          >
+            Delete
+          </StyledButton>
+        </StyledDivFlex>
+      ),
+      Filter: ColumnFilter,
+      disableFilters: true,
+    },
+  ];
+
+  const columns = useMemo(() => COLUMN, []);
+  const newUserData = useMemo(() => userData, [userData, data]);
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        data: newUserData,
+        columns: columns,
+      },
+
+      useFilters,
+      useSortBy
+    );
+
   return (
-    <StyledBox
-      className="ag-theme-alpine"
-      style={{ height: "80vh", width: "100%" }}
-      padding="1rem 8rem"
-    >
-      {data && (
-        <AgGridReact
-          // rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          onGridReady={onGridReady}
-          pagination={true}
-          paginationPageSize={10}
-          getRowStyle={getRowStyle}
-        ></AgGridReact>
+    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
+      <StyledTable>
+        {data && (
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render("Header")}
+
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <ArrowDropDownIcon />
+                          ) : (
+                            <ArrowDropUpIcon />
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </span>
+
+                      <div className="input-filter">
+                        {column.canFilter ? column.render("Filter") : null}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                console.log("row", row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </StyledTable>
+
+      {show && (
+        <TableModal
+          setShow={setShow}
+          idValue={idValue}
+          callback={handleDelete}
+        />
       )}
+      {show && <BackDrop onClose={setShow} />}
     </StyledBox>
   );
 };

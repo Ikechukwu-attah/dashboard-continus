@@ -18,6 +18,12 @@ export const StyledTable = styled.table `
   background-color: white;
      }
 
+     & td{
+        max-width: 25rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+     }
 & tr:nth-child(even) {
     background-color: rgba(2, 115, 81, 0.3);
 }
@@ -42,10 +48,13 @@ export const StyledTable = styled.table `
     line-height: 1px !important;
     font-size: 1.2rem;
     width: 80%;
+    font-family: Poppins !important;
 
     ::placeholder{
         font-size: 1rem;
         letter-spacing: 0.3rem;
+        font-family: Poppins !important;
+
        
     }
 }

@@ -5,6 +5,7 @@ import DropdownArrow from "../../../Icons/DropdownArrow";
 import { StyledList, StyledUl } from "../Basics/list";
 import { StyledInput, StyledLabel } from "../Input";
 import { Theme } from "../../../Theme";
+import { useHideDropDown } from "../../../hooks/useHideDropDown";
 
 // const data = ["Lagos", "Enugu", "Ibadan"];
 
@@ -19,12 +20,15 @@ const Dropdown = ({
   gap,
   icon,
   maxWidth,
+  minWidth,
+  showDropdown,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
 
   const handleChange = (item) => {
     const checkedItem = item === selectedItem ? "" : item;
+    console.log("checkdropdown", item);
 
     setSelectedItem(checkedItem);
     onChange({ [name]: checkedItem });
@@ -40,9 +44,12 @@ const Dropdown = ({
       justifyContent="space-between"
       alignItems="center"
       minHeight="7rem"
+      // fontSize="3px"
+      maxWidth={maxWidth}
       gap={gap}
       onClick={() => setIsIOpen(!isOpen)}
-      width={maxWidth}
+      // width={maxWidth}
+      minWidth={minWidth}
     >
       <StyledText
         fontSize="1.8rem"
@@ -66,12 +73,12 @@ const Dropdown = ({
         overFlow="auto"
         height="15rem"
         borderRadius="1rem"
-        scale={isOpen ? 1 : 0}
+        scale={isOpen || showDropdown ? 1 : 0}
         scrollBarWidth="0.3rem"
       >
         {data.map((item, index) => (
           <StyledList
-            padding="2rem"
+            padding="1rem"
             noHover
             borderRadius="1rem"
             background={background}
@@ -79,6 +86,7 @@ const Dropdown = ({
             color={textColor}
             display="flex"
             justifyContent="space-between"
+            // minWidth={minWidth}
             alignItems="center"
             margin="0 0 .1rem 0"
             onClick={() => handleChange(item)}

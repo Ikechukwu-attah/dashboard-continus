@@ -16,13 +16,18 @@ import { Theme } from "../../../Theme";
 import AddClient from "../AddClient";
 import ClientTable from "./ClientTable";
 import { useGetAllClient } from "./hooks/useGetClient";
+import Paginations from "../../../components/common/Paginations";
+import { getClientFilter } from "../../../constants";
 
 const ClientManagment = () => {
   const [showClientList, setShowClientList] = useState(true);
-  const { getAllClient, data, error, isLoading } = useGetAllClient();
+  const { getAllClient, data, error, isLoading, totalPages } =
+    useGetAllClient();
+
+  // const filter = "?where=data.role:in:user";
 
   useEffect(() => {
-    getAllClient();
+    getAllClient(getClientFilter);
   }, []);
 
   return (
@@ -42,12 +47,18 @@ const ClientManagment = () => {
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (
-            <ClientTable data={data} getAllClient={getAllClient} />
+            <StyledBox>
+              <ClientTable data={data} getAllClient={getAllClient} />
+              {data && (
+                <Paginations getData={getAllClient} totalPages={totalPages} />
+              )}
+            </StyledBox>
           )
         ) : (
           <AddClient
-            setShowClientList={setShowClientList}
-            getAllClient={getAllClient}
+            setShowList={setShowClientList}
+            getList={() => getAllClient(getClientFilter)}
+            userType="client"
           />
         )}
       </StyledDashboardContentWrapper>

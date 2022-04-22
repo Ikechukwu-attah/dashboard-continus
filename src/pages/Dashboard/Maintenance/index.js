@@ -18,12 +18,18 @@ import PickDate from "../../../components/common/DatePicker";
 import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 import Paginations from "../../../components/common/Paginations";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import { Check } from "@mui/icons-material";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
     useGetMaintenance();
   const [maintenanceData, setMaintenanceData] = useState([]);
   const [truckData, setTruckData] = useState([]);
+  const [selectedMaintenanceFilter, setSelectedMaintenanceFilter] = useState(
+    []
+  );
+  const [selectedTruckFilter, setSelectedTruckFilter] = useState([]);
+
   const [dateRange, setGetDate] = useState([]);
 
   useEffect(() => {
@@ -46,6 +52,16 @@ const Maintenance = () => {
       }
     }
   }, [data]);
+
+  useEffect(() => {
+    const selectedFiltered = `where=data.Truck:=:${selectedTruckFilter.truck},
+    data.Maintenance:=:${selectedMaintenanceFilter.maintenance}`;
+    //?where=data.Truck:=:truck&&where=data.Maintenance:=:mainte
+    // const truckFilter = `?where=data.Truck:=:${selectedTruckFilter.truck}`;
+    // const maintenanceFilter = `?where=data.Maintenance:=:${selectedMaintenanceFilter.maintenence}`;
+    getMaintenance(selectedFiltered);
+  }, [selectedMaintenanceFilter, selectedTruckFilter]);
+
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -70,11 +86,13 @@ const Maintenance = () => {
             label="Maintenance"
             onChange={(data) => {
               console.log("selection", data);
+              setSelectedMaintenanceFilter(data);
               const { maintenance } = data;
               const filter = `?where=data.Maintenance:=:${maintenance}`;
               getMaintenance(filter);
             }}
             data={maintenanceData}
+            minWidth="20rem"
             gap="20rem"
             icon={
               <KeyboardArrowDownIcon
@@ -92,6 +110,7 @@ const Maintenance = () => {
             onChange={(data) => console.log("user selection", data)}
             data={locations}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -121,12 +140,14 @@ const Maintenance = () => {
             label="Filter Truck"
             onChange={(data) => {
               console.log("user selection", data);
+              setSelectedTruckFilter(data);
               const { truck } = data;
               const filter = `?where=data.Truck:=:${truck}`;
               getMaintenance(filter);
             }}
             data={truckData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"

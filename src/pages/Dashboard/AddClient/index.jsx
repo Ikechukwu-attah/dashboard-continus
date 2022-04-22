@@ -10,8 +10,11 @@ import ImageUpload from "../../../components/ImageUpload";
 import { Theme } from "../../../Theme";
 import { useCreateClient } from "./hooks/CreateClient";
 import ButtonGroup from "../../../components/common/Button";
+import { roleData } from "../../../DUMMYDATA";
+import Dropdown from "../../../components/common/Dropdown";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const AddClient = ({ setShowClientList, getAllClient }) => {
+const AddClient = ({ setShowList, getList, userType }) => {
   // const [imgUrl, setImgUrl] = useState(null);
 
   const [signUpClientData, setSignUpClientData] = useState({});
@@ -24,15 +27,18 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = { ...signUpClientData, guard: "user" };
+    const data = {
+      ...signUpClientData,
+      ...(userType === "client" && { role: "user" }),
+    };
     createClient(data);
   };
 
   useEffect(() => {
     console.log("data444", data);
     if (data) {
-      setShowClientList(true);
-      getAllClient();
+      setShowList(true);
+      getList();
     }
   }, [data]);
 
@@ -99,32 +105,34 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
                 }
               />
             </StyledDivFlex>
-
-            <StyledDivFlex
-              flexDirection="column"
-              fontSize="1.8rem"
-              // gap="1rem"
-            >
-              <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Client Code
-              </StyledLabel>
-              <StyledInput
-                type="text"
-                placeholder="Enter Client Code"
-                required
-                padding="2.3rem"
-                fontSize="2.3rem"
-                name="company_id"
-                value={signUpClientData.company_id}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
-              />
-            </StyledDivFlex>
-
+            {userType === "client" && (
+              <StyledDivFlex
+                flexDirection="column"
+                fontSize="1.8rem"
+                // gap="1rem"
+              >
+                <StyledLabel
+                  fontSize="1.8rem"
+                  color={Theme.colors.neutralColor2}
+                >
+                  Client Code
+                </StyledLabel>
+                <StyledInput
+                  type="text"
+                  placeholder="Enter Client Code"
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                  name="company_id"
+                  value={signUpClientData.company_id}
+                  onChange={(event) =>
+                    handleChange({
+                      name: event.target.name,
+                      value: event.target.value,
+                    })
+                  }
+                />
+              </StyledDivFlex>
+            )}
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
                 Phone number
@@ -168,26 +176,59 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
             </StyledDivFlex>
           </StyledDivFlex>
           <StyledDivFlex right="1" flexDirection="column" gap="2rem" flex="1">
-            <StyledDivFlex flexDirection="column" gap="1rem">
-              <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
-                Company Address
-              </StyledLabel>
-              <StyledInput
-                type="text"
-                placeholder="Company Address"
-                required
-                padding="2.3rem"
-                fontSize="2.3rem"
-                name="company_address"
-                value={signUpClientData.company_address}
-                onChange={(event) =>
-                  handleChange({
-                    name: event.target.name,
-                    value: event.target.value,
-                  })
-                }
-              />
-            </StyledDivFlex>
+            {userType === "client" && (
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel
+                  fontSize="1.8rem"
+                  color={Theme.colors.neutralColor2}
+                >
+                  Company Address
+                </StyledLabel>
+                <StyledInput
+                  type="text"
+                  placeholder="Company Address"
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                  name="company_adrress"
+                  value={signUpClientData.company_address}
+                  onChange={(event) =>
+                    handleChange({
+                      name: event.target.name,
+                      value: event.target.value,
+                    })
+                  }
+                />
+              </StyledDivFlex>
+            )}
+
+            {userType === "admin" && (
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel
+                  fontSize="1.8rem"
+                  color={Theme.colors.neutralColor2}
+                >
+                  Role
+                </StyledLabel>
+                <Dropdown
+                  background={Theme.colors.secondaryColor}
+                  name="role"
+                  label="Role"
+                  value={signUpClientData.role}
+                  onChange={(data) => {
+                    const { role } = data;
+                    handleChange({
+                      name: "role",
+                      value: role,
+                    });
+                  }}
+                  // console.log("role selection", data);
+
+                  data={roleData}
+                  icon={<KeyboardArrowDownIcon fontSize="large" />}
+                />
+              </StyledDivFlex>
+            )}
+
             <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
               Upload Image
             </StyledLabel>
@@ -206,7 +247,7 @@ const AddClient = ({ setShowClientList, getAllClient }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => setShowClientList(true)}
+                onClick={() => setShowList(true)}
               >
                 Cancel
               </StyledButton>

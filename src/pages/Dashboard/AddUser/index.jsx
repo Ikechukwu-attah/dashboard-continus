@@ -179,7 +179,7 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
             </StyledDivFlex>
           </StyledDivFlex>
           <StyledDivFlex right="1" flexDirection="column" gap="2rem" flex="1">
-            {/* <StyledDivFlex flexDirection="column" gap="1rem">
+            <StyledDivFlex flexDirection="column" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
                 Role
               </StyledLabel>
@@ -187,11 +187,19 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                 background={Theme.colors.secondaryColor}
                 name="role"
                 label="Role"
-                onChange={(data) => console.log("user selection", data)}
+                value={signUpData.role}
+                onChange={(event) =>
+                  handleChange({
+                    name: event.target.name,
+                    value: event.target.value,
+                  })
+                }
+                // console.log("role selection", data);
+
                 data={roleData}
                 icon={<KeyboardArrowDownIcon fontSize="large" />}
               />
-            </StyledDivFlex> */}
+            </StyledDivFlex>
             <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor}>
               Upload Image
             </StyledLabel>

@@ -15,7 +15,7 @@ export const useGetMaintenance = () => {
 
     const getMaintenance = async(searchFilter) => {
         const url = searchFilter ? `${maintenanceAPI}/${searchFilter}` : maintenanceAPI;
-
+        console.log("url", url)
         setIsLoading(true)
         try {
             const response = await axios.get(url)

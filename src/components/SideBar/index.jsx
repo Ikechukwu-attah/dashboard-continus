@@ -24,7 +24,7 @@ const SideBar = () => {
   const handleLogOut = (event) => {
     event.preventDefault();
     cookie.remove("userToken");
-    navigate(user.guard === "admin" ? "/admin-login" : "/");
+    navigate("/");
     window.location.reload();
   };
   return (

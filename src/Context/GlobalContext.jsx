@@ -5,10 +5,12 @@ export const globalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const user = MapTokenToUser();
-  const [isAdmin] = useState(user.guard === "admin");
+  const [isAdmin] = useState(user.user?.data?.role === "admin");
   const [pageName, setPageName] = useState(
     isAdmin ? "Client Management" : "General Dashboard"
   );
+
+  const [showList, setShowList] = useState(true);
   console.log("pageName", pageName);
 
   return (
@@ -17,6 +19,8 @@ const GlobalProvider = ({ children }) => {
         pageName,
         setPageName,
         isAdmin,
+        showList,
+        setShowList,
       }}
     >
       {children}

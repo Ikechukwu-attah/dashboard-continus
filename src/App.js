@@ -8,6 +8,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import GlobalProvider from "./Context/GlobalContext";
+import DropdownFilterProvider from "./Context/DropdownFiltersContext";
 import jwt_decode from "jwt-decode";
 
 import { publicRoutes, protectedRoutes } from "./Routes/Routes";
@@ -23,22 +24,28 @@ function App() {
   // console.log("decodedToken", decodedToken);
   return (
     <GlobalProvider>
-      <BrowserRouter>
-        <Routes>
-          {publicRoutes.map(({ path, component }) => (
-            <Route
-              path={path}
-              element={<PublicRouteGaurd>{component}</PublicRouteGaurd>}
-            />
-          ))}
-          {protectedRoutes.map(({ path, component }) => (
-            <Route
-              path={path}
-              element={<ProtectedRouteGaurd>{component}</ProtectedRouteGaurd>}
-            />
-          ))}
-        </Routes>
-      </BrowserRouter>
+      <DropdownFilterProvider>
+        <BrowserRouter>
+          <Routes>
+            {" "}
+            {publicRoutes.map(({ path, component }) => (
+              <Route
+                path={path}
+                element={<PublicRouteGaurd> {component} </PublicRouteGaurd>}
+              />
+            ))}{" "}
+            {protectedRoutes.map(({ path, component }) => (
+              <Route
+                path={path}
+                element={
+                  <ProtectedRouteGaurd> {component} </ProtectedRouteGaurd>
+                }
+                exact={true}
+              />
+            ))}{" "}
+          </Routes>{" "}
+        </BrowserRouter>{" "}
+      </DropdownFilterProvider>
     </GlobalProvider>
   );
 }

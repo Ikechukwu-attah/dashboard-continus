@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "../../../../Authorization/Axios"
-import { getAllAdminAPI } from "../../../../Authorization/ServerPaths";
+import { getAllClientAPI } from "../../../../Authorization/ServerPaths";
 
 
 
@@ -10,14 +10,19 @@ export const useGetAllUsers = () => {
     const [data, setData] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
+    const [totalPages, setTotalPages] = useState(0)
 
-    const getAllUsers = async() => {
+
+    const getAllUsers = async(searchFilter) => {
+        const url = `${getAllClientAPI}/${searchFilter}`
         setIsLoading(true)
         try {
-            const response = await axios.get(getAllAdminAPI)
+            const response = await axios.get(url)
 
-            setData(response.data.data.admins);
-            console.log("response==>data", response.data.data.admins);
+            setData(response.data.data.clients);
+            console.log("response==>data", response.data.data.clients);
+            const { data: { pagination: { total_pages } } } = response.data
+            setTotalPages(total_pages)
             setIsLoading(false)
 
         } catch (error) {
@@ -30,5 +35,5 @@ export const useGetAllUsers = () => {
 
 
 
-    return { getAllUsers, useGetAllUsers, data, error, isLoading }
+    return { getAllUsers, useGetAllUsers, data, error, isLoading, totalPages }
 }

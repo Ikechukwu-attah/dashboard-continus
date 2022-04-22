@@ -21,7 +21,7 @@ export const useLoginClient = () => {
             setData(response)
 
             cookie.set('userToken', response.data.data.token);
-            navigate('/home')
+            // navigate('/home')
             window.location.reload()
 
         } catch (error) {
