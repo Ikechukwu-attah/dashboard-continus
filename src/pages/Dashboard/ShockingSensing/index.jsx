@@ -1,16 +1,5 @@
-import React, { useState } from "react";
-import {
-  BarChart,
-  Bar,
-  Label,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import React, { useState, useEffect, useContext } from "react";
+
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -25,10 +14,38 @@ import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledButton } from "../../../components/common/Button/style";
 import { dummyShockingData } from "../../../DUMMYDATACHART.js";
+import ShockSensingTable from "./ShockSensingTable";
+import { useGetShockingSensingTable } from "./hooks/useGetShockSensingTable";
+import Paginations from "../../../components/common/Paginations";
+import { useGetShockingSensingBarChart } from "./hooks/useGetShockingSensingBarChart";
+import ShockSensingBar from "./ShockSensingBar";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 
 const ShockingSense = () => {
   const [activeButton, setActiveButton] = useState("Table");
   const buttons = ["Table", "Graph"];
+  const { getShockingSensingTable, totalPages, isLoading, error, data } =
+    useGetShockingSensingTable();
+
+  console.log("table Data on filter", data);
+
+  const { getShockingSensingBarChart, graphdata } =
+    useGetShockingSensingBarChart();
+
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  console.log("checking shocking graph data", graphdata);
+
+  useEffect(() => {
+    getShockingSensingTable();
+  }, []);
+
+  useEffect(() => {
+    getShockingSensingBarChart();
+  }, []);
+
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -51,8 +68,15 @@ const ShockingSense = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              console.log("user selection", data);
+              const { location } = data;
+
+              const filter = `?where=data.City:=:${location}`;
+              getShockingSensingTable(filter);
+              console.log("filter", filter);
+            }}
+            data={locationsDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -80,8 +104,13 @@ const ShockingSense = () => {
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              const { truck } = data;
+              const filter = `?where=data.Trucks:=:${truck}`;
+              getShockingSensingTable(filter);
+            }}
+            minWidth="20rem"
+            data={truckDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -96,7 +125,7 @@ const ShockingSense = () => {
           <SubHeaderLayout
             text="Shock Sensing for the period:"
             date="1 Feb, 2022 - 28th Feb, 2022"
-            count="25 Trucks"
+            count={data?.length}
             buttons={
               <StyledDivFlex gap="2rem">
                 {buttons.map((text) => (
@@ -130,41 +159,22 @@ const ShockingSense = () => {
             }
           />
 
-          {/* BARCHART STARTS FROM HERE  */}
-          <StyledBox marginTop="3rem" padding="1rem 8rem" height="60vh">
-            <ResponsiveContainer width="100%">
-              <BarChart
-                // width={10}
-                // height={500}
-                data={dummyShockingData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" stroke="#000000" tick={{ fontSize: 10 }}>
-                  <Label value="Trucks" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis
-                  label={{
-                    value: "Percentage",
-                    angle: -90,
-                    position: "insideLeft",
-                  }}
-                  stroke="#000000"
-                  domain={[0, "dataMax + 0"]}
-                  tickCount={8}
+          {activeButton === "Table" ? (
+            <>
+              <ShockSensingTable data={data} />
+              {data?.length >= 1 && (
+                <Paginations
+                  getData={getShockingSensingTable}
+                  totalPages={totalPages}
                 />
-                <Tooltip cursor={{ fill: "transparent" }} />
-                <Legend />
+              )}
+            </>
+          ) : (
+            <ShockSensingBar data={graphdata} />
+          )}
 
-                <Bar dataKey="bis" fill="#E8743B" />
-              </BarChart>
-            </ResponsiveContainer>
-          </StyledBox>
+          {/* BARCHART STARTS FROM HERE  */}
+
           {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>

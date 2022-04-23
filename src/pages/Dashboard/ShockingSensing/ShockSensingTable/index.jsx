@@ -1,33 +1,32 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTable, useFilters, useSortBy } from "react-table";
-import { StyledTable } from "../../../../components/common/Basics/StyledTable";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
-import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
+import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
+import { StyledTable } from "../../../../components/common/Basics/StyledTable";
 
-const DriversTable = ({ data }) => {
-  const [driverData, setDriverData] = useState([]);
+const ShockSensingTable = ({ data }) => {
+  const [tableShockSensingData, setTableShockSensingData] = useState([]);
+  console.log("table sensing data", tableShockSensingData);
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
+      console.log("Is data shocking table working ");
       console.table("data table", data);
       const newData = data.map((data) => {
-        data["First name"] = data.data["First name"];
-        data["Last name"] = data.data["Last name"];
-        data.RFID = data.data.RFID;
-        data["RFID status"] = data.data["RFID status"];
-        data.Role = data.data.Role;
-        data.Trucks = data.data.Trucks;
+        data.Truck = data.data.Truck;
+        data["Truck chassis no"] = data.data["Truck chassis no."];
+        data.Driver = data.data.Driver;
+        data["Intensity (%)"] = data.data["Intensity [%]"];
+        data["Shock threshold (%)"] = data.data["Shock threshold [%]"];
 
         return data;
       });
 
-      console.log("newData driver", newData);
+      console.log("newData", newData);
 
-      setDriverData(newData);
+      setTableShockSensingData(newData);
     }
   }, [data]);
 
@@ -38,25 +37,36 @@ const DriversTable = ({ data }) => {
     //   Filter: ColumnFilter,
     //   disableFilters: true,
     // },
-    { Header: "First Name", accessor: "First name", Filter: ColumnFilter },
+    { Header: "Truck", accessor: "Truck", Filter: ColumnFilter },
     {
-      Header: "Last Name",
-      accessor: "Last name",
+      Header: "Truck chassis no",
+      accessor: "Truck chassis no",
       Filter: ColumnFilter,
     },
-    { Header: "RFID Key", accessor: "RFID", Filter: ColumnFilter },
-    { Header: "RFID Status", accessor: "RFID status", Filter: ColumnFilter },
-    { Header: "Role", accessor: "Role", Filter: ColumnFilter },
-    { Header: "Assigned Trucks", accessor: "Trucks", Filter: ColumnFilter },
+    { Header: "Driver", accessor: "Driver", Filter: ColumnFilter },
+    {
+      Header: "Intensity (%)",
+      accessor: "Intensity (%)",
+      Filter: ColumnFilter,
+    },
+    {
+      Header: "Shock threshold (%)",
+      accessor: "Shock threshold (%)",
+      Filter: ColumnFilter,
+    },
   ];
 
   const columns = useMemo(() => COLUMN, []);
-  const newDriverData = useMemo(() => driverData, [driverData, data]);
+  const newShockingSensingTableData = useMemo(
+    () => tableShockSensingData,
+    [tableShockSensingData, data]
+  );
+  console.log("new newShockingSensingTableData", newShockingSensingTableData);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
-        data: newDriverData,
+        data: newShockingSensingTableData,
         columns: columns,
       },
 
@@ -65,9 +75,9 @@ const DriversTable = ({ data }) => {
     );
 
   return (
-    <StyledBox padding="1rem 8rem">
-      {driverData?.length ? (
-        <StyledTable {...getTableProps()}>
+    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
+      {tableShockSensingData && (
+        <StyledTable {...getTableProps()} width="100% !important">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -109,18 +119,9 @@ const DriversTable = ({ data }) => {
             })}
           </tbody>
         </StyledTable>
-      ) : (
-        <StyledTextHeading
-          color="grey"
-          textAlign="center"
-          fontSize="2rem"
-          paddingTop="1rem"
-        >
-          No Result found
-        </StyledTextHeading>
       )}
     </StyledBox>
   );
 };
 
-export default DriversTable;
+export default ShockSensingTable;

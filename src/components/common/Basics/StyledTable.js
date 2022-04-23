@@ -35,7 +35,7 @@ export const StyledTable = styled.table `
 & th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: center;
+    text-align: left;
     background-color: #027351;
     color: white;
 

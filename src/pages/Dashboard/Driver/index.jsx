@@ -16,12 +16,21 @@ import DriversTable from "./DriversTable";
 import Paginations from "../../../components/common/Paginations";
 import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import PickDate from "../../../components/common/DatePicker";
+import { formatDate } from "../../../utils/FormatDate";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
 
 const Driver = () => {
   const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
+  const [dateRange, setDateRange] = useState([]);
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+
+  useEffect(() => {
+    const allFilter = `?where=data.Created on:between:2022-04-19, 2022-04-12|data.Trucks:in:BIS/NB/006|data.City:in:Ota`;
+    getDriver(allFilter);
+  }, [dateRange, truckDropdownData, locationsDropdownData]);
 
   useEffect(() => {
     getDriver();
@@ -67,6 +76,17 @@ const Driver = () => {
             }
           />
 
+          <PickDate
+            onChange={(date) => {
+              const filter = `?where=data.Created on:between:${
+                formatDate(date[0])["yyyy-mm-dd"]
+              }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
+              setDateRange(date);
+              console.log("date===>implenting", filter);
+              getDriver(filter);
+            }}
+          />
+
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
@@ -91,14 +111,27 @@ const Driver = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Driver  Managment:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
             count={data?.length}
+            data={data}
           />
         </StyledBox>
 
         <StyledBox>
-          <DriversTable data={data} />
-          <Paginations getData={getDriver} totalPages={totalPages} />
+          {isLoading ? (
+            <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
+          ) : (
+            <>
+              <DriversTable data={data} />
+            </>
+          )}
+
+          <Paginations
+            getData={getDriver}
+            totalPages={totalPages}
+            isLoading={isLoading}
+            data={data}
+          />
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

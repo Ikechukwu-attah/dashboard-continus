@@ -37,13 +37,13 @@ const Dropdown = ({
   return (
     <StyledDivFlex
       position="relative"
-      padding="2rem"
+      padding="1rem"
       borderRadius="1rem"
       border={`1px solid ${borderColor}`}
       background={background}
       justifyContent="space-between"
       alignItems="center"
-      minHeight="7rem"
+      // minHeight="7rem"
       // fontSize="3px"
       maxWidth={maxWidth}
       gap={gap}
@@ -66,7 +66,7 @@ const Dropdown = ({
 
       <StyledUl
         position="absolute"
-        Top="7rem"
+        Top="4.8rem"
         Left="0"
         Right="0"
         background="rgba(0,0,0,0)"

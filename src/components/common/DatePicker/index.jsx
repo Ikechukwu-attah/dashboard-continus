@@ -42,7 +42,7 @@ const PickDate = ({ onChange }) => {
       size="lg"
       placeholder="Select Date"
       style={{ width: 200 }}
-      padding="1.4rem"
+      padding="0.5rem"
       borderRadius="1rem"
       //   border="2px solid #C4C4C4"
       background={Theme.colors.neutralColor}

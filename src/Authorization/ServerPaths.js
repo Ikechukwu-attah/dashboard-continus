@@ -28,3 +28,5 @@ export const maintenanceAPI = `${baseURL}/api/user/maintenance_report`
 export const monthlyAvaliablityAPI = `${baseURL}/api/user/monthly_availability`
 export const allTruckAPI = `${baseURL}/api/user/GetClientTrucks`
 export const allCitiyAPI = `${baseURL}/api/user/GetClientCities`
+export const shockSensingTableAPI = `${baseURL}/api/user/shock_sensing_table`
+export const shockSensingBarAPI = `${baseURL}/api/user/shock_sensing`
