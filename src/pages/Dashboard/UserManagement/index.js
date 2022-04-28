@@ -15,10 +15,12 @@ import AddClient from "../AddClient";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import Paginations from "../../../components/common/Paginations";
 import { getUserFilter } from "../../../constants";
+import { globalContext } from "../../../Context/GlobalContext";
 // import { globalContext } from "../../../Context/GlobalContext";
 const UserManagement = () => {
   const [showUserList, setShowUserList] = useState(true);
   // const{showList,setShowList}  = useContext(globalContext)
+  const { showListing, setShowListing } = useContext(globalContext);
 
   console.log("showUserList", showUserList);
   const { isLoading, getAllUsers, data, totalPages } = useGetAllUsers();
@@ -35,15 +37,15 @@ const UserManagement = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex>
-            {showUserList && (
-              <StyledPageHeaderButton onClick={() => setShowUserList(false)}>
+            {showListing && (
+              <StyledPageHeaderButton onClick={() => setShowListing(false)}>
                 Add user
               </StyledPageHeaderButton>
             )}
           </StyledDivFlex>
         </PageHeaderLayout>
 
-        {showUserList ? (
+        {showListing ? (
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (

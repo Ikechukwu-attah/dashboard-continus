@@ -65,7 +65,7 @@ const ShockSensingBar = ({ data }) => {
           </XAxis>
           <YAxis
             label={{
-              value: "Percentage",
+              value: "Total Number of Shock",
               angle: -90,
               position: "insideLeft",
             }}

@@ -1,16 +1,5 @@
-import React from "react";
-import {
-  BarChart,
-  Bar,
-  Label,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import React, { useContext, useEffect, useState } from "react";
+
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -26,8 +15,17 @@ import { StyledBox } from "../../../components/common/Basics/DivBox";
 import MiniDropDown from "../../../components/Widget/MiniDropDown";
 import { dummyTruckData } from "../../../DUMMYDATACHART.js";
 import { StyledText } from "../../../components/common/Basics/StyledText";
+import { useGetTruckUsage } from "./hooks/useGetTruckUsage";
+import TruckUsageGraph from "./TruckUsageGraph";
+import { formatDate } from "../../../utils/FormatDate";
+import PickDate from "../../../components/common/DatePicker";
 
 const TruckUsage = () => {
+  const { getTruckUsage, data, error, isLoading } = useGetTruckUsage();
+  const [dateRange, setDateRange] = useState();
+  useEffect(() => {
+    getTruckUsage();
+  }, []);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -60,19 +58,17 @@ const TruckUsage = () => {
               />
             }
           />
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="period"
-            label="Time Period"
-            onChange={(data) => console.log("user selection", data)}
-            data={period}
-            gap="2rem"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
+          <PickDate
+            onChange={(date) => {
+              const filter = `?period[start]=${formatDate(date[0])[
+                "yyyy-mm-dd"
+              ].replace(/(^|\D)(\d)(?!\d)/g, "$10$2")}&period[end]=${formatDate(
+                date[1]
+              )["yyyy-mm-dd"].replace(/(^|\D)(\d)(?!\d)/g, "$10$2")} 
+               `;
+              setDateRange(date);
+              getTruckUsage(filter);
+            }}
           />
 
           <Dropdown
@@ -94,7 +90,7 @@ const TruckUsage = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Truck Usage for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
             count="25 Trucks"
           />
 
@@ -150,45 +146,7 @@ const TruckUsage = () => {
           </StyledDivFlex>
 
           {/* BARCHART STARTS FROM HERE  */}
-          <StyledBox
-            marginTop="3rem"
-            padding="1rem 8rem"
-            background={Theme.colors.neutralColor}
-            height="60vh"
-          >
-            <ResponsiveContainer width="100%">
-              <BarChart
-                // width={1000}
-                // height={500}
-                data={dummyTruckData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" stroke="#000000">
-                  <Label value="Trucks" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis
-                  label={{
-                    value: "Percentage",
-                    angle: -90,
-                    position: "insideLeft",
-                  }}
-                  domain={[0, "dataMax + 0"]}
-                />
-                <Tooltip />
-                <Legend />
-
-                <Bar dataKey="bis" fill="#E8743B" />
-                <Bar dataKey="nb" fill="#5899DA" />
-                <Bar dataKey="yu" fill="#19A979" />
-              </BarChart>
-            </ResponsiveContainer>
-          </StyledBox>
+          <TruckUsageGraph data={dummyTruckData} />
           {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>

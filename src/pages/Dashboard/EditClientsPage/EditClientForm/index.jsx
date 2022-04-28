@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { css } from "styled-components";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../../components/common/Basics/DivFlex";
@@ -16,6 +16,7 @@ import { useUpdateClient } from "../../../Login/hooks/useUpdateClients";
 import { roleData } from "../../../../DUMMYDATA";
 import Dropdown from "../../../../components/common/Dropdown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { globalContext } from "../../../../Context/GlobalContext";
 
 const EditClient = ({ setShowClientList }) => {
   // const [imgUrl, setImgUrl] = useState(null);
@@ -24,6 +25,8 @@ const EditClient = ({ setShowClientList }) => {
   const { isLoading, data, getClient, error } = useGetClient();
   const { updateClient, isLoading: isUserUpdating } = useUpdateClient();
   const { id, userType } = useParams();
+  const { showListing, setShowListing } = useContext(globalContext);
+  console.log("setShowList", setShowListing);
 
   console.log("user type", userType);
 
@@ -62,6 +65,7 @@ const EditClient = ({ setShowClientList }) => {
       >
         Add user now
       </StyledText>
+      <StyledButton onClick={() => setShowListing(false)}>check</StyledButton>
       <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
           gap="20rem"
@@ -198,7 +202,7 @@ const EditClient = ({ setShowClientList }) => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="company_adrress"
-                  value={clientData.company_address}
+                  value={clientData.company_adrress}
                   onChange={(event) =>
                     handleChange({
                       name: event.target.name,
@@ -222,13 +226,16 @@ const EditClient = ({ setShowClientList }) => {
                   background={Theme.colors.secondaryColor}
                   name="role"
                   label="Role"
+                  Top="6.8rem"
+                  padding="2rem"
                   value={clientData?.role}
-                  onChange={(event) =>
+                  onChange={(event) => {
                     handleChange({
                       name: event.target.name,
                       value: event.target.value,
-                    })
-                  }
+                    });
+                    console.log("client-role", clientData.role);
+                  }}
                   // console.log("role selection", data);
 
                   data={roleData}
@@ -248,17 +255,27 @@ const EditClient = ({ setShowClientList }) => {
               marginTop="5rem"
               justifyContent="space-between"
             >
-              <StyledButton
-                padding="1.2rem 6.7rem"
-                fontSize="1.8rem"
-                background={Theme.colors.neutralColor4}
-                borderRadius="5rem"
-                fontWeight="500"
-                color={Theme.colors.neutralColor}
-                onClick={() => setShowClientList(true)}
+              <Link
+                to={
+                  userType === "admin"
+                    ? "/user-management"
+                    : "/client-management"
+                }
+                style={{ textDecoration: "none" }}
               >
-                Cancel
-              </StyledButton>
+                <StyledButton
+                  padding="1.2rem 6.7rem"
+                  fontSize="1.8rem"
+                  background={Theme.colors.neutralColor4}
+                  borderRadius="5rem"
+                  fontWeight="500"
+                  color={Theme.colors.neutralColor}
+                  // onClick={() => <Link></Link>}
+                  type="button"
+                >
+                  Cancel
+                </StyledButton>
+              </Link>
 
               <ButtonGroup
                 padding="1.2rem 5.7rem"

@@ -5,12 +5,10 @@ import { StyledBox } from "../Basics/DivBox";
 
 const Paginations = ({
   getData,
-  getMaintenance,
   totalPages,
-  getDriver,
-  getOccupancyJournal,
   isLoading,
   data,
+  onPageSelected,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const StyledPagination = styled(ReactPaginate)`
@@ -22,10 +20,10 @@ const Paginations = ({
   `;
 
   const handlePageChange = (data) => {
-    const filterCriteria = `?page=${data.selected + 1}`;
+    const filterCriteria = `:&page=${data.selected + 1}`;
     console.log("paginations,", filterCriteria);
 
-    getData(filterCriteria);
+    onPageSelected(filterCriteria);
     // getDriver(filterCriteria);
     // console.log("getDriver", getDriver(filterCriteria));
   };

@@ -10,8 +10,9 @@ const GlobalProvider = ({ children }) => {
     isAdmin ? "Client Management" : "General Dashboard"
   );
 
-  const [showList, setShowList] = useState(true);
+  const [showListing, setShowListing] = useState(true);
   console.log("pageName", pageName);
+  console.log("showListing...", showListing);
 
   return (
     <globalContext.Provider
@@ -19,8 +20,8 @@ const GlobalProvider = ({ children }) => {
         pageName,
         setPageName,
         isAdmin,
-        showList,
-        setShowList,
+        showListing,
+        setShowListing,
       }}
     >
       {children}

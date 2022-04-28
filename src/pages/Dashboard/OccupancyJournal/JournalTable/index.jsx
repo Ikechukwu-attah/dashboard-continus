@@ -5,6 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
+import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 
 const JournalTable = ({ data }) => {
   const [journalData, setJournalData] = useState([]);
@@ -74,13 +75,10 @@ const JournalTable = ({ data }) => {
   return (
     <StyledBox
       padding="1rem 8rem "
-      // width="50rem"
-      // overFlow="hidden"
-      // background="blue"
-      // marginTop="20rem"
+      style={{ maxWidth: "100%", overflowX: " auto " }}
     >
-      {journalData && (
-        <StyledTable {...getTableProps()} width="100% !important">
+      {journalData.length ? (
+        <StyledTable {...getTableProps()} width="100%">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -122,6 +120,15 @@ const JournalTable = ({ data }) => {
             })}
           </tbody>
         </StyledTable>
+      ) : (
+        <StyledTextHeading
+          color="grey"
+          textAlign="center"
+          fontSize="2rem"
+          paddingTop="1rem"
+        >
+          No Result found
+        </StyledTextHeading>
       )}
     </StyledBox>
   );

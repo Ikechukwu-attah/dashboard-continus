@@ -1,25 +1,25 @@
-import { createGlobalStyle } from 'styled-components';
-
-
-
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle `
  *{
   ::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0.5rem;
+    height:0.5rem;
+   
   }
 
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #ddd;
+    
   }
   
   ::-webkit-scrollbar-thumb {
-    background: ${({theme})=>theme.colors.secondaryColor}; 
+    background: ${({ theme }) => theme.colors.primaryColor}; 
     border-radius: 0.3rem;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${({theme})=>theme.colors.primaryColor};
+    background: ${({ theme }) => theme.colors.primaryColor};
   }
  }
  *,
@@ -53,4 +53,4 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-`
+`;

@@ -16,6 +16,7 @@ import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledButton } from "../../../components/common/Button/style";
 import { getClientFilter } from "../../../constants";
+import { StyledTextHeading } from "../../../components/common/Basics/Heading";
 
 const ClientTable = ({ data, getAllClient }) => {
   const { deleteClient, error, isLoading } = useDeleteClient();
@@ -70,7 +71,7 @@ const ClientTable = ({ data, getAllClient }) => {
       Header: "Action",
       accessor: "action",
       Cell: ({ row }) => (
-        <StyledDivFlex gap="1rem">
+        <StyledDivFlex gap="0.2rem">
           <Link to={`/user-management/client/${row.values.id}`}>
             <StyledButton
               fontWeight="400"
@@ -109,11 +110,14 @@ const ClientTable = ({ data, getAllClient }) => {
   const columns = useMemo(() => COLUMN, []);
   const newClientData = useMemo(() => clientData, [clientData, data]);
 
+  const initialState = { hiddenColumns: ["id"] };
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
         data: newClientData,
         columns: columns,
+        initialState,
       },
 
       useFilters,
@@ -131,58 +135,63 @@ const ClientTable = ({ data, getAllClient }) => {
   console.log("all client data2", data);
 
   return (
-    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
-      <StyledTable>
-        {data && (
-          <table {...getTableProps()}>
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                    >
-                      {column.render("Header")}
-
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <ArrowDropDownIcon />
-                          ) : (
-                            <ArrowDropUpIcon />
-                          )
+    <StyledBox
+      // style={{ maxWidth: "100%", overflowX: " auto " }}
+      padding="1rem 8rem"
+    >
+      {data ? (
+        <StyledTable {...getTableProps()} width="100%">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDropDownIcon fontSize="large" />
                         ) : (
-                          ""
-                        )}
-                      </span>
-
-                      <div className="input-filter">
-                        {column.canFilter ? column.render("Filter") : null}
-                      </div>
-                    </th>
-                  ))}
+                          <ArrowDropUpIcon fontSize="large" />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                    <div className="input-filter">
+                      {column.canFilter ? column.render("Filter") : null}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              console.log("row", row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
                 </tr>
-              ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row);
-                console.log("row", row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </StyledTable>
+              );
+            })}
+          </tbody>
+        </StyledTable>
+      ) : (
+        <StyledTextHeading
+          color="grey"
+          textAlign="center"
+          fontSize="2rem"
+          paddingTop="1rem"
+        >
+          No Result found
+        </StyledTextHeading>
+      )}
 
       {show && (
         <TableModal

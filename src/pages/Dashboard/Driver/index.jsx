@@ -19,18 +19,50 @@ import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 import PickDate from "../../../components/common/DatePicker";
 import { formatDate } from "../../../utils/FormatDate";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import { useFilter } from "../../../hooks/useFilter";
 
 const Driver = () => {
   const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
   const [dateRange, setDateRange] = useState([]);
+  const [pageFilter, setPageFilter] = useState();
+  // CREATING FILTER STATE
+
+  const [locationFilter, setLocationFilter] = useState();
+  const [truckfilter, setTruckFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
 
-  useEffect(() => {
-    const allFilter = `?where=data.Created on:between:2022-04-19, 2022-04-12|data.Trucks:in:BIS/NB/006|data.City:in:Ota`;
-    getDriver(allFilter);
-  }, [dateRange, truckDropdownData, locationsDropdownData]);
+  useFilter(
+    truckfilter,
+    dateFilter,
+    locationFilter,
+    null,
+    pageFilter,
+    getDriver
+  );
+
+  // useEffect(() => {
+  //   const refineFilter = (filter) => {
+  //     if (filter && filter[7] === "|") {
+  //       console.log("filter array", `${filter.slice(0, 7)}${filter.slice(8)}`);
+  //       return `${filter.slice(0, 7)}${filter.slice(8)}`;
+  //     }
+  //     return filter;
+  //   };
+
+  //   const allFilter = `?where=${truckfilter ? `|${truckfilter}` : ""}${
+  //     dateFilter ? `|${dateFilter}` : ""
+  //   }${locationFilter ? `|${locationFilter}` : ""}`;
+
+  //   const filter = allFilter === "?where=" ? null : allFilter;
+
+  //   console.log("all filter =>>>", refineFilter(filter));
+
+  //   getDriver(refineFilter(filter));
+  // }, [truckfilter, dateFilter, locationFilter]);
 
   useEffect(() => {
     getDriver();
@@ -59,11 +91,10 @@ const Driver = () => {
             name="location"
             label="Location"
             onChange={(data) => {
-              console.log("user selection", data);
               const { location } = data;
-              const filter = `?where=data.City:=:${location}`;
-              getDriver(filter);
-              console.log("filter", filter);
+              console.log("location", location);
+              const filter = location ? `data.City:=:${location}` : null;
+              setLocationFilter(filter);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -78,12 +109,13 @@ const Driver = () => {
 
           <PickDate
             onChange={(date) => {
-              const filter = `?where=data.Created on:between:${
-                formatDate(date[0])["yyyy-mm-dd"]
-              }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
+              const filter =
+                date &&
+                `data.Created on:between:${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
               setDateRange(date);
-              console.log("date===>implenting", filter);
-              getDriver(filter);
+              setDateFilter(filter);
             }}
           />
 
@@ -93,8 +125,8 @@ const Driver = () => {
             label="Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = `?where=data.Trucks:=:${truck}`;
-              getDriver(filter);
+              const filter = truck ? `data.Trucks:=:${truck}` : "";
+              setTruckFilter(filter);
             }}
             minWidth="20rem"
             data={truckDropdownData}
@@ -131,6 +163,7 @@ const Driver = () => {
             totalPages={totalPages}
             isLoading={isLoading}
             data={data}
+            onPageSelected={setPageFilter}
           />
         </StyledBox>
       </StyledDashboardContentWrapper>

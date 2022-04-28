@@ -29,11 +29,15 @@ const Navbar = () => {
         fontSize="3.6rem"
         lineHeight="5.4rem"
       >
-        FLEET MANAGEMENT SYSTEM
+        FLEET MANAGEMENT SYSTEM{" "}
       </StyledTextHeading>
       <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
         <StyledImage
-          src="/assets/7Up-logo.jpg"
+          src={
+            !user.user.data.avatar
+              ? `${process.env.REACT_APP_BASE_URL}/${user.user.data.avatar}`
+              : "/assets/7Up-logo.jpg"
+          }
           height="7.2rem"
           width="7.2rem"
           borderRadius="50%"
@@ -58,7 +62,13 @@ const Navbar = () => {
             fontWeight="400"
             lineHeight="2.7rem"
           >
-            Bisedge personnel
+            {/* Bisedge personnel */}{" "}
+            {user.user.data.role === "personnel" ||
+            user.user.data.role === "admin"
+              ? user.user.data.role === "personnel"
+                ? "Bisedge Personnel"
+                : "Bisedge Admin"
+              : user.user.company_id.toUpperCase()}
           </StyledText>
         </StyledDivFlex>
         <StyledBox

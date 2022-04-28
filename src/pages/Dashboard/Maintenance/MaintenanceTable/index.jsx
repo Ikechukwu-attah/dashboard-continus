@@ -7,6 +7,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 
 const MaintenanceTable = ({ data }) => {
   console.log("is loading", data);
@@ -24,6 +25,11 @@ const MaintenanceTable = ({ data }) => {
         data["Drive type"] = data.data["Drive type"];
         data.Technology = data.data.Technology;
         data.Maintenance = data.data.Maintenance;
+        data.Status = data.data.Status;
+        data["Due On"] = data.data["Due on"];
+        data["Due at (h)"] = data.data["Due at [h]"];
+        data["Done at"] = data.data["Done at"];
+        data["Done at [h]"] = data.data["Done at [h]"];
 
         return data;
       });
@@ -43,13 +49,18 @@ const MaintenanceTable = ({ data }) => {
     // },
     { Header: "Truck", accessor: "Truck", Filter: ColumnFilter },
     {
-      Header: "Truck chassis no",
+      Header: "Chassis no",
       accessor: "Truck chassis no",
       Filter: ColumnFilter,
     },
     { Header: "Drive type", accessor: "Drive type", Filter: ColumnFilter },
     { Header: "Technology", accessor: "Technology", Filter: ColumnFilter },
     { Header: "Maintenance", accessor: "Maintenance", Filter: ColumnFilter },
+    { Header: "Status", accessor: "Status", Filter: ColumnFilter },
+    { Header: "Due On", accessor: "Due On", Filter: ColumnFilter },
+    { Header: "Due at (h)", accessor: "Due at (h)", Filter: ColumnFilter },
+    // { Header: "Done at", accessor: "Done at", Filter: ColumnFilter },
+    // { Header: "Done at [h]", accessor: "Done at [h]", Filter: ColumnFilter },
   ];
 
   const columns = useMemo(() => COLUMN, []);
@@ -71,8 +82,11 @@ const MaintenanceTable = ({ data }) => {
     );
 
   return (
-    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
-      {maintenanceData && (
+    <StyledBox
+      style={{ maxWidth: "100%", overflowX: " auto " }}
+      padding="1rem 8rem"
+    >
+      {maintenanceData.length ? (
         <StyledTable {...getTableProps()} width="100% !important">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -115,6 +129,15 @@ const MaintenanceTable = ({ data }) => {
             })}
           </tbody>
         </StyledTable>
+      ) : (
+        <StyledTextHeading
+          color="grey"
+          textAlign="center"
+          fontSize="2rem"
+          paddingTop="1rem"
+        >
+          No Result found
+        </StyledTextHeading>
       )}
     </StyledBox>
   );

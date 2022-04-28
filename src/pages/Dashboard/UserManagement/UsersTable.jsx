@@ -18,6 +18,7 @@ import BackDrop from "../../../components/common/Backdrop/BackDrop";
 import Paginations from "../../../components/common/Paginations";
 import { useDeleteClient } from "../../Login/hooks/useClientDelete";
 import { getUserFilter } from "../../../constants";
+import { StyledTextHeading } from "../../../components/common/Basics/Heading";
 
 const UsersTable = ({ data, getAllUsers }) => {
   const [userData, setUserData] = useState([]);
@@ -106,12 +107,14 @@ const UsersTable = ({ data, getAllUsers }) => {
 
   const columns = useMemo(() => COLUMN, []);
   const newUserData = useMemo(() => userData, [userData, data]);
+  const initialState = { hiddenColumns: ["id"] };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
         data: newUserData,
         columns: columns,
+        initialState,
       },
 
       useFilters,
@@ -119,58 +122,63 @@ const UsersTable = ({ data, getAllUsers }) => {
     );
 
   return (
-    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
-      <StyledTable>
-        {data && (
-          <table {...getTableProps()}>
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                    >
-                      {column.render("Header")}
-
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <ArrowDropDownIcon />
-                          ) : (
-                            <ArrowDropUpIcon />
-                          )
+    <StyledBox
+      // style={{ maxWidth: "100%", overflowX: " auto " }}
+      padding="1rem 8rem"
+    >
+      {data ? (
+        <StyledTable {...getTableProps()} width="100%">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDropDownIcon fontSize="large" />
                         ) : (
-                          ""
-                        )}
-                      </span>
-
-                      <div className="input-filter">
-                        {column.canFilter ? column.render("Filter") : null}
-                      </div>
-                    </th>
-                  ))}
+                          <ArrowDropUpIcon fontSize="large" />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                    <div className="input-filter">
+                      {column.canFilter ? column.render("Filter") : null}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              console.log("row", row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
                 </tr>
-              ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row);
-                console.log("row", row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </StyledTable>
+              );
+            })}
+          </tbody>
+        </StyledTable>
+      ) : (
+        <StyledTextHeading
+          color="grey"
+          textAlign="center"
+          fontSize="2rem"
+          paddingTop="1rem"
+        >
+          No Result found
+        </StyledTextHeading>
+      )}
 
       {show && (
         <TableModal

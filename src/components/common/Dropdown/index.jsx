@@ -15,29 +15,35 @@ const Dropdown = ({
   textColor = Theme.colors.neutralColor2,
   background = Theme.colors.neutralColor,
   label,
+  Top = "4.8rem",
   onChange,
+  padding = "1rem",
   data,
   gap,
   icon,
   maxWidth,
   minWidth,
   showDropdown,
+  value,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
 
   const handleChange = (item) => {
-    const checkedItem = item === selectedItem ? "" : item;
-    console.log("checkdropdown", item);
-
-    setSelectedItem(checkedItem);
+    let checkedItem;
+    if (item === selectedItem) {
+      checkedItem = null;
+    } else {
+      checkedItem = item;
+    }
+    setSelectedItem(checkedItem === null ? label : checkedItem);
     onChange({ [name]: checkedItem });
   };
 
   return (
     <StyledDivFlex
       position="relative"
-      padding="1rem"
+      padding={padding}
       borderRadius="1rem"
       border={`1px solid ${borderColor}`}
       background={background}
@@ -66,7 +72,7 @@ const Dropdown = ({
 
       <StyledUl
         position="absolute"
-        Top="4.8rem"
+        Top={Top}
         Left="0"
         Right="0"
         background="rgba(0,0,0,0)"
@@ -78,7 +84,7 @@ const Dropdown = ({
       >
         {data.map((item, index) => (
           <StyledList
-            padding="1rem"
+            padding={padding}
             noHover
             borderRadius="1rem"
             background={background}
@@ -96,7 +102,7 @@ const Dropdown = ({
               color={textColor}
               htmlFor={item + "_" + index}
             >
-              {item}
+              {item || value}
             </StyledLabel>
             <StyledInput
               checked={selectedItem === item}

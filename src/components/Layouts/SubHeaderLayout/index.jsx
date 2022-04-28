@@ -7,7 +7,7 @@ import { StyledButton } from "../../common/Button/style";
 import { formatDate } from "../../../utils/FormatDate";
 
 const SubHeaderLayout = ({ buttons, text, dateRange = [], count, data }) => {
-  const [date1, date2] = dateRange;
+  const [date1, date2] = dateRange ? dateRange : [];
 
   return (
     <StyledBox padding="1rem 8rem" background={Theme.colors.neutralColor}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
@@ -18,11 +18,13 @@ import ClientTable from "./ClientTable";
 import { useGetAllClient } from "./hooks/useGetClient";
 import Paginations from "../../../components/common/Paginations";
 import { getClientFilter } from "../../../constants";
+import { globalContext } from "../../../Context/GlobalContext";
 
 const ClientManagment = () => {
   const [showClientList, setShowClientList] = useState(true);
   const { getAllClient, data, error, isLoading, totalPages } =
     useGetAllClient();
+  const { showListing, setShowListing } = useContext(globalContext);
 
   // const filter = "?where=data.role:in:user";
 
@@ -35,15 +37,15 @@ const ClientManagment = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex>
-            {showClientList && (
-              <StyledPageHeaderButton onClick={() => setShowClientList(false)}>
+            {showListing && (
+              <StyledPageHeaderButton onClick={() => setShowListing(false)}>
                 Add Client
               </StyledPageHeaderButton>
             )}
           </StyledDivFlex>
         </PageHeaderLayout>
 
-        {showClientList ? (
+        {showListing ? (
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (

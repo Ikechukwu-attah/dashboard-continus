@@ -67,7 +67,7 @@ const DriversTable = ({ data }) => {
   return (
     <StyledBox padding="1rem 8rem">
       {driverData?.length ? (
-        <StyledTable {...getTableProps()}>
+        <StyledTable {...getTableProps()} width="100%">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>

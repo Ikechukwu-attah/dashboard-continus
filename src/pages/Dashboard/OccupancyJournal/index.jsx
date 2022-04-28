@@ -16,24 +16,42 @@ import JournalTable from "./JournalTable";
 import Paginations from "../../../components/common/Paginations";
 import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import { formatDate } from "../../../utils/FormatDate";
+import { useFilter } from "../../../hooks/useFilter";
+import PickDate from "../../../components/common/DatePicker";
 
 const OccupancyJournal = () => {
   const { getOccupancyJournal, error, isLoading, data, totalPages } =
     useOccupancyJournal();
-  const [locationData, setLocationData] = useState([]);
-  const [truckData, setTruckData] = useState([]);
+  const [pageFilter, setPageFilter] = useState();
+  // const [locationData, setLocationData] = useState([]);
+  // const [truckData, setTruckData] = useState([]);
   console.log("data journal", data);
 
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+  const [locationFilter, setLocationFilter] = useState();
+  const [truckfilter, setTruckFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+  const [dateRange, setDateRange] = useState([]);
 
-  console.log("truckdropDown", truckDropdownData);
-  console.log("locationdropDown", locationsDropdownData);
+  // console.log("truckdropDown", truckDropdownData);
+  // console.log("locationdropDown", locationsDropdownData);
 
   useEffect(() => {
     getOccupancyJournal();
   }, []);
+
+  useFilter(
+    truckfilter,
+    dateFilter,
+    locationFilter,
+    null,
+    pageFilter,
+    getOccupancyJournal
+  );
 
   // useEffect(() => {
   //   if (data) {
@@ -77,8 +95,8 @@ const OccupancyJournal = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-              const filter = `?where=data.City:=:${location}`;
-              getOccupancyJournal(filter);
+              const filter = location ? `data.City:=:${location}` : "";
+              setLocationFilter(filter);
               console.log("filter", filter);
             }}
             data={locationsDropdownData}
@@ -91,19 +109,16 @@ const OccupancyJournal = () => {
               />
             }
           />
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="period"
-            label="Time Period"
-            onChange={(data) => console.log("user selection", data)}
-            data={period}
-            gap="2rem"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
+          <PickDate
+            onChange={(date) => {
+              const filter =
+                date &&
+                `data.Date:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
+                  formatDate(date[1])["yyyy-mm-dd"]
+                }`;
+              setDateRange(date);
+              setDateFilter(filter);
+            }}
           />
 
           <Dropdown
@@ -114,8 +129,9 @@ const OccupancyJournal = () => {
               console.log("user selection", data);
               const { truck } = data;
               console.log("truck", truck);
-              const filter = `?where=data.Truck:=:${truck}`;
-              getOccupancyJournal(filter);
+              const filter = truck ? `data.Truck:=:${truck}` : "";
+              // getOccupancyJournal(filter);
+              setTruckFilter(filter);
             }}
             data={truckDropdownData}
             gap="2rem"
@@ -132,17 +148,25 @@ const OccupancyJournal = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Occupancy Journal for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
+            count={data?.length}
+            data={data}
           />
         </StyledBox>
         <StyledBox>
-          <JournalTable data={data} />
-          {data && (
-            <Paginations
-              totalPages={totalPages}
-              getData={getOccupancyJournal}
-            />
+          {isLoading ? (
+            <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
+          ) : (
+            <JournalTable data={data} />
           )}
+
+          <Paginations
+            totalPages={totalPages}
+            getData={getOccupancyJournal}
+            isLoading={isLoading}
+            data={data}
+            onPageSelected={setPageFilter}
+          />
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

@@ -20,20 +20,37 @@ import Paginations from "../../../components/common/Paginations";
 import { useGetShockingSensingBarChart } from "./hooks/useGetShockingSensingBarChart";
 import ShockSensingBar from "./ShockSensingBar";
 import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import { formatDate } from "../../../utils/FormatDate";
+import PickDate from "../../../components/common/DatePicker";
+import { useFilter } from "../../../hooks/useFilter";
 
 const ShockingSense = () => {
   const [activeButton, setActiveButton] = useState("Table");
   const buttons = ["Table", "Graph"];
   const { getShockingSensingTable, totalPages, isLoading, error, data } =
     useGetShockingSensingTable();
+  const { getShockingSensingBarChart, graphdata } =
+    useGetShockingSensingBarChart();
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  const [dateRange, setDateRange] = useState([]);
+  const [locationFilter, setLocationFilter] = useState();
+  const [truckfilter, setTruckFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+  const [pageFilter, setPageFilter] = useState();
 
   console.log("table Data on filter", data);
 
-  const { getShockingSensingBarChart, graphdata } =
-    useGetShockingSensingBarChart();
-
-  const { truckDropdownData, locationsDropdownData } = useContext(
-    dropdownFilterContext
+  useFilter(
+    truckfilter,
+    dateFilter,
+    locationFilter,
+    null,
+    pageFilter,
+    getShockingSensingTable
   );
 
   console.log("checking shocking graph data", graphdata);
@@ -71,13 +88,14 @@ const ShockingSense = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-
-              const filter = `?where=data.City:=:${location}`;
-              getShockingSensingTable(filter);
+              const filter = location ? `data.City:=:${location}` : "";
+              setLocationFilter(filter);
+              // getShockingSensingTable(filter);
               console.log("filter", filter);
             }}
             data={locationsDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -85,19 +103,14 @@ const ShockingSense = () => {
               />
             }
           />
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="period"
-            label="Time Period"
-            onChange={(data) => console.log("user selection", data)}
-            data={period}
-            gap="2rem"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
+          <PickDate
+            onChange={(date) => {
+              const filter = `data.Date:between:${
+                formatDate(date[0])["yyyy-mm-dd"]
+              }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
+              setDateRange(date);
+              setDateFilter(filter);
+            }}
           />
 
           <Dropdown
@@ -106,8 +119,9 @@ const ShockingSense = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = `?where=data.Trucks:=:${truck}`;
-              getShockingSensingTable(filter);
+              const filter = truck ? `data.Truck:=:${truck}` : "";
+              // getShockingSensingTable(filter);
+              setTruckFilter(filter);
             }}
             minWidth="20rem"
             data={truckDropdownData}
@@ -124,8 +138,9 @@ const ShockingSense = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Shock Sensing for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
             count={data?.length}
+            data={data}
             buttons={
               <StyledDivFlex gap="2rem">
                 {buttons.map((text) => (
@@ -161,11 +176,19 @@ const ShockingSense = () => {
 
           {activeButton === "Table" ? (
             <>
-              <ShockSensingTable data={data} />
+              {isLoading ? (
+                <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
+              ) : (
+                <ShockSensingTable data={data} />
+              )}
+
               {data?.length >= 1 && (
                 <Paginations
                   getData={getShockingSensingTable}
                   totalPages={totalPages}
+                  isLoading={isLoading}
+                  data={data}
+                  onPageSelected={setPageFilter}
                 />
               )}
             </>

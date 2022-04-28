@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { css } from "styled-components";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
@@ -13,12 +13,14 @@ import ButtonGroup from "../../../components/common/Button";
 import { roleData } from "../../../DUMMYDATA";
 import Dropdown from "../../../components/common/Dropdown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { globalContext } from "../../../Context/GlobalContext";
 
 const AddClient = ({ setShowList, getList, userType }) => {
   // const [imgUrl, setImgUrl] = useState(null);
 
   const [signUpClientData, setSignUpClientData] = useState({});
   const { createClient, isLoading, data, error } = useCreateClient();
+  const { showListing, setShowListing } = useContext(globalContext);
 
   const handleChange = ({ name, value }) => {
     setSignUpClientData({ ...signUpClientData, [name]: value });
@@ -190,7 +192,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="company_adrress"
-                  value={signUpClientData.company_address}
+                  value={signUpClientData.company_adrress}
                   onChange={(event) =>
                     handleChange({
                       name: event.target.name,
@@ -212,6 +214,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 <Dropdown
                   background={Theme.colors.secondaryColor}
                   name="role"
+                  Top="6.8rem"
+                  padding="2rem"
                   label="Role"
                   value={signUpClientData.role}
                   onChange={(data) => {
@@ -247,7 +251,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => setShowList(true)}
+                onClick={() => setShowListing(true)}
               >
                 Cancel
               </StyledButton>

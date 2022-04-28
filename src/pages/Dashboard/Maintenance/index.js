@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -19,18 +19,36 @@ import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 import Paginations from "../../../components/common/Paginations";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import { Check } from "@mui/icons-material";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import { formatDate } from "../../../utils/FormatDate";
+import { useFilter } from "../../../hooks/useFilter";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
     useGetMaintenance();
   const [maintenanceData, setMaintenanceData] = useState([]);
-  const [truckData, setTruckData] = useState([]);
-  const [selectedMaintenanceFilter, setSelectedMaintenanceFilter] = useState(
-    []
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
   );
-  const [selectedTruckFilter, setSelectedTruckFilter] = useState([]);
 
-  const [dateRange, setGetDate] = useState([]);
+  const [locationFilter, setLocationFilter] = useState();
+  const [truckfilter, setTruckFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+  const [pageFilter, setPageFilter] = useState();
+  const [maintenanceFilter, setMaintenanceFilter] = useState([]);
+
+  const [truckData, setTruckData] = useState([]);
+
+  useFilter(
+    truckfilter,
+    dateFilter,
+    locationFilter,
+    maintenanceFilter,
+    pageFilter,
+    getMaintenance
+  );
+
+  const [dateRange, setDateRange] = useState([]);
 
   useEffect(() => {
     getMaintenance();
@@ -42,25 +60,25 @@ const Maintenance = () => {
         data,
         (allData) => allData.Maintenance
       );
-      const truckDropdownData = removeDuplicate(
-        data,
-        (allData) => allData.Truck
-      );
+      // const truckDropdownData = removeDuplicate(
+      //   data,
+      //   (allData) => allData.Truck
+      // );
       if (!maintenanceData.length) {
         setMaintenanceData(maintenanceDropdownData);
-        setTruckData(truckDropdownData);
+        // setTruckData(truckDropdownData);
       }
     }
   }, [data]);
 
-  useEffect(() => {
-    const selectedFiltered = `where=data.Truck:=:${selectedTruckFilter.truck},
-    data.Maintenance:=:${selectedMaintenanceFilter.maintenance}`;
-    //?where=data.Truck:=:truck&&where=data.Maintenance:=:mainte
-    // const truckFilter = `?where=data.Truck:=:${selectedTruckFilter.truck}`;
-    // const maintenanceFilter = `?where=data.Maintenance:=:${selectedMaintenanceFilter.maintenence}`;
-    getMaintenance(selectedFiltered);
-  }, [selectedMaintenanceFilter, selectedTruckFilter]);
+  // useEffect(() => {
+  //   const selectedFiltered = `where=data.Truck:=:${selectedTruckFilter.truck},
+  //   data.Maintenance:=:${selectedMaintenanceFilter.maintenance}`;
+  //   //?where=data.Truck:=:truck&&where=data.Maintenance:=:mainte
+  //   // const truckFilter = `?where=data.Truck:=:${selectedTruckFilter.truck}`;
+  //   // const maintenanceFilter = `?where=data.Maintenance:=:${selectedMaintenanceFilter.maintenence}`;
+  //   getMaintenance(selectedFiltered);
+  // }, [selectedMaintenanceFilter, selectedTruckFilter]);
 
   return (
     <DashboardLayout>
@@ -86,10 +104,12 @@ const Maintenance = () => {
             label="Maintenance"
             onChange={(data) => {
               console.log("selection", data);
-              setSelectedMaintenanceFilter(data);
               const { maintenance } = data;
-              const filter = `?where=data.Maintenance:=:${maintenance}`;
-              getMaintenance(filter);
+              const filter = maintenance
+                ? `data.Maintenance:=:${maintenance}`
+                : "";
+              setMaintenanceFilter(filter);
+              // getMaintenance(filter);
             }}
             data={maintenanceData}
             minWidth="20rem"
@@ -107,8 +127,13 @@ const Maintenance = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              const { location } = data;
+              const filter = location ? `data.City:=:${location}` : "";
+              setLocationFilter(filter);
+              console.log("location selection", data);
+            }}
+            data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
             icon={
@@ -132,20 +157,32 @@ const Maintenance = () => {
               />
             }
           /> */}
-          <PickDate onChange={(date) => setGetDate(date)} />
+          <PickDate
+            onChange={(date) => {
+              const filter =
+                date &&
+                `data.Due on:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
+                  formatDate(date[1])["yyyy-mm-dd"]
+                }`;
+              setDateRange(date);
+              setDateFilter(filter);
+
+              console.log("this is filter", filter);
+            }}
+          />
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
             onChange={(data) => {
-              console.log("user selection", data);
-              setSelectedTruckFilter(data);
+              console.log("truck selection", data);
+              // setSelectedTruckFilter(data);
               const { truck } = data;
-              const filter = `?where=data.Truck:=:${truck}`;
-              getMaintenance(filter);
+              const filter = truck ? `data.Truck:=:${truck}` : "";
+              setTruckFilter(filter);
             }}
-            data={truckData}
+            data={truckDropdownData}
             gap="2rem"
             minWidth="20rem"
             icon={
@@ -160,7 +197,7 @@ const Maintenance = () => {
         <StyledBox background={Theme.colors.neutralColor}>
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
-            text="Occupancy Journal for the period:"
+            text="Maintenance for the period:"
             dateRange={dateRange}
             count={data?.length}
             // 1 Feb, 2022 - 28th Feb, 2022
@@ -171,12 +208,16 @@ const Maintenance = () => {
           {isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0 " />
           ) : (
-            <>
-              <MaintenanceTable data={data} />
-
-              <Paginations getData={getMaintenance} totalPages={totalPages} />
-            </>
+            <MaintenanceTable data={data} />
           )}
+
+          <Paginations
+            getData={getMaintenance}
+            totalPages={totalPages}
+            data={data}
+            isLoading={isLoading}
+            onPageSelected={setPageFilter}
+          />
         </StyledBox>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

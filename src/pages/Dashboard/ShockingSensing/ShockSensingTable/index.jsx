@@ -5,6 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { ColumnFilter } from "../../../../components/common/Basics/ColumnFilter";
 import { StyledTable } from "../../../../components/common/Basics/StyledTable";
+import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 
 const ShockSensingTable = ({ data }) => {
   const [tableShockSensingData, setTableShockSensingData] = useState([]);
@@ -76,7 +77,7 @@ const ShockSensingTable = ({ data }) => {
 
   return (
     <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
-      {tableShockSensingData && (
+      {tableShockSensingData?.length ? (
         <StyledTable {...getTableProps()} width="100% !important">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -119,6 +120,15 @@ const ShockSensingTable = ({ data }) => {
             })}
           </tbody>
         </StyledTable>
+      ) : (
+        <StyledTextHeading
+          color="grey"
+          textAlign="center"
+          fontSize="2rem"
+          paddingTop="1rem"
+        >
+          No Result found
+        </StyledTextHeading>
       )}
     </StyledBox>
   );

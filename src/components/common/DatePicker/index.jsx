@@ -48,6 +48,7 @@ const PickDate = ({ onChange }) => {
       background={Theme.colors.neutralColor}
       placement="bottomEnd"
       onChange={handleChange}
+      selectRange="false"
     />
   );
 };
