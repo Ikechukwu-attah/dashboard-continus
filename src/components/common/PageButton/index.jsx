@@ -11,6 +11,8 @@ const PageHeadingButtons = ({ text }) => (
     fontWeight="500"
   >
     {text}
+
+    {/* Dont get it twisted before it get too late */}
   </StyledButton>
 );
 
