@@ -14,6 +14,7 @@ import TogglePassword from "../../components/TogglePassword";
 import PasswordResetSuccess from "./PasswordResetSuccess";
 import { useResetPassword } from "./hooks/useResetPassword";
 import ButtonGroup from "../../components/common/Button";
+import BisedgeLogo from "../../components/Images/BisedgeLogo.png";
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -60,7 +61,7 @@ const ResetPassword = () => {
         backgroundPosition="center center"
         backgroundRepeat="no-repeat"
       >
-        <StyledImage src="/assets/bisedge-logo1.png" alt="bisedge logo" />
+        <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
       <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
         {data ? (

@@ -12,6 +12,7 @@ import { Theme } from "../../Theme";
 import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
 import { StyledTextArea } from "../../components/common/Basics/TextArea";
+import BisedgeLogo from "../../components/Images/BisedgeLogo.png";
 
 const ContactAdmin = () => {
   //   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const ContactAdmin = () => {
         backgroundPosition="center center"
         backgroundRepeat="no-repeat"
       >
-        <StyledImage src="/assets/bisedge-logo1.png" alt="bisedge logo" />
+        <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
       <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
         <StyledDivFlex
