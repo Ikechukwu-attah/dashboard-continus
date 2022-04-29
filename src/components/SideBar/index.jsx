@@ -11,6 +11,8 @@ import { globalContext } from "../../Context/GlobalContext";
 import LogOutIcon from "../../Icons/LogOut";
 import { StyledText } from "../common/Basics/StyledText";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
+// import BisedgeLogo from "../../../public/assets/Bisedge-sidelogo.svg";
+import BisedgeSideLogo from "../Images/BisedgeSideLogo";
 import cookie from "js-cookie";
 
 const SideBar = () => {
@@ -39,10 +41,7 @@ const SideBar = () => {
         alignItem="center"
         justifyContent="center"
       >
-        <StyledImage
-          src="/assets/bisedge-sidelogo.svg"
-          alt="bisede sidebar logo"
-        />
+        <BisedgeSideLogo />
       </StyledDivFlex>
 
       <StyledUl>
