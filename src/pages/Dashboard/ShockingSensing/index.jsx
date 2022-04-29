@@ -24,6 +24,8 @@ import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import { formatDate } from "../../../utils/FormatDate";
 import PickDate from "../../../components/common/DatePicker";
 import { useFilter } from "../../../hooks/useFilter";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const ShockingSense = () => {
   const [activeButton, setActiveButton] = useState("Table");
@@ -35,6 +37,11 @@ const ShockingSense = () => {
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+  const {
+    getCSVExport,
+    csvData,
+    isLoading: isLoadingDownload,
+  } = useGetCSVExport();
 
   const [dateRange, setDateRange] = useState([]);
   const [locationFilter, setLocationFilter] = useState();
@@ -68,8 +75,39 @@ const ShockingSense = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "shock_sensing",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              Report Via Email
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "shock_sensing",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isLoadingDownload ? "DownLoading..." : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 

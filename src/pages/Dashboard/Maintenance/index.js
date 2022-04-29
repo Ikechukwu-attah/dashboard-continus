@@ -22,6 +22,8 @@ import { Check } from "@mui/icons-material";
 import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 import { formatDate } from "../../../utils/FormatDate";
 import { useFilter } from "../../../hooks/useFilter";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
@@ -31,6 +33,11 @@ const Maintenance = () => {
     dropdownFilterContext
   );
 
+  const {
+    getCSVExport,
+    csvData,
+    isLoading: isLoadingDownload,
+  } = useGetCSVExport();
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState();
@@ -85,8 +92,39 @@ const Maintenance = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "maintenance_report",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              Report Via Email
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "maintenance_report",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isLoadingDownload ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 

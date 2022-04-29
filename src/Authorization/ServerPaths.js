@@ -29,3 +29,4 @@ export const shockSensingBarAPI = `${baseURL}/api/user/shock_sensing`;
 export const allCompanyAPI = `${baseURL}/api/user/get_all_companies`;
 export const switchCompanyAPI = `${baseURL}/api/user/switch_company`;
 export const truckUsageAPI = `${baseURL}/api/user/truck_usage`;
+export const exportCSVAPI = `${baseURL}/api/user/export`;

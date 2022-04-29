@@ -20,6 +20,8 @@ import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import { formatDate } from "../../../utils/FormatDate";
 import { useFilter } from "../../../hooks/useFilter";
 import PickDate from "../../../components/common/DatePicker";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const OccupancyJournal = () => {
   const { getOccupancyJournal, error, isLoading, data, totalPages } =
@@ -36,6 +38,12 @@ const OccupancyJournal = () => {
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState();
   const [dateRange, setDateRange] = useState([]);
+
+  const {
+    getCSVExport,
+    csvData,
+    isLoading: isLoadingDownload,
+  } = useGetCSVExport();
 
   // console.log("truckdropDown", truckDropdownData);
   // console.log("locationdropDown", locationsDropdownData);
@@ -75,8 +83,40 @@ const OccupancyJournal = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "occupancy_journal",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              Report Via Email
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "occupancy_journal",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isLoadingDownload ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 

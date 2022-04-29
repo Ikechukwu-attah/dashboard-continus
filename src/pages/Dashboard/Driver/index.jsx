@@ -20,12 +20,21 @@ import PickDate from "../../../components/common/DatePicker";
 import { formatDate } from "../../../utils/FormatDate";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import { useFilter } from "../../../hooks/useFilter";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const Driver = () => {
   const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
   const [dateRange, setDateRange] = useState([]);
   const [pageFilter, setPageFilter] = useState();
   // CREATING FILTER STATE
+
+  // export data useState destructuring
+  const {
+    getCSVExport,
+    csvData,
+    isLoading: isLoadingDownload,
+  } = useGetCSVExport();
 
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
@@ -73,8 +82,42 @@ const Driver = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "driver_management",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              Report Via Email
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                // const user = MapTokenToUser();
+                // console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "driver_management",
+                    query: {},
+                    as: "download",
+                    // recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isLoadingDownload ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
         <StyledDivFlex
