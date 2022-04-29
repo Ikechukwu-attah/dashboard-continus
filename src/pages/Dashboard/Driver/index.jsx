@@ -102,14 +102,11 @@ const Driver = () => {
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
-                // const user = MapTokenToUser();
-                // console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "driver_management",
                     query: {},
                     as: "download",
-                    // recipients: [user.user.email],
                   },
                 };
 
