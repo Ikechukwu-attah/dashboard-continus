@@ -14,6 +14,7 @@ import { StyledBox } from "../../components/common/Basics/DivBox";
 import { StyledSpinning } from "../../components/common/SpinningLoader/style";
 import { useLoginClient } from "./hooks/useClientLogin";
 import ButtonGroup from "../../components/common/Button";
+import BisedgeLogo from "../../components/Images/BisedgeLogo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Login = () => {
         backgroundPosition="center center"
         backgroundRepeat="no-repeat"
       >
-        <StyledImage src="/assets/bisedge-logo1.png" alt="bisedge logo" />
+        <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
       <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
         <StyledDivFlex
