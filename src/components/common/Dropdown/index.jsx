@@ -82,7 +82,7 @@ const Dropdown = ({
         scale={isOpen || showDropdown ? 1 : 0}
         scrollBarWidth="0.3rem"
       >
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <StyledList
             padding={padding}
             noHover

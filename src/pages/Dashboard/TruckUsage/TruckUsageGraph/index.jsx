@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import {
   BarChart,
@@ -15,10 +15,32 @@ import {
 import { Theme } from "../../../../Theme";
 
 const TruckUsageGraph = ({ data }) => {
+  const [truckData, setTruckData] = useState([]);
+  console.log("tuck data modified", truckData);
+
+  useEffect(() => {
+    if (data) {
+      console.log("Is data for truck working ");
+      console.table("data truck", data);
+      const newData = data.map((data) => {
+        data.Driving = data.data["Driving [h]"];
+        data.Lifting = data.data["Lifting [h]"];
+        data.Active = data.data["Active usage [h]"];
+        data.Truck = data.data.Truck;
+
+        return data;
+      });
+
+      console.log("newData graph", newData);
+
+      setTruckData(newData);
+    }
+  }, [data]);
   return (
     <StyledBox
       marginTop="3rem"
       padding="1rem 8rem"
+      // marginBottom="0 0 40rem 0"
       background={Theme.colors.neutralColor}
       height="60vh"
     >
@@ -26,7 +48,7 @@ const TruckUsageGraph = ({ data }) => {
         <BarChart
           // width={1000}
           // height={500}
-          data={data}
+          data={truckData}
           margin={{
             top: 5,
             right: 30,
@@ -35,7 +57,13 @@ const TruckUsageGraph = ({ data }) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" stroke="#000000">
+          <XAxis
+            dataKey="Truck"
+            stroke="#000000"
+            // angle={-45}
+            textAnchor="end"
+            tick={{ fontSize: 10 }}
+          >
             <Label value="Trucks" offset={0} position="insideBottom" />
           </XAxis>
           <YAxis
@@ -45,13 +73,14 @@ const TruckUsageGraph = ({ data }) => {
               position: "insideLeft",
             }}
             domain={[0, "dataMax + 0"]}
+            tickCount={5}
           />
           <Tooltip />
-          <Legend />
+          {/* <Legend /> */}
 
-          <Bar dataKey="bis" fill="#E8743B" />
-          <Bar dataKey="nb" fill="#5899DA" />
-          <Bar dataKey="yu" fill="#19A979" />
+          <Bar dataKey="Active" fill="#E8743B" />
+          <Bar dataKey="Driving" fill="#5899DA" />
+          <Bar dataKey="Lifting" fill="#19A979" />
         </BarChart>
       </ResponsiveContainer>
     </StyledBox>

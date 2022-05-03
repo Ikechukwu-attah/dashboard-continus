@@ -4,7 +4,7 @@ import { StyledDivFlex } from "../Basics/DivFlex";
 import { StyledText } from "../Basics/StyledText";
 import { StyledSpinning } from "../SpinningLoader/style";
 
-const SpinnerWithText = ({ isLoading, margin }) => {
+const SpinnerWithText = ({ isLoading, margin, spinnerText }) => {
   return (
     <StyledDivFlex
       gap="2rem"
@@ -17,7 +17,7 @@ const SpinnerWithText = ({ isLoading, margin }) => {
         <>
           <StyledSpinning speed="1s" />
           <StyledText color={Theme.colors.neutralColor2} fontSize="2.5rem">
-            Loading ....
+            {spinnerText || "Loading ...."}
           </StyledText>
         </>
       )}

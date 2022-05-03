@@ -52,7 +52,8 @@ const Maintenance = () => {
     locationFilter,
     maintenanceFilter,
     pageFilter,
-    getMaintenance
+    getMaintenance,
+    null
   );
 
   const [dateRange, setDateRange] = useState([]);

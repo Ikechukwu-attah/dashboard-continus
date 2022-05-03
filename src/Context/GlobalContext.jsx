@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import WidgetProvider from "./WidgetContext";
 import MapTokenToUser from "../Authorization/MapTokenToUser";
 
 export const globalContext = createContext();
@@ -24,7 +25,7 @@ const GlobalProvider = ({ children }) => {
         setShowListing,
       }}
     >
-      {children}
+      <WidgetProvider>{children}</WidgetProvider>
     </globalContext.Provider>
   );
 };

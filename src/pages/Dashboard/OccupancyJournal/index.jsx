@@ -22,6 +22,8 @@ import { useFilter } from "../../../hooks/useFilter";
 import PickDate from "../../../components/common/DatePicker";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
 
 const OccupancyJournal = () => {
   const { getOccupancyJournal, error, isLoading, data, totalPages } =
@@ -34,10 +36,14 @@ const OccupancyJournal = () => {
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+  const startDate = getPreviousDate(30);
+  const endDate = getTodayDate();
+
+  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
-  const [dateRange, setDateRange] = useState([]);
+  const [dateFilter, setDateFilter] = useState(filter);
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
 
   const {
     getCSVExport,
@@ -45,18 +51,10 @@ const OccupancyJournal = () => {
     isLoading: isLoadingDownload,
   } = useGetCSVExport();
 
-  // console.log("truckdropDown", truckDropdownData);
-  // console.log("locationdropDown", locationsDropdownData);
-
-  useEffect(() => {
-    getOccupancyJournal();
-  }, []);
-
-  useFilter(
+  useFilterGraph(
     truckfilter,
-    dateFilter,
     locationFilter,
-    null,
+    dateFilter,
     pageFilter,
     getOccupancyJournal
   );
@@ -135,7 +133,7 @@ const OccupancyJournal = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-              const filter = location ? `data.City:=:${location}` : "";
+              const filter = data && `location=${location}`;
               setLocationFilter(filter);
               console.log("filter", filter);
             }}
@@ -153,11 +151,12 @@ const OccupancyJournal = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `data.Date:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
-                  formatDate(date[1])["yyyy-mm-dd"]
-                }`;
-              setDateRange(date);
+                `?period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
+             `;
               setDateFilter(filter);
+              setDateRange(date);
             }}
           />
 
@@ -169,9 +168,10 @@ const OccupancyJournal = () => {
               console.log("user selection", data);
               const { truck } = data;
               console.log("truck", truck);
-              const filter = truck ? `data.Truck:=:${truck}` : "";
-              // getOccupancyJournal(filter);
+              // const filter = truck ? `data.Truck:=:${truck}` : "";
+              const filter = data && `truck=${truck}`;
               setTruckFilter(filter);
+              // getOccupancyJournal(filter);
             }}
             data={truckDropdownData}
             gap="2rem"

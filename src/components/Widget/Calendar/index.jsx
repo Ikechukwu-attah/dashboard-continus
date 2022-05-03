@@ -13,17 +13,17 @@ const CalendarCheck = () => {
   };
 
   return (
-    <StyledDivFlex justifyContent="flex-end" marginTop="2rem">
+    <StyledDivFlex justifyContent="flex-end">
       <StyledDivFlex
         flexDirection="column"
         padding="3rem"
         background="#fff"
         borderRadius="2rem"
-        width="25%"
+        width="80%"
       >
         <Calendar selectRange={true} onChange={onChange} value={date} />
         {console.log("date", date)}
-        <StyledText color="black">{date.toString()}</StyledText>
+        {/* <StyledText color="black">{date.toString()}</StyledText> */}
       </StyledDivFlex>
     </StyledDivFlex>
   );

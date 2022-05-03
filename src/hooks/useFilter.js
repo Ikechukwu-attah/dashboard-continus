@@ -7,6 +7,7 @@ export const useFilter = (
         maintenanceFilter,
         pageFilter,
         getData
+        // getGraph
     ) => {
         useEffect(() => {
                     const refineFilter = (filter) => {
@@ -27,6 +28,7 @@ export const useFilter = (
     console.log("all filter =>>>", refineFilter(filter));
 
     getData(refineFilter(filter));
+    // getGraph(refineFilter(filter));
   }, [truckFilter, dateFilter, locationFilter, maintenanceFilter, pageFilter]);
 
   return null;

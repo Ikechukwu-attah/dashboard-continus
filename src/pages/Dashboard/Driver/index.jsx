@@ -44,14 +44,7 @@ const Driver = () => {
     dropdownFilterContext
   );
 
-  useFilter(
-    truckfilter,
-    dateFilter,
-    locationFilter,
-    null,
-    pageFilter,
-    getDriver
-  );
+  useFilter(truckfilter, null, locationFilter, null, pageFilter, getDriver);
 
   // useEffect(() => {
   //   const refineFilter = (filter) => {
@@ -147,7 +140,7 @@ const Driver = () => {
             }
           />
 
-          <PickDate
+          {/* <PickDate
             onChange={(date) => {
               const filter =
                 date &&
@@ -157,7 +150,7 @@ const Driver = () => {
               setDateRange(date);
               setDateFilter(filter);
             }}
-          />
+          /> */}
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -185,7 +178,7 @@ const Driver = () => {
             text="Driver  Managment:"
             dateRange={dateRange}
             count={data?.length}
-            data={data}
+            // data={data}
           />
         </StyledBox>
 

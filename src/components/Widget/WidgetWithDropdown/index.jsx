@@ -9,20 +9,34 @@ import { StyledDivFlex } from "../../common/Basics/DivFlex";
 import { Theme } from "../../../Theme";
 import { StyledBox } from "../../common/Basics/DivBox";
 import WidgetMenu from "../MiniDropDown";
+import { BorderBottom } from "@mui/icons-material";
 
 const WidgetWithDropdown = ({
-  width = "33.333%", //default width incase no width was passed
+  width = "100%", //default width incase no width was passed
+  maxHeight = "24rem",
   label,
   count,
   onView,
+  // bottom = "1rem",
+  // right = "4rem",
+  top = "",
   onRemove,
+  borderTopRight = "2rem",
+  borderTopLeft = "2rem",
+  borderBottomRight = "2rem",
+  borderBottomLeft = "2rem",
 }) => {
   return (
     <StyledDivFlex
       background={Theme.colors.neutralColor}
       width={width}
+      maxHeight={maxHeight}
       boxShadow="0px 4px 4px #F3EFE9"
-      borderRadius="2rem"
+      // borderRadius="2rem"
+      borderTRR={borderTopRight}
+      borderTLR={borderTopLeft}
+      borderBRR={borderBottomRight}
+      borderBLR={borderBottomLeft}
       padding="6rem 4rem 4rem 4rem"
       justifyContent="space-between"
       alignItems="center"
@@ -58,7 +72,7 @@ const WidgetWithDropdown = ({
         {label}
       </StyledText>
 
-      <StyledBox position="absolute" Bottom="1rem" Right="4rem">
+      <StyledBox position="absolute" Bottom="1rem" Right="4rem" top={top}>
         <StyledText
           fontSize="1.8rem"
           fontWeight="400"

@@ -30,3 +30,6 @@ export const allCompanyAPI = `${baseURL}/api/user/get_all_companies`;
 export const switchCompanyAPI = `${baseURL}/api/user/switch_company`;
 export const truckUsageAPI = `${baseURL}/api/user/truck_usage`;
 export const exportCSVAPI = `${baseURL}/api/user/export`;
+export const generalDashboardAPI = `${baseURL}/api/user/dashboard`;
+export const updateWidgetAPI = `${baseURL}/api/user/update_widget`;
+export const co2ReductionAPI = `${baseURL}/api/user/co2_reduction`;

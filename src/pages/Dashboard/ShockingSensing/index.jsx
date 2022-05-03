@@ -58,6 +58,7 @@ const ShockingSense = () => {
     null,
     pageFilter,
     getShockingSensingTable
+    // getShockingSensingBarChart
   );
 
   console.log("checking shocking graph data", graphdata);
@@ -143,9 +144,11 @@ const ShockingSense = () => {
           />
           <PickDate
             onChange={(date) => {
-              const filter = `data.Date:between:${
-                formatDate(date[0])["yyyy-mm-dd"]
-              }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
+              const filter =
+                date &&
+                `data.Date:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
+                  formatDate(date[1])["yyyy-mm-dd"]
+                }`;
               setDateRange(date);
               setDateFilter(filter);
             }}

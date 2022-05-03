@@ -19,20 +19,91 @@ import { useGetTruckUsage } from "./hooks/useGetTruckUsage";
 import TruckUsageGraph from "./TruckUsageGraph";
 import { formatDate } from "../../../utils/FormatDate";
 import PickDate from "../../../components/common/DatePicker";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import BusyOverlay from "../../../components/common/BusyOverlay";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 
 const TruckUsage = () => {
   const { getTruckUsage, data, error, isLoading } = useGetTruckUsage();
   const [dateRange, setDateRange] = useState();
+  const [truckFilter, setTruckFilter] = useState();
+  const [locationFilter, setLocationFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+  const {
+    getCSVExport,
+    csvData,
+    isLoading: isLoadingDownload,
+  } = useGetCSVExport();
+
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  useFilterGraph(truckFilter, locationFilter, dateFilter, null, getTruckUsage);
+
   useEffect(() => {
-    getTruckUsage();
+    const startDate = getPreviousDate(1);
+    const endDate = getTodayDate();
+
+    const filter = `?period[start]=${startDate}
+    &period[end]=${endDate}`;
+    setDateFilter(filter);
+
+    setDateRange([startDate, endDate]);
+    getTruckUsage(filter);
   }, []);
+
+  // useEffect(() => {
+  //   const filter = `${dateFilter}${truckFilter ? `&${truckFilter}` : ""}${
+  //     locationFilter ? `&${locationFilter}` : ""
+  //   }`;
+  //   console.log("truck filter concat", filter);
+  //   getTruckUsage(filter);
+  // }, [truckFilter, locationFilter, dateFilter]);
+  useFilterGraph(truckFilter, locationFilter, dateFilter, null, getTruckUsage);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "truck_usage",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              Report Via Email
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "truck_usage",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isLoadingDownload ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 
@@ -48,8 +119,12 @@ const TruckUsage = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              const { location } = data;
+              const filter = `city:=:${location}`;
+              setLocationFilter(filter);
+            }}
+            data={locationsDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -60,14 +135,14 @@ const TruckUsage = () => {
           />
           <PickDate
             onChange={(date) => {
-              const filter = `?period[start]=${formatDate(date[0])[
-                "yyyy-mm-dd"
-              ].replace(/(^|\D)(\d)(?!\d)/g, "$10$2")}&period[end]=${formatDate(
-                date[1]
-              )["yyyy-mm-dd"].replace(/(^|\D)(\d)(?!\d)/g, "$10$2")} 
+              const filter =
+                date &&
+                `?period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
                `;
+              setDateFilter(filter);
               setDateRange(date);
-              getTruckUsage(filter);
             }}
           />
 
@@ -75,8 +150,12 @@ const TruckUsage = () => {
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              const { truck } = data;
+              const filter = `where=data.Truck:=:${truck}`;
+              setTruckFilter(filter);
+            }}
+            data={truckDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -86,12 +165,12 @@ const TruckUsage = () => {
             }
           />
         </StyledDivFlex>
-        <StyledBox background={Theme.colors.neutralColor}>
+        <StyledBox background={Theme.colors.neutralColor} padding="0 0 4rem 0">
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Truck Usage for the period:"
             dateRange={dateRange}
-            count="25 Trucks"
+            count={data?.length}
           />
 
           <StyledDivFlex
@@ -144,9 +223,14 @@ const TruckUsage = () => {
               </StyledText>
             </StyledDivFlex>
           </StyledDivFlex>
-
+          <TruckUsageGraph data={data} />
           {/* BARCHART STARTS FROM HERE  */}
-          <TruckUsageGraph data={dummyTruckData} />
+
+          <BusyOverlay
+            isLoading={isLoading}
+            spinnerText={data ? "Updating chart..." : "Loading chart ..."}
+          />
+
           {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>
