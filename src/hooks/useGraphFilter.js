@@ -5,16 +5,25 @@ export const useFilterGraph = (
         locationFilter,
         dateFilter,
         pageFilter,
+        maintenanceFilter,
         getData
     ) => {
         useEffect(() => {
-                    const filter = `${dateFilter}${truckFilter ? `&${truckFilter}` : ""}${
-      locationFilter
-        ? `&${locationFilter} ${pageFilter ? `&${pageFilter}` : ""}`
-        : ""
+                    const refineFilter = (filter) => {
+                        if (filter && filter[1] === "&") {
+                            return `${filter.slice(0, 1)}${filter.slice(2)}`;
+                        }
+                        return filter;
+                    };
+                    const filter = `?${dateFilter ? dateFilter : ""}${
+      truckFilter ? `&${truckFilter}` : ""
+    }${locationFilter ? `&${locationFilter}` : ""}${
+      pageFilter ? `&${pageFilter}` : ""
     }`;
+
     console.log("truck filter concat", filter);
-    getData(filter);
+    console.log("pageFilter", pageFilter);
+    getData(refineFilter(filter));
     console.log("getData", getData);
-  }, [truckFilter, locationFilter, dateFilter, pageFilter]);
+  }, [truckFilter, locationFilter, dateFilter, pageFilter, maintenanceFilter]);
 };

@@ -22,29 +22,48 @@ import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import { useFilter } from "../../../hooks/useFilter";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 
 const Driver = () => {
   const { data, isLoading, error, getDriver, totalPages } = useGetDriver();
-  const [dateRange, setDateRange] = useState([]);
+  const [activePage, setActivePage] = useState(0);
+
+  const startDate = getPreviousDate(120);
+  const endDate = getTodayDate();
+
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [pageFilter, setPageFilter] = useState();
+  const [locationFilter, setLocationFilter] = useState();
+  const [truckfilter, setTruckFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
   // CREATING FILTER STATE
 
-  // export data useState destructuring
+  const resetPagination = () => {
+    const pageFilter = `page=1`;
+    setPageFilter(pageFilter);
+    setActivePage(0);
+  };
   const {
     getCSVExport,
     csvData,
     isLoading: isLoadingDownload,
   } = useGetCSVExport();
 
-  const [locationFilter, setLocationFilter] = useState();
-  const [truckfilter, setTruckFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
-
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
 
-  useFilter(truckfilter, null, locationFilter, null, pageFilter, getDriver);
+  // useFilter(truckfilter, null, locationFilter, null, pageFilter, getDriver);
+  useFilterGraph(
+    truckfilter,
+    locationFilter,
+    null,
+    pageFilter,
+    null,
+    getDriver
+  );
 
   // useEffect(() => {
   //   const refineFilter = (filter) => {
@@ -126,7 +145,8 @@ const Driver = () => {
             onChange={(data) => {
               const { location } = data;
               console.log("location", location);
-              const filter = location ? `data.City:=:${location}` : null;
+              const filter = location ? `location=${location}` : null;
+              resetPagination();
               setLocationFilter(filter);
             }}
             data={locationsDropdownData}
@@ -158,8 +178,9 @@ const Driver = () => {
             label="Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = truck ? `data.Trucks:=:${truck}` : "";
+              const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
+              resetPagination();
             }}
             minWidth="20rem"
             data={truckDropdownData}
@@ -176,7 +197,7 @@ const Driver = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Driver  Managment:"
-            dateRange={dateRange}
+            // dateRange={dateRange}
             count={data?.length}
             // data={data}
           />
@@ -197,6 +218,8 @@ const Driver = () => {
             isLoading={isLoading}
             data={data}
             onPageSelected={setPageFilter}
+            activePage={activePage}
+            setActivePage={setActivePage}
           />
         </StyledBox>
       </StyledDashboardContentWrapper>

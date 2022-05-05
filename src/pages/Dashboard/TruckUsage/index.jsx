@@ -29,10 +29,15 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 
 const TruckUsage = () => {
   const { getTruckUsage, data, error, isLoading } = useGetTruckUsage();
-  const [dateRange, setDateRange] = useState();
+
+  const startDate = getPreviousDate(120);
+  const endDate = getTodayDate();
+
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
   const {
     getCSVExport,
     csvData,
@@ -43,19 +48,26 @@ const TruckUsage = () => {
     dropdownFilterContext
   );
 
-  useFilterGraph(truckFilter, locationFilter, dateFilter, null, getTruckUsage);
+  useFilterGraph(
+    truckFilter,
+    locationFilter,
+    dateFilter,
+    null,
+    null,
+    getTruckUsage
+  );
 
-  useEffect(() => {
-    const startDate = getPreviousDate(1);
-    const endDate = getTodayDate();
+  // useEffect(() => {
+  //   const startDate = getPreviousDate(1);
+  //   const endDate = getTodayDate();
 
-    const filter = `?period[start]=${startDate}
-    &period[end]=${endDate}`;
-    setDateFilter(filter);
+  //   const filter = `?period[start]=${startDate}
+  //   &period[end]=${endDate}`;
+  //   setDateFilter(filter);
 
-    setDateRange([startDate, endDate]);
-    getTruckUsage(filter);
-  }, []);
+  //   setDateRange([startDate, endDate]);
+  //   getTruckUsage(filter);
+  // }, []);
 
   // useEffect(() => {
   //   const filter = `${dateFilter}${truckFilter ? `&${truckFilter}` : ""}${
@@ -64,7 +76,7 @@ const TruckUsage = () => {
   //   console.log("truck filter concat", filter);
   //   getTruckUsage(filter);
   // }, [truckFilter, locationFilter, dateFilter]);
-  useFilterGraph(truckFilter, locationFilter, dateFilter, null, getTruckUsage);
+  // useFilterGraph(truckFilter, locationFilter, dateFilter, null, getTruckUsage);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -121,7 +133,7 @@ const TruckUsage = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              const filter = `city:=:${location}`;
+              const filter = data && `location=${location}`;
               setLocationFilter(filter);
             }}
             data={locationsDropdownData}
@@ -152,7 +164,7 @@ const TruckUsage = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = `where=data.Truck:=:${truck}`;
+              const filter = data && `truck=${truck}`;
               setTruckFilter(filter);
             }}
             data={truckDropdownData}

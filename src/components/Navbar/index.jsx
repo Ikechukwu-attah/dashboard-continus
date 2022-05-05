@@ -29,7 +29,7 @@ const Navbar = () => {
         fontSize="3.6rem"
         lineHeight="5.4rem"
       >
-        FLEET MANAGEMENT SYSTEM{" "}
+        FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
       <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
         <StyledImage

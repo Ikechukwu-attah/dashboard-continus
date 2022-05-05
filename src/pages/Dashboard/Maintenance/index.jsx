@@ -24,14 +24,28 @@ import { formatDate } from "../../../utils/FormatDate";
 import { useFilter } from "../../../hooks/useFilter";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
     useGetMaintenance();
-  const [maintenanceData, setMaintenanceData] = useState([]);
+  const [cycleData, setCycleData] = useState([]);
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+  const [activePage, setActivePage] = useState(0);
+
+  const resetPagination = () => {
+    const pageFilter = `page=1`;
+    setPageFilter(pageFilter);
+    setActivePage(0);
+  };
+
+  const startDate = getPreviousDate(120);
+  const endDate = getTodayDate();
+
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
 
   const {
     getCSVExport,
@@ -40,40 +54,48 @@ const Maintenance = () => {
   } = useGetCSVExport();
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
   const [pageFilter, setPageFilter] = useState();
   const [maintenanceFilter, setMaintenanceFilter] = useState([]);
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
 
-  const [truckData, setTruckData] = useState([]);
+  // const [truckData, setTruckData] = useState([]);
 
-  useFilter(
+  // useFilter(
+  //   truckfilter,
+  //   dateFilter,
+  //   locationFilter,
+  //   pageFilter,
+  //   maintenanceFilter,
+  //   getMaintenance,
+  //   null
+  // );
+
+  useFilterGraph(
     truckfilter,
-    dateFilter,
     locationFilter,
-    maintenanceFilter,
+    dateFilter,
     pageFilter,
-    getMaintenance,
-    null
+    maintenanceFilter,
+    getMaintenance
   );
 
-  const [dateRange, setDateRange] = useState([]);
-
-  useEffect(() => {
-    getMaintenance();
-  }, []);
+  // useEffect(() => {
+  //   getMaintenance();
+  // }, []);
 
   useEffect(() => {
     if (data) {
-      const maintenanceDropdownData = removeDuplicate(
+      const cycleDropdownData = removeDuplicate(
         data,
-        (allData) => allData.Maintenance
+        (allData) => allData.Cycle
       );
       // const truckDropdownData = removeDuplicate(
       //   data,
       //   (allData) => allData.Truck
       // );
-      if (!maintenanceData.length) {
-        setMaintenanceData(maintenanceDropdownData);
+      if (!cycleData.length) {
+        setCycleData(cycleDropdownData);
         // setTruckData(truckDropdownData);
       }
     }
@@ -139,18 +161,17 @@ const Maintenance = () => {
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
-            name="maintenance"
-            label="Maintenance"
+            name="cycle"
+            label="Cycle"
             onChange={(data) => {
               console.log("selection", data);
-              const { maintenance } = data;
-              const filter = maintenance
-                ? `data.Maintenance:=:${maintenance}`
-                : "";
+              const { cycle } = data;
+              const filter = maintenance ? `data.Cycle:=:${cycle}` : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
+              resetPagination();
             }}
-            data={maintenanceData}
+            data={cycleData}
             minWidth="20rem"
             gap="20rem"
             icon={
@@ -168,8 +189,9 @@ const Maintenance = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              const filter = location ? `data.City:=:${location}` : "";
+              const filter = location ? `location=${location}` : "";
               setLocationFilter(filter);
+              resetPagination();
               console.log("location selection", data);
             }}
             data={locationsDropdownData}
@@ -200,13 +222,13 @@ const Maintenance = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `data.Due on:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
-                  formatDate(date[1])["yyyy-mm-dd"]
-                }`;
-              setDateRange(date);
+                `?period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
+           `;
               setDateFilter(filter);
-
-              console.log("this is filter", filter);
+              setDateRange(date);
+              resetPagination();
             }}
           />
 
@@ -218,8 +240,9 @@ const Maintenance = () => {
               console.log("truck selection", data);
               // setSelectedTruckFilter(data);
               const { truck } = data;
-              const filter = truck ? `data.Truck:=:${truck}` : "";
+              const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
+              resetPagination();
             }}
             data={truckDropdownData}
             gap="2rem"
@@ -256,6 +279,8 @@ const Maintenance = () => {
             data={data}
             isLoading={isLoading}
             onPageSelected={setPageFilter}
+            activePage={activePage}
+            setActivePage={setActivePage}
           />
         </StyledBox>
       </StyledDashboardContentWrapper>

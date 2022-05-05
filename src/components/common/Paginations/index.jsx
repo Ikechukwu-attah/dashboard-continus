@@ -9,6 +9,8 @@ const Paginations = ({
   isLoading,
   data,
   onPageSelected,
+  activePage,
+  setActivePage,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const StyledPagination = styled(ReactPaginate)`
@@ -20,7 +22,8 @@ const Paginations = ({
   `;
 
   const handlePageChange = (data) => {
-    const filterCriteria = `:&page=${data.selected + 1}`;
+    const filterCriteria = `page=${data.selected + 1}`;
+    setActivePage(data.selected);
     console.log("paginations,", filterCriteria);
 
     onPageSelected(filterCriteria);
@@ -48,6 +51,7 @@ const Paginations = ({
         breakClassName={"page-item"}
         breakLinkClassName={"page-link"}
         activeClassName={"active"}
+        forcePage={activePage}
       />
     </StyledBox>
   );

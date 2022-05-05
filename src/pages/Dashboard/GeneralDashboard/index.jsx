@@ -45,7 +45,7 @@ const GeneralDashboard = () => {
     getWidgets,
   } = useContext(widgetContext);
 
-  useFilterGraph(null, null, dateFilter, null, getWidgets);
+  useFilterGraph(null, null, dateFilter, null, null, getWidgets);
 
   const addWidget = ({ widget }) => {
     const allWidgets = [...widgets];

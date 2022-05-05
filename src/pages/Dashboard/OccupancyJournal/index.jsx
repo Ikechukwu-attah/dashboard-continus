@@ -56,6 +56,7 @@ const OccupancyJournal = () => {
     locationFilter,
     dateFilter,
     pageFilter,
+    null,
     getOccupancyJournal
   );
 

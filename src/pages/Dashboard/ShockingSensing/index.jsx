@@ -26,6 +26,8 @@ import PickDate from "../../../components/common/DatePicker";
 import { useFilter } from "../../../hooks/useFilter";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 
 const ShockingSense = () => {
   const [activeButton, setActiveButton] = useState("Table");
@@ -43,29 +45,43 @@ const ShockingSense = () => {
     isLoading: isLoadingDownload,
   } = useGetCSVExport();
 
-  const [dateRange, setDateRange] = useState([]);
+  const [activePage, setActivePage] = useState(0);
+
+  const resetPagination = () => {
+    const pageFilter = `page=1`;
+    setPageFilter(pageFilter);
+    setActivePage(0);
+  };
+
+  const startDate = getPreviousDate(120);
+  const endDate = getTodayDate();
+
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+
+  console.log("shocking sense", filter);
+
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
   const [pageFilter, setPageFilter] = useState();
 
   console.log("table Data on filter", data);
 
-  useFilter(
+  useFilterGraph(
     truckfilter,
-    dateFilter,
     locationFilter,
-    null,
+    dateFilter,
     pageFilter,
+    null,
     getShockingSensingTable
-    // getShockingSensingBarChart
   );
 
   console.log("checking shocking graph data", graphdata);
 
-  useEffect(() => {
-    getShockingSensingTable();
-  }, []);
+  // useEffect(() => {
+  //   getShockingSensingTable();
+  // }, []);
 
   useEffect(() => {
     getShockingSensingBarChart();
@@ -127,8 +143,10 @@ const ShockingSense = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-              const filter = location ? `data.City:=:${location}` : "";
+              const filter = location ? `location=${location}` : "";
               setLocationFilter(filter);
+              resetPagination();
+
               // getShockingSensingTable(filter);
               console.log("filter", filter);
             }}
@@ -146,11 +164,13 @@ const ShockingSense = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `data.Date:between:${formatDate(date[0])["yyyy-mm-dd"]}, ${
-                  formatDate(date[1])["yyyy-mm-dd"]
-                }`;
-              setDateRange(date);
+                `?period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
+           `;
               setDateFilter(filter);
+              setDateRange(date);
+              resetPagination();
             }}
           />
 
@@ -160,9 +180,10 @@ const ShockingSense = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = truck ? `data.Truck:=:${truck}` : "";
+              const filter = truck ? `truck=${truck}` : "";
               // getShockingSensingTable(filter);
               setTruckFilter(filter);
+              resetPagination();
             }}
             minWidth="20rem"
             data={truckDropdownData}
@@ -230,6 +251,8 @@ const ShockingSense = () => {
                   isLoading={isLoading}
                   data={data}
                   onPageSelected={setPageFilter}
+                  activePage={activePage}
+                  setActivePage={setActivePage}
                 />
               )}
             </>

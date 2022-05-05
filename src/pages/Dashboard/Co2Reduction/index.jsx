@@ -50,6 +50,7 @@ const Co2Reduction = () => {
     locationFilter,
     dateFilter,
     null,
+    null,
     getCo2Reduction
   );
 
