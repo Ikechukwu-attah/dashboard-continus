@@ -39,11 +39,8 @@ const ShockingSense = () => {
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
-  const {
-    getCSVExport,
-    csvData,
-    isLoading: isLoadingDownload,
-  } = useGetCSVExport();
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
 
   const [activePage, setActivePage] = useState(0);
 
@@ -108,7 +105,7 @@ const ShockingSense = () => {
                 getCSVExport(data);
               }}
             >
-              Report Via Email
+              {isExporting ? "Sending..." : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
@@ -123,7 +120,7 @@ const ShockingSense = () => {
                 getCSVExport(data);
               }}
             >
-              {isLoadingDownload ? "DownLoading..." : "Download Report"}
+              {isDownloading ? "DownLoading..." : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -164,7 +161,7 @@ const ShockingSense = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
            `;

@@ -24,9 +24,14 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { formatDate } from "../../../utils/FormatDate";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import CalendarCheck from "../../../components/Widget/Calendar";
 
 const GeneralDashboard = () => {
   const [widgets, setWidgets] = useState();
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
 
   const {
     updateWidget,
@@ -135,8 +140,39 @@ const GeneralDashboard = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            {/* <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "dashboard",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isExporting ? "Sending..." : " Report Via Email"}
+            </StyledPageHeaderButton> */}
+            {/* <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "dashboard",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isDownloading ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton> */}
           </StyledDivFlex>
         </PageHeaderLayout>
         <StyledDivFlex
@@ -168,7 +204,7 @@ const GeneralDashboard = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
              `;
@@ -194,7 +230,6 @@ const GeneralDashboard = () => {
             {/* {widgets?.map((item) => {
               return <>{getWidget(item)}</>;
             })} */}
-
             {widgetComponents
               ?.reverse()
               .map(
@@ -203,7 +238,6 @@ const GeneralDashboard = () => {
                     <>{widget.Component}</>
                   )
               )}
-
             {isLoading &&
               !widgetsData &&
               Array.from(Array(3).keys()).map((item) => (
@@ -214,12 +248,19 @@ const GeneralDashboard = () => {
                     borderRadius: "2rem",
                   }}
                 />
-              ))}
+              ))}{" "}
+            {widgets?.includes("monthly_availability") && (
+              <StyledBox gridColumn={"span 2"}>
+                <AvailabilityCard
+                  onRemove={() => removeWidget("monthly_availability")}
+                />
+              </StyledBox>
+            )}
+            {widgets?.includes("calendar") && (
+              <CalendarCheck onRemove={() => removeWidget("calendar")} />
+            )}
           </StyledDivGrid>
-          <StyledDivFlex gap="3rem" marginTop="4rem">
-            <AvailabilityCard />
-            {/* <CalendarCheck /> */}
-          </StyledDivFlex>
+          <StyledDivFlex gap="3rem" marginTop="4rem"></StyledDivFlex>
         </StyledBox>
       </StyledDashboardContentWrapper>
       <BusyOverlay

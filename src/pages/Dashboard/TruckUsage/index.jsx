@@ -38,11 +38,8 @@ const TruckUsage = () => {
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
-  const {
-    getCSVExport,
-    csvData,
-    isLoading: isLoadingDownload,
-  } = useGetCSVExport();
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
 
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
@@ -98,7 +95,7 @@ const TruckUsage = () => {
                 getCSVExport(data);
               }}
             >
-              Report Via Email
+              {isExporting ? "Sending..." : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
@@ -113,8 +110,7 @@ const TruckUsage = () => {
                 getCSVExport(data);
               }}
             >
-              {" "}
-              {isLoadingDownload ? "DownLoading" : "Download Report"}
+              {isDownloading ? "DownLoading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -149,7 +145,7 @@ const TruckUsage = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
                `;
@@ -201,21 +197,6 @@ const TruckUsage = () => {
                 fontWeight="500"
                 color={Theme.colors.neutralColor2}
               >
-                Active usage
-              </StyledText>
-            </StyledDivFlex>
-
-            <StyledDivFlex alignItems="center" gap="1rem">
-              <StyledText
-                height="28px"
-                width="28px"
-                background="#5899DA"
-              ></StyledText>
-              <StyledText
-                fontSize="1.8rem"
-                fontWeight="500"
-                color={Theme.colors.neutralColor2}
-              >
                 Driving
               </StyledText>
             </StyledDivFlex>
@@ -234,6 +215,21 @@ const TruckUsage = () => {
                 Lifting
               </StyledText>
             </StyledDivFlex>
+
+            {/* <StyledDivFlex alignItems="center" gap="1rem">
+              <StyledText
+                height="28px"
+                width="28px"
+                background="#19A979"
+              ></StyledText>
+              <StyledText
+                fontSize="1.8rem"
+                fontWeight="500"
+                color={Theme.colors.neutralColor2}
+              >
+                Lifting
+              </StyledText>
+            </StyledDivFlex> */}
           </StyledDivFlex>
           <TruckUsageGraph data={data} />
           {/* BARCHART STARTS FROM HERE  */}

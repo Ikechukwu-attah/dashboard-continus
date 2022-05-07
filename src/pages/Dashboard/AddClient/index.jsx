@@ -191,7 +191,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
                   placeholder="Company Address"
                   padding="2.3rem"
                   fontSize="2.3rem"
-                  name="company_adrress"
+                  name="company_address"
                   value={signUpClientData.company_adrress}
                   onChange={(event) =>
                     handleChange({
@@ -251,7 +251,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => setShowListing(true)}
+                onClick={() => setShowList(true)}
               >
                 Cancel
               </StyledButton>

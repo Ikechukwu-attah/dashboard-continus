@@ -6,7 +6,7 @@ import WidgetMenu from "../../../../components/Widget/MiniDropDown";
 import { Theme } from "../../../../Theme";
 import AvailabilityGraph from "./Graph";
 
-const AvailabilityCard = ({ width = "50%", onRemove, onView }) => {
+const AvailabilityCard = ({ width = "100%", onRemove, onView }) => {
   return (
     <StyledDivFlex
       background={Theme.colors.neutralColor}

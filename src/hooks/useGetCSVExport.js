@@ -3,19 +3,22 @@ import { exportCSVAPI } from "../Authorization/ServerPaths";
 import axios from "../Authorization/Axios";
 
 export const useGetCSVExport = () => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
     const [error, setError] = useState();
     const [csvData, setCsvData] = useState();
     const getCSVExport = async(data) => {
-        setIsLoading(true);
+        const {
+            export: { entity, as },
+        } = data;
+
+        const setIsLoading = as === "download" ? setIsDownloading : setIsExporting;
         try {
-            const {
-                export: { entity, as },
-            } = data;
             const url = `${exportCSVAPI}/${entity}`;
+            setIsLoading(true);
             const response = await axios.post(url, data);
+            setIsLoading(false);
             if (as === "download") {
-                console.log("download link", response.data.data.link);
                 const downloadLink = response.data.data.link;
                 const fileName = downloadLink
                     .split("/")
@@ -38,15 +41,14 @@ export const useGetCSVExport = () => {
                 //     });
             }
             setCsvData(response);
-            setIsLoading(false);
             console.log("assssss", as);
 
             console.log("export data", response);
         } catch (error) {
-            setIsLoading(false);
             setError(error.response);
+            setIsLoading(false);
         }
     };
 
-    return { getCSVExport, isLoading, error, csvData };
+    return { getCSVExport, isDownloading, isExporting, error, csvData };
 };

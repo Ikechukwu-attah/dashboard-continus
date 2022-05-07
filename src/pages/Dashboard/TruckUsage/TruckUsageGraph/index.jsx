@@ -16,26 +16,27 @@ import { Theme } from "../../../../Theme";
 
 const TruckUsageGraph = ({ data }) => {
   const [truckData, setTruckData] = useState([]);
-  console.log("tuck data modified", truckData);
+  // console.log("tuck data modified", truckData);
+  console.log("truck now now", data);
 
-  useEffect(() => {
-    if (data) {
-      console.log("Is data for truck working ");
-      console.table("data truck", data);
-      const newData = data.map((data) => {
-        data.Driving = data.data["Driving [h]"];
-        data.Lifting = data.data["Lifting [h]"];
-        data.Active = data.data["Active usage [h]"];
-        data.Truck = data.data.Truck;
+  // useEffect(() => {
+  //   if (data) {
+  //     // console.log("Is data for truck working ");
+  //     // console.table("data truck", data);
+  //     // const newData = data.map((data) => {
+  //     //   data.Driving = data.data["Driving [h]"];
+  //     //   data.Lifting = data.data["Lifting [h]"];
+  //     //   data.Active = data.data["Active usage [h]"];
+  //     //   data.Truck = data.data.Truck;
 
-        return data;
-      });
+  //     //   return data;
+  //     // });
 
-      console.log("newData graph", newData);
+  //     // console.log("newData graph", newData);
 
-      setTruckData(newData);
-    }
-  }, [data]);
+  //     setTruckData(data);
+  //   }
+  // }, [data]);
   return (
     <StyledBox
       marginTop="3rem"
@@ -48,7 +49,7 @@ const TruckUsageGraph = ({ data }) => {
         <BarChart
           // width={1000}
           // height={500}
-          data={truckData}
+          data={data}
           margin={{
             top: 5,
             right: 30,
@@ -58,7 +59,7 @@ const TruckUsageGraph = ({ data }) => {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            dataKey="Truck"
+            dataKey="truck"
             stroke="#000000"
             // angle={-45}
             textAnchor="end"
@@ -75,12 +76,11 @@ const TruckUsageGraph = ({ data }) => {
             domain={[0, "dataMax + 0"]}
             tickCount={5}
           />
-          <Tooltip />
+          <Tooltip /> #19A979
           {/* <Legend /> */}
-
-          <Bar dataKey="Active" fill="#E8743B" />
-          <Bar dataKey="Driving" fill="#5899DA" />
-          <Bar dataKey="Lifting" fill="#19A979" />
+          <Bar dataKey="driving_percentage" fill="#E8743B" />
+          <Bar dataKey="lifting_percentage" fill="#19A979" />
+          {/* <Bar dataKey="Lifting" fill="#5899DA" /> */}
         </BarChart>
       </ResponsiveContainer>
     </StyledBox>

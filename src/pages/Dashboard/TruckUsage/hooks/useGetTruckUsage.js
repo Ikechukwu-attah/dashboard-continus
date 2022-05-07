@@ -22,7 +22,7 @@ export const useGetTruckUsage = () => {
             console.log("still not working");
 
             setIsLoading(false);
-            console.log("truck ", response);
+            console.log("truck changed ", response.data.data.records);
             setData(response.data.data.records);
             console.log("data truck ooooooooooo o");
         } catch (error) {

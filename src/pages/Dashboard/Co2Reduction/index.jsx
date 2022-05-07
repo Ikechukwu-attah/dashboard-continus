@@ -28,11 +28,15 @@ import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const Co2Reduction = () => {
-  const startDate = getPreviousDate(1);
+  const startDate = getPreviousDate(10);
   const endDate = getTodayDate();
-  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
 
   const { data, getCo2Reduction, isLoading } = useGetCo2Reduction();
   const { truckDropdownData, locationsDropdownData } = useContext(
@@ -54,14 +58,96 @@ const Co2Reduction = () => {
     getCo2Reduction
   );
 
+  const widgetCardComponents = [
+    {
+      Component: (
+        <CardWidget
+          label="Disel saved (liters)"
+          count={Math.round(data?.diesel_saved_in_litres)}
+          // background="#5899DA"
+          icon={<Droplet />}
+          width="100%"
+        />
+      ),
+    },
+
+    {
+      Component: (
+        <CardWidget
+          label="Co2 Reduction (Kg)"
+          count={Math.round(data?.co2_reduction_in_kg)}
+          // background="#5899DA"
+          icon={<Cloud />}
+          width="100%"
+        />
+      ),
+    },
+
+    {
+      Component: (
+        <CardWidget
+          label="Co2 Reduction (tons)"
+          count={Math.round(data?.co2_reduction_in_ton)}
+          // background="#5899DA"
+          icon={<CloudBlue />}
+          width="100%"
+        />
+      ),
+    },
+
+    {
+      Component: (
+        <CardWidget
+          label="Total Active Usage"
+          count={Math.round(data?.total_active_usage)}
+          // background="#5899DA"
+          icon={<CloudGreen />}
+          width="100%"
+        />
+      ),
+    },
+  ];
+
   console.log("date range", dateRange);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "co2_reduction",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isExporting ? "Sending..." : " Report Via Email"}
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "co2_reduction",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isDownloading ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 
@@ -97,7 +183,7 @@ const Co2Reduction = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
                `;
@@ -141,50 +227,53 @@ const Co2Reduction = () => {
           width="100%"
           // flexWrap="wrap"
         >
-          <CardWidget
+          {/* <CardWidget
             label="Disel saved (liters)"
             count={Math.round(data?.diesel_saved_in_litres)}
             // background="#5899DA"
             icon={<Droplet />}
             width="100%"
-          />
+          /> */}
 
-          <CardWidget
+          {/* <CardWidget
             label="Co2 Reduction (Kg)"
             count={Math.round(data?.co2_reduction_in_kg)}
             // background="#5899DA"
             icon={<Cloud />}
             width="100%"
-          />
+          /> */}
 
-          <CardWidget
+          {/* <CardWidget
             label="Co2 Reduction (tons)"
             count={Math.round(data?.co2_reduction_in_ton)}
             // background="#5899DA"
             icon={<CloudBlue />}
             width="100%"
-          />
+          /> */}
 
-          <CardWidget
+          {/* <CardWidget
             label="Total Active Usage"
             count={Math.round(data?.total_active_usage)}
             // background="#5899DA"
             icon={<CloudGreen />}
             width="100%"
-          />
+          /> */}
 
-          {/* {isLoading &&
-            !data &&
+          {data &&
+            widgetCardComponents.map((item) => {
+              return item.Component;
+            })}
+
+          {isLoading &&
             Array.from(Array(3).keys()).map((item) => (
               <Skeleton
                 style={{
                   height: "25rem",
                   width: "100%",
                   borderRadius: "2rem",
-                  bottom: "15rem",
                 }}
               />
-            ))} */}
+            ))}
         </StyledDivGrid>
       </StyledDashboardContentWrapper>
     </DashboardLayout>

@@ -152,7 +152,7 @@ const OccupancyJournal = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
              `;

@@ -47,11 +47,8 @@ const Maintenance = () => {
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
 
-  const {
-    getCSVExport,
-    csvData,
-    isLoading: isLoadingDownload,
-  } = useGetCSVExport();
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
@@ -131,7 +128,7 @@ const Maintenance = () => {
                 getCSVExport(data);
               }}
             >
-              Report Via Email
+              {isExporting ? "Sending..." : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
@@ -146,7 +143,7 @@ const Maintenance = () => {
                 getCSVExport(data);
               }}
             >
-              {isLoadingDownload ? "DownLoading" : "Download Report"}
+              {isDownloading ? "DownLoading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -166,9 +163,10 @@ const Maintenance = () => {
             onChange={(data) => {
               console.log("selection", data);
               const { cycle } = data;
-              const filter = maintenance ? `data.Cycle:=:${cycle}` : "";
+              const filter = maintenance ? `cycle=${cycle}` : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
+
               resetPagination();
             }}
             data={cycleData}
@@ -222,7 +220,7 @@ const Maintenance = () => {
             onChange={(date) => {
               const filter =
                 date &&
-                `?period[start]=${
+                `period[start]=${
                   formatDate(date[0])["yyyy-mm-dd"]
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
            `;

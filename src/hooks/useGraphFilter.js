@@ -18,7 +18,9 @@ export const useFilterGraph = (
                     const filter = `?${dateFilter ? dateFilter : ""}${
       truckFilter ? `&${truckFilter}` : ""
     }${locationFilter ? `&${locationFilter}` : ""}${
-      pageFilter ? `&${pageFilter}` : ""
+      pageFilter
+        ? `&${pageFilter}${maintenanceFilter ? `&${maintenanceFilter}` : ""}`
+        : ""
     }`;
 
     console.log("truck filter concat", filter);

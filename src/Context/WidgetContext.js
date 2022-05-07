@@ -6,20 +6,16 @@ import { getPreviousDate, getTodayDate } from "../utils/GetDate";
 export const widgetContext = createContext();
 
 export const WidgetProvider = ({ children }) => {
+  const startDate = getPreviousDate(30);
+  const endDate = getTodayDate();
+  const filter = `period[start]=${startDate}
+    &period[end]=${endDate}`;
   const { data, getWidgets, isLoading } = useGetWidgets();
   const [dateRange, setDateRange] = useState([]);
-  const [dateFilter, setDateFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
 
   useEffect(() => {
-    const startDate = getPreviousDate(30);
-    const endDate = getTodayDate();
-
-    const filter = `?period[start]=${startDate}
-    &period[end]=${endDate}`;
-    setDateFilter(filter);
-
     setDateRange([startDate, endDate]);
-    getWidgets(filter);
   }, []);
 
   return (

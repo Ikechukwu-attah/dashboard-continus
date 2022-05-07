@@ -14,6 +14,7 @@ export const StyledBox = styled.div `
   display: ${({ display }) => display};
   position: ${({ position }) => position};
   top: ${({ Top }) => Top};
+  grid-column: ${({ gridColumn }) => gridColumn};
   bottom: ${({ Bottom }) => Bottom};
   right: ${({ Right }) => Right};
   left: ${({ Left }) => Left};

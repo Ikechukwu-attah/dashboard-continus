@@ -45,15 +45,14 @@ const Driver = () => {
     setPageFilter(pageFilter);
     setActivePage(0);
   };
-  const {
-    getCSVExport,
-    csvData,
-    isLoading: isLoadingDownload,
-  } = useGetCSVExport();
+  const { getCSVExport, csvData, isExporting, isDownloading } =
+    useGetCSVExport();
 
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
+
+  console.log("truck dropdown==>", truckDropdownData);
 
   // useFilter(truckfilter, null, locationFilter, null, pageFilter, getDriver);
   useFilterGraph(
@@ -110,7 +109,7 @@ const Driver = () => {
                 getCSVExport(data);
               }}
             >
-              Report Via Email
+              {isExporting ? "Sending......" : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
@@ -125,7 +124,7 @@ const Driver = () => {
                 getCSVExport(data);
               }}
             >
-              {isLoadingDownload ? "DownLoading" : "Download Report"}
+              {isDownloading ? "DownLoading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>

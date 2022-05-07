@@ -202,7 +202,7 @@ const EditClient = ({ setShowClientList }) => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="company_adrress"
-                  value={clientData.company_adrress}
+                  value={clientData.company_address}
                   onChange={(event) =>
                     handleChange({
                       name: event.target.name,

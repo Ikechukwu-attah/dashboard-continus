@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -28,14 +28,52 @@ import { StyledText } from "../../../components/common/Basics/StyledText";
 import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { dummyDataChart } from "../../../DUMMYDATACHART.js";
 import { useMonthlyAvaliablity } from "./hooks/useMonthlyAvaliablity";
+import AvaliablityGraph from "./Graph";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import PickDate from "../../../components/common/DatePicker";
+import { formatDate } from "../../../utils/FormatDate";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import DailyRating from "./DailyRatings";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
+import { StyledDivGrid } from "../../../components/common/Basics/DivGrid";
 
 const MonthlyAvaliablity = () => {
-  const { getMonthlyAvaliablity, data, error, isLoading } =
+  const { getMonthlyAvaliablity, data, error, isLoading, summary } =
     useMonthlyAvaliablity();
 
-  useEffect(() => {
-    getMonthlyAvaliablity();
-  }, []);
+  const startDate = getPreviousDate(120);
+  const endDate = getTodayDate();
+
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
+  const [truckFilter, setTruckFilter] = useState();
+  const [locationFilter, setLocationFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
+
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  useFilterGraph(
+    truckFilter,
+    locationFilter,
+    dateFilter,
+    null,
+    null,
+    getMonthlyAvaliablity
+  );
+  console.log("summary", summary);
+  console.log("data avail", data);
+  // useEffect(() => {
+  //   getMonthlyAvaliablity(
+  //     "?period[start]=2022-03-01&truck=BIS/NB/002&period[end]=2022-04-01"
+  //   );
+  // }, []);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -57,8 +95,12 @@ const MonthlyAvaliablity = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              const { location } = data;
+              const filter = data && `location=${location}`;
+              setLocationFilter(filter);
+            }}
+            data={locationsDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -67,27 +109,29 @@ const MonthlyAvaliablity = () => {
               />
             }
           />
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="period"
-            label="Time Period"
-            onChange={(data) => console.log("user selection", data)}
-            data={period}
-            gap="2rem"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
+          <PickDate
+            onChange={(date) => {
+              const filter =
+                date &&
+                `period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
+               `;
+              setDateFilter(filter);
+              setDateRange(date);
+            }}
           />
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              const { truck } = data;
+              const filter = data && `truck=${truck}`;
+              setTruckFilter(filter);
+            }}
+            data={truckDropdownData}
             gap="2rem"
             icon={
               <KeyboardArrowDownIcon
@@ -102,107 +146,52 @@ const MonthlyAvaliablity = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Monthly Availability for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
-            count="25 Trucks"
+            dateRange={dateRange}
+            count={data?.length}
           />
-
-          <StyledDivFlex
-            padding="1rem  8rem 1rem 10rem"
-            marginTop="2rem"
-            gap="4rem"
-          >
-            <StyledBox
-              // padding="5rem"
-              background={Theme.colors.neutralColor5}
-              minWidth="30%"
-            >
-              <StyledText
-                fontSize="2.4rem"
-                fontWeight="500"
-                padding="2rem 0 0 2rem"
-                Display="inline-block"
-                color={Theme.colors.primaryColor}
-              >
-                28 days (672 Hours)
-              </StyledText>
-              <StyledDivFlex
-                padding="4rem 0rem 0rem 0rem"
-                justifyContent="flex-end"
-              >
-                <StyledText
-                  fontSize="2.4rem"
-                  fontWeight="400"
-                  color={Theme.colors.primaryColor}
-                  padding="0 2rem 0rem 0rem"
-                >
-                  Uptime
-                </StyledText>
-              </StyledDivFlex>
-              <StyledDivFlex></StyledDivFlex>
-            </StyledBox>
-
-            <StyledBox
-              // padding="5rem"
-              background={Theme.colors.neutralColor5}
-              minWidth="30%"
-            >
-              <StyledText
-                fontSize="2.4rem"
-                fontWeight="500"
-                padding="2rem 0 0 2rem"
-                color={Theme.colors.primaryColor}
-                Display="inline-block"
-              >
-                100%
-              </StyledText>
-              <StyledDivFlex
-                padding="4rem 0rem 0rem 0rem"
-                justifyContent="flex-end"
-              >
-                <StyledText
-                  fontSize="2.4rem"
-                  fontWeight="400"
-                  color={Theme.colors.primaryColor}
-                  padding="0 2rem 0rem 0rem"
-                >
-                  Availability
-                </StyledText>
-              </StyledDivFlex>
-              <StyledDivFlex></StyledDivFlex>
-            </StyledBox>
-          </StyledDivFlex>
-          {/* BARCHART STARTS FROM HERE  */}
-          <StyledBox marginTop="3rem" padding="1rem 8rem" height="55vh">
-            <ResponsiveContainer width="100%">
-              <BarChart
-                // width={1000}
-                // height={500}
-                data={dummyDataChart}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke="#000000">
-                  <Label value="Days" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis
-                  label={{
-                    value: "Uptime (hours)",
-                    angle: -90,
-                    position: "insideLeft",
+          <StyledDivGrid width="100%" gap="5rem" padding="1rem 8rem">
+            {isLoading &&
+              Array.from(Array(3).keys()).map((item) => (
+                <Skeleton
+                  style={{
+                    height: "15rem",
+                    width: "100%",
+                    marginTop: "5rem",
                   }}
                 />
-                <Tooltip />
-                <Legend />
+              ))}
+          </StyledDivGrid>
+          <>
+            {data && !isLoading && (
+              <StyledDivFlex
+                padding="1rem  8rem 1rem 10rem"
+                marginTop="2rem"
+                gap="4rem"
+              >
+                <DailyRating
+                  label="Uptime"
+                  count={`${
+                    summary?.total_days ? summary?.total_days : 0
+                  } days   (${
+                    summary?.total_uptime_hours
+                      ? summary?.total_uptime_hours
+                      : 0
+                  } Hours)`}
+                />
+                <DailyRating
+                  label=" Availability"
+                  count={`${
+                    summary?.avg_availability
+                      ? summary?.avg_availability?.toFixed(2)
+                      : 0
+                  }%`}
+                />
+              </StyledDivFlex>
+            )}
 
-                <Bar dataKey="hour" fill="#E8743B" />
-              </BarChart>
-            </ResponsiveContainer>
-          </StyledBox>
+            {/* BARCHART STARTS FROM HERE  */}
+            <AvaliablityGraph data={data} isLoading={isLoading} />
+          </>
           {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>

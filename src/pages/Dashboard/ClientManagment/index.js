@@ -37,15 +37,15 @@ const ClientManagment = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex>
-            {showListing && (
-              <StyledPageHeaderButton onClick={() => setShowListing(false)}>
+            {showClientList && (
+              <StyledPageHeaderButton onClick={() => setShowClientList(false)}>
                 Add Client
               </StyledPageHeaderButton>
             )}
           </StyledDivFlex>
         </PageHeaderLayout>
 
-        {showListing ? (
+        {showClientList ? (
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (
