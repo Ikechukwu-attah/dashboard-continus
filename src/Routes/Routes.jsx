@@ -16,6 +16,8 @@ import Battery from "../pages/Dashboard/Battery";
 import EditUsersPage from "../pages/Dashboard/EditUsersPage";
 import EditClientsPage from "../pages/Dashboard/EditClientsPage";
 import ContactAdmin from "../pages/ContactAdmin";
+import UploadData from "../pages/Dashboard/Upload";
+import TruckManagment from "../pages/Dashboard/TruckManagment";
 
 export const publicRoutes = [
   {
@@ -67,4 +69,8 @@ export const protectedRoutes = [
   { path: "/user-management/:userType/:id", component: <EditClientsPage /> },
 
   { path: "/driver", component: <Driver /> },
+
+  { path: "/upload-data", component: <UploadData /> },
+
+  { path: "/truck-management", component: <TruckManagment /> },
 ];

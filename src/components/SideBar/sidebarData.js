@@ -1,20 +1,16 @@
-import React, { useContext } from "react"
-
+import React, { useContext } from "react";
 
 export const sideBarData = [{
         id: 1,
         title: "General Dashboard",
         link: "/home",
-
     },
-
 
     {
         id: 2,
         title: "Monthly Availability ",
-        link: "/monthly-avaliablity"
+        link: "/monthly-avaliablity",
     },
-
 
     // {
     //     id: 3,
@@ -25,63 +21,57 @@ export const sideBarData = [{
     {
         id: 10,
         title: "Driver Management",
-        link: "/driver"
+        link: "/driver",
     },
 
     {
         id: 4,
         title: "Truck Usage",
-        link: "/truck-usage"
+        link: "/truck-usage",
     },
-
 
     {
         id: 5,
         title: "Occupancy Journal",
-        link: "/occupancy-journal"
+        link: "/occupancy-journal",
     },
-
 
     {
         id: 6,
         title: "Battery ",
-        link: "/battery"
+        link: "/battery",
     },
 
     {
         id: 7,
         title: "C02 Reduction",
-        link: "/co2-reduction"
+        link: "/co2-reduction",
     },
 
     {
         id: 8,
         title: "Maintenance ",
-        link: "/maintenance"
+        link: "/maintenance",
     },
 
     {
         id: 9,
         title: "Shocks Sensing ",
-        link: "/shocking-sense"
+        link: "/shocking-sense",
     },
-
-
-
-
-
-
-]
-
-
-export const adminNavbarData = [
 
     {
+        id: 10,
+        title: "Truck Management ",
+        link: "/truck-management",
+    },
+];
+
+export const adminNavbarData = [{
         id: 1,
         title: "Client Management ",
-        link: "/client-management"
+        link: "/client-management",
     },
-
 
     {
         id: 2,
@@ -89,6 +79,9 @@ export const adminNavbarData = [
         link: "/user-management",
     },
 
-
-
-]
+    {
+        id: 3,
+        title: "Upload Data ",
+        link: "/upload-data",
+    },
+];

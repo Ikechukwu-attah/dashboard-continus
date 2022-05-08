@@ -65,7 +65,7 @@ const EditClient = ({ setShowClientList }) => {
       >
         Add user now
       </StyledText>
-      <StyledButton onClick={() => setShowListing(false)}>check</StyledButton>
+
       <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
           gap="20rem"
@@ -85,7 +85,7 @@ const EditClient = ({ setShowClientList }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="firstname"
-                value={clientData.firstname}
+                value={clientData?.firstname}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -106,7 +106,7 @@ const EditClient = ({ setShowClientList }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="lastname"
-                value={clientData.lastname}
+                value={clientData?.lastname}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -134,7 +134,7 @@ const EditClient = ({ setShowClientList }) => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="company_id"
-                  value={clientData.company_id}
+                  value={clientData?.company_id}
                   onChange={(event) =>
                     handleChange({
                       name: event.target.name,
@@ -156,7 +156,7 @@ const EditClient = ({ setShowClientList }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="phone"
-                value={clientData.phone}
+                value={clientData?.phone}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -177,7 +177,7 @@ const EditClient = ({ setShowClientList }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="email"
-                value={clientData.email}
+                value={clientData?.email}
                 onChange={(event) =>
                   handleChange({
                     name: event.target.name,
@@ -202,7 +202,7 @@ const EditClient = ({ setShowClientList }) => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="company_adrress"
-                  value={clientData.company_address}
+                  value={clientData?.company_address}
                   onChange={(event) =>
                     handleChange({
                       name: event.target.name,
@@ -240,6 +240,31 @@ const EditClient = ({ setShowClientList }) => {
 
                   data={roleData}
                   icon={<KeyboardArrowDownIcon fontSize="large" />}
+                />
+              </StyledDivFlex>
+            )}
+
+            {userType === "client" && (
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel
+                  fontSize="1.8rem"
+                  color={Theme.colors.neutralColor2}
+                >
+                  Availability Threshold
+                </StyledLabel>
+                <StyledInput
+                  type="number"
+                  placeholder="Availability Threshold"
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                  name="availability_threshold"
+                  value={clientData?.availability_threshold}
+                  onChange={(event) =>
+                    handleChange({
+                      name: event.target.name,
+                      value: event.target.value,
+                    })
+                  }
                 />
               </StyledDivFlex>
             )}

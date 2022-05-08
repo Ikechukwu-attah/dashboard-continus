@@ -37,15 +37,15 @@ const UserManagement = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex>
-            {showListing && (
-              <StyledPageHeaderButton onClick={() => setShowListing(false)}>
+            {showUserList && (
+              <StyledPageHeaderButton onClick={() => setShowUserList(false)}>
                 Add user
               </StyledPageHeaderButton>
             )}
           </StyledDivFlex>
         </PageHeaderLayout>
 
-        {showListing ? (
+        {showUserList ? (
           isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="3rem 0 0 0" />
           ) : (

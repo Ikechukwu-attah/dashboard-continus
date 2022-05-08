@@ -233,6 +233,31 @@ const AddClient = ({ setShowList, getList, userType }) => {
               </StyledDivFlex>
             )}
 
+            {userType === "client" && (
+              <StyledDivFlex flexDirection="column" gap="1rem">
+                <StyledLabel
+                  fontSize="1.8rem"
+                  color={Theme.colors.neutralColor2}
+                >
+                  Availability Threshold
+                </StyledLabel>
+                <StyledInput
+                  type="number"
+                  placeholder="Availability Threshold"
+                  padding="2.3rem"
+                  fontSize="2.3rem"
+                  name="availability_threshold"
+                  value={signUpClientData.availability_threshold}
+                  onChange={(event) =>
+                    handleChange({
+                      name: event.target.name,
+                      value: event.target.value,
+                    })
+                  }
+                />
+              </StyledDivFlex>
+            )}
+
             <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
               Upload Image
             </StyledLabel>

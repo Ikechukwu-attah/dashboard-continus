@@ -59,7 +59,7 @@ const SideBar = () => {
                 key={item.id}
                 fontSize="1.8rem"
                 fontWeight="400"
-                lineHeight="2.7rem"
+                lineHeight="2rem"
                 padding="1rem 1rem 1rem 10.5rem"
                 color={
                   activeUrl === item.link

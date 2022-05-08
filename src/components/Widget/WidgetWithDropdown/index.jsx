@@ -80,7 +80,7 @@ const WidgetWithDropdown = ({
           margin="0 1rem 0 0"
           cursor="pointer"
         >
-          Download report
+          View report
         </StyledText>
       </StyledBox>
       <StyledBox cursor="pointer" position="absolute" Top="2rem" Right="2rem">

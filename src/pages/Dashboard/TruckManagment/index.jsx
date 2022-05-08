@@ -1,37 +1,30 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useState } from "react";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
+import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
+import PickDate from "../../../components/common/DatePicker";
 import Dropdown from "../../../components/common/Dropdown";
-import PageHeadingButtons from "../../../components/common/PageButton";
+import Paginations from "../../../components/common/Paginations";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import DashboardLayout from "../../../components/Layouts/DashboardLayout";
 import PageHeaderLayout from "../../../components/Layouts/HeaderLayout";
-import { Theme } from "../../../Theme";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { locations, period, trucks } from "../../../DUMMYDATA";
-import { StyledBox } from "../../../components/common/Basics/DivBox";
 import SubHeaderLayout from "../../../components/Layouts/SubHeaderLayout";
-import { useOccupancyJournal } from "./hooks/useGetOccupancyJournal";
-import JournalTable from "./JournalTable";
-import Paginations from "../../../components/common/Paginations";
-import { removeDuplicate } from "../../../components/common/RemoveDuplicate";
 import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
-import SpinnerWithText from "../../../components/common/SpinnerWithText";
-import { formatDate } from "../../../utils/FormatDate";
-import { useFilter } from "../../../hooks/useFilter";
-import PickDate from "../../../components/common/DatePicker";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
-import MapTokenToUser from "../../../Authorization/MapTokenToUser";
-import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import { Theme } from "../../../Theme";
+import { formatDate } from "../../../utils/FormatDate";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import { useGetTruckManagement } from "./hooks/useGetTruckManagement";
+import TruckManagementTable from "./TruckTable";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const OccupancyJournal = () => {
-  const { getOccupancyJournal, error, isLoading, data, totalPages } =
-    useOccupancyJournal();
-  const [pageFilter, setPageFilter] = useState();
-  // const [locationData, setLocationData] = useState([]);
-  // const [truckData, setTruckData] = useState([]);
-  console.log("data journal", data);
+const TruckManagment = () => {
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
 
   const [activePage, setActivePage] = useState(0);
 
@@ -41,11 +34,11 @@ const OccupancyJournal = () => {
     setActivePage(0);
   };
 
-  const { truckDropdownData, locationsDropdownData } = useContext(
-    dropdownFilterContext
-  );
+  const { data, isLoading, getTruckManagement, error, totalPages } =
+    useGetTruckManagement();
   const startDate = getPreviousDate(30);
   const endDate = getTodayDate();
+  const [pageFilter, setPageFilter] = useState();
 
   const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
   const [locationFilter, setLocationFilter] = useState();
@@ -53,11 +46,8 @@ const OccupancyJournal = () => {
   const [dateFilter, setDateFilter] = useState(filter);
   const [dateRange, setDateRange] = useState([startDate, endDate]);
 
-  const {
-    getCSVExport,
-    csvData,
-    isLoading: isLoadingDownload,
-  } = useGetCSVExport();
+  const { getCSVExport, csvData, isExporting, isDownloading } =
+    useGetCSVExport();
 
   useFilterGraph(
     truckfilter,
@@ -65,25 +55,8 @@ const OccupancyJournal = () => {
     dateFilter,
     pageFilter,
     null,
-    getOccupancyJournal
+    getTruckManagement
   );
-
-  // useEffect(() => {
-  //   if (data) {
-  //     const locationDropdownData = removeDuplicate(
-  //       data,
-  //       (allData) => allData.City
-  //     );
-  //     const truckDropdownData = removeDuplicate(
-  //       data,
-  //       (allData) => allData.Truck
-  //     );
-  //     if (!locationData.length) {
-  //       setLocationData(locationDropdownData);
-  //       setTruckData(truckDropdownData);
-  //     }
-  //   }
-  // }, [data]);
 
   return (
     <DashboardLayout>
@@ -96,7 +69,7 @@ const OccupancyJournal = () => {
                 console.log("user export", user.user.email);
                 const data = {
                   export: {
-                    entity: "occupancy_journal",
+                    entity: "truck_management",
                     query: {},
                     as: "email",
                     recipients: [user.user.email],
@@ -106,13 +79,13 @@ const OccupancyJournal = () => {
                 getCSVExport(data);
               }}
             >
-              Report Via Email
+              {isExporting ? "Sending......" : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
               onClick={() => {
                 const data = {
                   export: {
-                    entity: "occupancy_journal",
+                    entity: "truck_management",
                     query: {},
                     as: "download",
                   },
@@ -121,12 +94,10 @@ const OccupancyJournal = () => {
                 getCSVExport(data);
               }}
             >
-              {" "}
-              {isLoadingDownload ? "DownLoading" : "Download Report"}
+              {isDownloading ? "DownLoading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
-
         <StyledDivFlex
           // background={Theme.colors.neutralColor}
           padding="1rem 8rem"
@@ -137,14 +108,15 @@ const OccupancyJournal = () => {
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
+
             name="location"
             label="Location"
             onChange={(data) => {
-              console.log("user selection", data);
               const { location } = data;
-              const filter = data && `location=${location}`;
+              console.log("location", location);
+              const filter = location ? `location=${location}` : null;
+              resetPagination();
               setLocationFilter(filter);
-              console.log("filter", filter);
               resetPagination();
             }}
             data={locationsDropdownData}
@@ -157,16 +129,16 @@ const OccupancyJournal = () => {
               />
             }
           />
+
           <PickDate
             onChange={(date) => {
               const filter =
                 date &&
-                `period[start]=${
+                `data.Created on:between:${
                   formatDate(date[0])["yyyy-mm-dd"]
-                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
-             `;
-              setDateFilter(filter);
+                }, ${formatDate(date[1])["yyyy-mm-dd"]}`;
               setDateRange(date);
+              setDateFilter(filter);
               resetPagination();
             }}
           />
@@ -174,20 +146,16 @@ const OccupancyJournal = () => {
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
-            label="Filter Truck"
+            label="Truck"
             onChange={(data) => {
-              console.log("user selection", data);
               const { truck } = data;
-              console.log("truck", truck);
-              // const filter = truck ? `data.Truck:=:${truck}` : "";
-              const filter = data && `truck=${truck}`;
+              const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
               resetPagination();
-              // getOccupancyJournal(filter);
             }}
+            minWidth="20rem"
             data={truckDropdownData}
             gap="2rem"
-            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -199,22 +167,25 @@ const OccupancyJournal = () => {
         <StyledBox background={Theme.colors.neutralColor}>
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
-            text="Occupancy Journal for the period:"
+            text="Truck  Management:"
             dateRange={dateRange}
             count={data?.length}
             data={data}
           />
         </StyledBox>
+
         <StyledBox>
           {isLoading ? (
             <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
           ) : (
-            <JournalTable data={data} />
+            <>
+              <TruckManagementTable data={data} />
+            </>
           )}
 
           <Paginations
+            getData={getTruckManagement}
             totalPages={totalPages}
-            getData={getOccupancyJournal}
             isLoading={isLoading}
             data={data}
             onPageSelected={setPageFilter}
@@ -227,4 +198,4 @@ const OccupancyJournal = () => {
   );
 };
 
-export default OccupancyJournal;
+export default TruckManagment;
