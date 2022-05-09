@@ -28,7 +28,7 @@ const Companies = () => {
     if (data) {
       console.log("checking ooooooooooooooooooo");
       const newData = data.map((data) => {
-        return data.name;
+        return data.data.official_name;
       });
       setGetCompanies(newData);
       console.log("new data ", newData);

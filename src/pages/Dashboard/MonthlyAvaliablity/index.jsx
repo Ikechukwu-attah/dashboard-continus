@@ -102,6 +102,7 @@ const MonthlyAvaliablity = () => {
             }}
             data={locationsDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -133,6 +134,7 @@ const MonthlyAvaliablity = () => {
             }}
             data={truckDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -171,10 +173,12 @@ const MonthlyAvaliablity = () => {
                 <DailyRating
                   label="Uptime"
                   count={`${
-                    summary?.total_days ? summary?.total_days : 0
+                    summary?.total_days
+                      ? summary?.total_days.toLocaleString()
+                      : 0
                   } days   (${
                     summary?.total_uptime_hours
-                      ? summary?.total_uptime_hours
+                      ? summary?.total_uptime_hours.toLocaleString()
                       : 0
                   } Hours)`}
                 />
@@ -182,7 +186,7 @@ const MonthlyAvaliablity = () => {
                   label=" Availability"
                   count={`${
                     summary?.avg_availability
-                      ? summary?.avg_availability?.toFixed(2)
+                      ? summary?.avg_availability?.toFixed()
                       : 0
                   }%`}
                 />

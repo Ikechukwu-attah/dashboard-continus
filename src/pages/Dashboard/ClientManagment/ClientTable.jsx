@@ -61,11 +61,11 @@ const ClientTable = ({ data, getAllClient }) => {
       Filter: ColumnFilter,
       disableFilters: true,
     },
+    { Header: "Client Code", accessor: "company_id", Filter: ColumnFilter },
     { Header: "First Name", accessor: "firstname", Filter: ColumnFilter },
     { Header: "last Name", accessor: "lastname", Filter: ColumnFilter },
     { Header: "Email", accessor: "email", Filter: ColumnFilter },
     { Header: "Phone Number", accessor: "phone", Filter: ColumnFilter },
-    { Header: "Client Code", accessor: "company_id", Filter: ColumnFilter },
     { Header: "Role", accessor: "role", Filter: ColumnFilter },
     {
       Header: "Action",

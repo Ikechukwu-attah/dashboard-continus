@@ -14,10 +14,15 @@ import { roleData } from "../../../DUMMYDATA";
 import Dropdown from "../../../components/common/Dropdown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { globalContext } from "../../../Context/GlobalContext";
+import { useGetAllCompanies } from "../../../components/Company/hooks/useGetAllCompanies";
 
 const AddClient = ({ setShowList, getList, userType }) => {
   // const [imgUrl, setImgUrl] = useState(null);
+  const { data: companyData, getAllCompany } = useGetAllCompanies();
+  // console.log("company data==>", companyData[1]);
 
+  const [companyName, setCompanyName] = useState();
+  console.log("company==>", companyName);
   const [signUpClientData, setSignUpClientData] = useState({});
   const { createClient, isLoading, data, error } = useCreateClient();
   const { showListing, setShowListing } = useContext(globalContext);
@@ -37,7 +42,22 @@ const AddClient = ({ setShowList, getList, userType }) => {
   };
 
   useEffect(() => {
-    console.log("data444", data);
+    getAllCompany();
+  }, []);
+
+  useEffect(() => {
+    if (companyData) {
+      console.log("checking ooooooooooooooooooo");
+      const newData = companyData?.map((data) => {
+        return data.name;
+      });
+      setCompanyName(newData);
+      console.log("companyName=>>> ", newData);
+    }
+  }, [companyData]);
+
+  useEffect(() => {
+    // console.log("data444", data);
     if (data) {
       setShowList(true);
       getList();
@@ -119,7 +139,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 >
                   Client Code
                 </StyledLabel>
-                <StyledInput
+                {/* <StyledInput
                   type="text"
                   placeholder="Enter Client Code"
                   padding="2.3rem"
@@ -132,6 +152,26 @@ const AddClient = ({ setShowList, getList, userType }) => {
                       value: event.target.value,
                     })
                   }
+                /> */}
+
+                <Dropdown
+                  background={Theme.colors.secondaryColor}
+                  name="company_id"
+                  Top="6.8rem"
+                  padding="2rem"
+                  label="Client Code"
+                  value={signUpClientData.company_id}
+                  onChange={(data) => {
+                    const { company_id } = data;
+                    handleChange({
+                      name: "company_id",
+                      value: company_id,
+                    });
+                  }}
+                  // console.log("role selection", data);
+
+                  data={companyName}
+                  icon={<KeyboardArrowDownIcon fontSize="large" />}
                 />
               </StyledDivFlex>
             )}

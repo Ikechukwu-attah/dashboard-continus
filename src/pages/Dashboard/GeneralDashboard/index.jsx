@@ -82,7 +82,7 @@ const GeneralDashboard = () => {
       Component: (
         <WidgetWithDropdown
           label="Number of Operators"
-          count={widgetsData?.no_of_operators}
+          count={Math.round(widgetsData?.no_of_operators).toLocaleString()}
           onRemove={() => removeWidget("operators")}
         />
       ),
@@ -92,7 +92,7 @@ const GeneralDashboard = () => {
       Component: (
         <WidgetWithDropdown
           label="Activated Trucks"
-          count={widgetsData?.no_of_trucks}
+          count={Math.round(widgetsData?.no_of_trucks).toLocaleString()}
           onRemove={() => removeWidget("trucks")}
         />
       ),
@@ -102,7 +102,7 @@ const GeneralDashboard = () => {
       Component: (
         <WidgetWithDropdown
           label="Overall Uptime (Hours)"
-          count={Math.round(widgetsData?.total_uptime)}
+          count={Math.round(widgetsData?.total_uptime).toLocaleString()}
           onRemove={() => removeWidget("uptime")}
         />
       ),
@@ -112,8 +112,10 @@ const GeneralDashboard = () => {
       Component: (
         <ModifiedCard
           label="Highest ShockThreshold"
-          count={Math.round(widgetsData?.total_no_of_shocks)}
-          thresholdCount={Math.round(widgetsData?.highest_shock_threshold)}
+          count={Math.round(widgetsData?.total_no_of_shocks).toLocaleString()}
+          thresholdCount={Math.round(
+            widgetsData?.highest_shock_threshold
+          ).toLocaleString()}
           onRemove={() => {
             removeWidget("shock");
           }}

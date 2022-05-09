@@ -63,7 +63,7 @@ const Co2Reduction = () => {
       Component: (
         <CardWidget
           label="Disel saved (liters)"
-          count={Math.round(data?.diesel_saved_in_litres)}
+          count={Math.round(data?.diesel_saved_in_litres).toLocaleString()}
           // background="#5899DA"
           icon={<Droplet />}
           width="100%"
@@ -75,7 +75,7 @@ const Co2Reduction = () => {
       Component: (
         <CardWidget
           label="Co2 Reduction (Kg)"
-          count={Math.round(data?.co2_reduction_in_kg)}
+          count={Math.round(data?.co2_reduction_in_kg).toLocaleString()}
           // background="#5899DA"
           icon={<Cloud />}
           width="100%"
@@ -87,7 +87,7 @@ const Co2Reduction = () => {
       Component: (
         <CardWidget
           label="Co2 Reduction (tons)"
-          count={Math.round(data?.co2_reduction_in_ton)}
+          count={Math.round(data?.co2_reduction_in_ton).toLocaleString()}
           // background="#5899DA"
           icon={<CloudBlue />}
           width="100%"
@@ -99,7 +99,7 @@ const Co2Reduction = () => {
       Component: (
         <CardWidget
           label="Total Active Usage"
-          count={Math.round(data?.total_active_usage)}
+          count={Math.round(data?.total_active_usage).toLocaleString()}
           // background="#5899DA"
           icon={<CloudGreen />}
           width="100%"

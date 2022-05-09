@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -16,6 +16,22 @@ import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 
 const AvaliablityGraph = ({ data, isLoading }) => {
+  console.log("monthly data", data);
+  const [extractDay, setExtractDay] = useState();
+  console.log("extracted data", extractDay);
+
+  useEffect(() => {
+    if (data) {
+      const newData = data.map((data) => {
+        const day = new Date(data.day);
+        data.getDay = day.getDate();
+        return data;
+      });
+      setExtractDay(newData);
+      console.log("newdate ==>", newData);
+    }
+  }, [data]);
+
   return (
     <StyledBox marginTop="3rem" padding="1rem 8rem 3rem 8rem" height="55vh">
       {data?.length && !isLoading ? (
@@ -23,7 +39,7 @@ const AvaliablityGraph = ({ data, isLoading }) => {
           <BarChart
             // width={1000}
             // height={500}
-            data={data}
+            data={extractDay}
             margin={{
               top: 5,
               right: 30,
@@ -32,7 +48,7 @@ const AvaliablityGraph = ({ data, isLoading }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" stroke="#000000" angle={-10}>
+            <XAxis dataKey="getDay" stroke="#000000">
               <Label value="Days" offset={-5} position="insideBottom" />
             </XAxis>
             <YAxis
