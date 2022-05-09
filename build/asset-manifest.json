@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/bisedge/static/css/main.7c8bb39c.css",
+    "main.js": "/bisedge/static/js/main.85478177.js",
+    "static/media/BisedgeLogo.png": "/bisedge/static/media/BisedgeLogo.c7298d7e13e8883601f9.png",
+    "index.html": "/bisedge/index.html",
+    "main.7c8bb39c.css.map": "/bisedge/static/css/main.7c8bb39c.css.map",
+    "main.85478177.js.map": "/bisedge/static/js/main.85478177.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7c8bb39c.css",
+    "static/js/main.85478177.js"
+  ]
+}
