@@ -34,8 +34,8 @@ const Navbar = () => {
       <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
         <StyledImage
           src={
-            !user.user.data.avatar
-              ? `${process.env.REACT_APP_BASE_URL}/${user.user.data.avatar}`
+            user.user.data.avatar
+              ? user.user.Company.data.picture
               : "/assets/7Up-logo.jpg"
           }
           height="7.2rem"
@@ -68,7 +68,7 @@ const Navbar = () => {
               ? user.user.data.role === "personnel"
                 ? "Bisedge Personnel"
                 : "Bisedge Admin"
-              : user.user.company_id.toUpperCase()}
+              : user?.user?.Company?.data?.official_name}
           </StyledText>
         </StyledDivFlex>
         <StyledBox

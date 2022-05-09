@@ -65,7 +65,7 @@ const CardWidget = ({
           margin="0 1rem 0 0"
           cursor="pointer"
         >
-          Download report
+          {/* Download report */}
         </StyledText>
       </StyledBox>
       <StyledBox position="absolute" Top="2px" Right="1rem" cursor="ponter">
