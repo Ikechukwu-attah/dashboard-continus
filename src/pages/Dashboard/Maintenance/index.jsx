@@ -179,6 +179,7 @@ const Maintenance = () => {
               />
             }
             maxWidth="40rem"
+            multiSelect={true}
           />
 
           <Dropdown
@@ -201,6 +202,7 @@ const Maintenance = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
           {/* <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -251,6 +253,7 @@ const Maintenance = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
         </StyledDivFlex>
 

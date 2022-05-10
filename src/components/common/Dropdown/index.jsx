@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledDivFlex } from "../Basics/DivFlex";
 import { StyledText } from "../Basics/StyledText";
 import DropdownArrow from "../../../Icons/DropdownArrow";
@@ -25,20 +25,60 @@ const Dropdown = ({
   minWidth,
   showDropdown,
   value,
+  multiSelect,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(label);
+  const [selectedItems, setSelectedItems] = useState([label]);
+  console.log("dropdown value", value);
+  const removeItem = (item) => {
+    const allItems = [...selectedItems];
+    return allItems.filter((selectedItem) => selectedItem !== item);
+  };
+
+  const getSelectedItems = (items) => {
+    const allItems = items.slice(1);
+    return allItems.length > 1
+      ? allItems.join(",")
+      : allItems.length === 1
+      ? allItems[0]
+      : null;
+  };
 
   const handleChange = (item) => {
-    let checkedItem;
-    if (item === selectedItem) {
-      checkedItem = null;
+    if (!multiSelect) {
+      let checkedItem;
+      if (selectedItems[0] === item) {
+        checkedItem = null;
+      } else {
+        checkedItem = item;
+      }
+      setSelectedItems(checkedItem === null ? [label] : [checkedItem]);
+      onChange({ [name]: checkedItem });
     } else {
-      checkedItem = item;
+      if (selectedItems.includes(item)) {
+        const newItemList = removeItem(item);
+        setSelectedItems(newItemList);
+        onChange({
+          [name]: getSelectedItems(newItemList),
+        });
+      } else {
+        const allItems = [...selectedItems];
+        allItems.push(item);
+        setSelectedItems(allItems);
+        onChange({
+          [name]: getSelectedItems(allItems),
+        });
+      }
     }
-    setSelectedItem(checkedItem === null ? label : checkedItem);
-    onChange({ [name]: checkedItem });
   };
+
+  useEffect(() => {
+    if (value) {
+      setSelectedItems([value]);
+    }
+  }, [value]);
+
+  console.log("selected", selectedItems);
 
   return (
     <StyledDivFlex
@@ -66,7 +106,7 @@ const Dropdown = ({
         whiteSpace="nowrap"
         Display="block"
       >
-        {selectedItem}
+        {selectedItems[0]}
       </StyledText>
       {icon}
 
@@ -105,7 +145,7 @@ const Dropdown = ({
               {item || value}
             </StyledLabel>
             <StyledInput
-              checked={selectedItem === item}
+              checked={selectedItems.includes(item)}
               type="checkbox"
               scale="1.7"
               id={item + "_" + index}

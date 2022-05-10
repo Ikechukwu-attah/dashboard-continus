@@ -97,7 +97,7 @@ const MonthlyAvaliablity = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              const filter = data && `location=${location}`;
+              const filter = location && `location=${location}`;
               setLocationFilter(filter);
             }}
             data={locationsDropdownData}
@@ -109,6 +109,7 @@ const MonthlyAvaliablity = () => {
                 style={{ color: "#606060" }}
               />
             }
+            // multiSelect={true}
           />
           <PickDate
             onChange={(date) => {
@@ -129,7 +130,7 @@ const MonthlyAvaliablity = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = data && `truck=${truck}`;
+              const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
             }}
             data={truckDropdownData}
@@ -141,6 +142,7 @@ const MonthlyAvaliablity = () => {
                 style={{ color: "#606060" }}
               />
             }
+            // multiSelect={true}
           />
         </StyledDivFlex>
 

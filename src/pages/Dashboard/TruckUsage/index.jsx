@@ -129,17 +129,19 @@ const TruckUsage = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              const filter = data && `location=${location}`;
+              const filter = location && `location=${location}`;
               setLocationFilter(filter);
             }}
             data={locationsDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
           <PickDate
             onChange={(date) => {
@@ -160,17 +162,19 @@ const TruckUsage = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = data && `truck=${truck}`;
+              const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
             }}
             data={truckDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
         </StyledDivFlex>
         <StyledBox background={Theme.colors.neutralColor} padding="0 0 4rem 0">

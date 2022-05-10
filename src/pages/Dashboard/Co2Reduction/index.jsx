@@ -166,7 +166,7 @@ const Co2Reduction = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-              const filter = data && `location=${location}`;
+              const filter = location && `location=${location}`;
               setLocationFilter(filter);
             }}
             data={locationsDropdownData}
@@ -178,6 +178,7 @@ const Co2Reduction = () => {
                 style={{ color: "#606060" }}
               />
             }
+            // multiSelect={true}
           />
           <PickDate
             onChange={(date) => {
@@ -199,7 +200,7 @@ const Co2Reduction = () => {
             label="Filter Truck"
             onChange={(data) => {
               const { truck } = data;
-              const filter = data && `truck=${truck}`;
+              const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
             }}
             data={truckDropdownData}
@@ -211,6 +212,7 @@ const Co2Reduction = () => {
                 style={{ color: "#606060" }}
               />
             }
+            // multiSelect={true} not working on this page.
           />
         </StyledDivFlex>
 

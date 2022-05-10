@@ -71,10 +71,12 @@ const ShockingSense = () => {
     dateFilter,
     pageFilter,
     null,
-    getShockingSensingTable
+    activeButton === "Table"
+      ? getShockingSensingTable
+      : getShockingSensingBarChart
   );
 
-  console.log("checking shocking graph data", graphdata);
+  // console.log("checking shocking graph data", graphdata);
 
   // useEffect(() => {
   //   getShockingSensingTable();
@@ -156,6 +158,7 @@ const ShockingSense = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
           <PickDate
             onChange={(date) => {
@@ -185,6 +188,7 @@ const ShockingSense = () => {
             minWidth="20rem"
             data={truckDropdownData}
             gap="2rem"
+            multiSelect={true}
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"

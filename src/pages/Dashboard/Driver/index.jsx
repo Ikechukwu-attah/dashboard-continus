@@ -157,6 +157,7 @@ const Driver = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
 
           {/* <PickDate
@@ -190,6 +191,7 @@ const Driver = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
         </StyledDivFlex>
         <StyledBox background={Theme.colors.neutralColor}>

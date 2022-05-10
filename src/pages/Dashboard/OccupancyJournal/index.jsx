@@ -47,7 +47,7 @@ const OccupancyJournal = () => {
   const startDate = getPreviousDate(30);
   const endDate = getTodayDate();
 
-  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
@@ -142,7 +142,7 @@ const OccupancyJournal = () => {
             onChange={(data) => {
               console.log("user selection", data);
               const { location } = data;
-              const filter = data && `location=${location}`;
+              const filter = location && `location=${location}`;
               setLocationFilter(filter);
               console.log("filter", filter);
               resetPagination();
@@ -156,6 +156,7 @@ const OccupancyJournal = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
           <PickDate
             onChange={(date) => {
@@ -180,7 +181,7 @@ const OccupancyJournal = () => {
               const { truck } = data;
               console.log("truck", truck);
               // const filter = truck ? `data.Truck:=:${truck}` : "";
-              const filter = data && `truck=${truck}`;
+              const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
               resetPagination();
               // getOccupancyJournal(filter);
@@ -194,6 +195,7 @@ const OccupancyJournal = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
         </StyledDivFlex>
         <StyledBox background={Theme.colors.neutralColor}>

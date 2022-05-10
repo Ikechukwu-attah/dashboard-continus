@@ -25,7 +25,6 @@ const AddClient = ({ setShowList, getList, userType }) => {
   console.log("company==>", companyName);
   const [signUpClientData, setSignUpClientData] = useState({});
   const { createClient, isLoading, data, error } = useCreateClient();
-  const { showListing, setShowListing } = useContext(globalContext);
 
   const handleChange = ({ name, value }) => {
     setSignUpClientData({ ...signUpClientData, [name]: value });
