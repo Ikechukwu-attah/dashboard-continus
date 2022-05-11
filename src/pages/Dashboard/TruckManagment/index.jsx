@@ -36,11 +36,13 @@ const TruckManagment = () => {
 
   const { data, isLoading, getTruckManagement, error, totalPages } =
     useGetTruckManagement();
-  const startDate = getPreviousDate(30);
+
+  console.log("truck management", data);
+  const startDate = getPreviousDate(450);
   const endDate = getTodayDate();
   const [pageFilter, setPageFilter] = useState();
 
-  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
@@ -128,6 +130,7 @@ const TruckManagment = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
 
           <PickDate
@@ -162,6 +165,7 @@ const TruckManagment = () => {
                 style={{ color: "#606060" }}
               />
             }
+            multiSelect={true}
           />
         </StyledDivFlex>
         <StyledBox background={Theme.colors.neutralColor}>

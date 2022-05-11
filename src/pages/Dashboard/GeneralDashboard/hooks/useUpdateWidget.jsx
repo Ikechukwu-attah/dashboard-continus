@@ -11,13 +11,11 @@ export const useUpdateWidget = () => {
     setIsLoading(true);
     try {
       const response = await axios.put(updateWidgetAPI, data);
-      console.log("update widget", response);
-      setUpdateWidgetData(response.data.data.settings);
+      setUpdateWidgetData(response?.data?.data?.settings);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setError(error.response);
-      console.log("error=>>widget update", error.response);
+      setError(error?.response);
     }
   };
 

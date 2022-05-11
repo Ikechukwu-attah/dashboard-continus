@@ -1,32 +1,34 @@
 import { useState } from "react";
+import { shockSensingTableAPI } from "../../../../Authorization/ServerPaths";
 import axios from "../../../../Authorization/Axios";
-import { truckManagementAPI } from "../../../../Authorization/ServerPaths";
 
-export const useGetTruckManagement = () => {
+export const useGetShockingSensingTable = () => {
   const [data, setData] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const getTruckManagement = async (searchFilter) => {
+  const getShockingSensingTable = async (searchFilter) => {
+    const url = searchFilter
+      ? `${shockSensingTableAPI}/${searchFilter}`
+      : shockSensingTableAPI;
     setIsLoading(true);
     try {
-      const url = `${truckManagementAPI}/${searchFilter}`;
       const response = await axios.get(url);
-      setIsLoading(false);
       setData(response?.data?.data?.records);
+      // console.log("shocking sense table", response.data.data.records)
+      setIsLoading(false);
       const {
         data: {
           pagination: { total_pages },
         },
-      } = response.data;
+      } = response?.data;
       setTotalPages(total_pages);
-      console.log("response truck--", response?.data?.data?.records);
     } catch (error) {
-      setIsLoading(false);
       setError(error?.response);
+      // console.log("shocking sense error", error.response);
     }
   };
 
-  return { data, isLoading, error, getTruckManagement, totalPages };
+  return { getShockingSensingTable, data, error, isLoading, totalPages };
 };

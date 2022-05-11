@@ -1,32 +1,35 @@
 import { useState } from "react";
 import axios from "../../../../Authorization/Axios";
-import { truckManagementAPI } from "../../../../Authorization/ServerPaths";
+import { maintenanceAPI } from "../../../../Authorization/ServerPaths";
 
-export const useGetTruckManagement = () => {
+export const useGetMaintenance = () => {
   const [data, setData] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const getTruckManagement = async (searchFilter) => {
+  const getMaintenance = async (searchFilter) => {
+    const url = searchFilter
+      ? `${maintenanceAPI}/${searchFilter}`
+      : maintenanceAPI;
+    console.log("url", url);
     setIsLoading(true);
     try {
-      const url = `${truckManagementAPI}/${searchFilter}`;
       const response = await axios.get(url);
       setIsLoading(false);
+
       setData(response?.data?.data?.records);
       const {
         data: {
           pagination: { total_pages },
         },
-      } = response.data;
+      } = response?.data;
       setTotalPages(total_pages);
-      console.log("response truck--", response?.data?.data?.records);
+      // console.log("data driver", data);
     } catch (error) {
-      setIsLoading(false);
-      setError(error?.response);
+      setError(error?.response?.data?.message);
     }
   };
 
-  return { data, isLoading, error, getTruckManagement, totalPages };
+  return { data, getMaintenance, isLoading, error, totalPages };
 };

@@ -12,11 +12,13 @@ export const useGetCo2Reduction = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(url);
-      console.log("co2 response", response.data.data);
-      setData(response.data.data);
+      console.log("co2 response", response?.data?.data);
+      setData(response?.data?.data);
       setIsLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      setError(error?.response?.message);
+    }
   };
 
-  return { getCo2Reduction, data, isLoading };
+  return { getCo2Reduction, data, isLoading, error };
 };

@@ -15,14 +15,13 @@ export const useGetWidgets = () => {
       console.log("is it working ................");
       const response = await axios.get(url);
       console.log("widget response", response?.data?.data?.widgets_to_show);
-      console.log("widget added", response.data.data.all_widgets);
       setData(response?.data?.data);
-      setWidgetDropDown(response.data.data.all_widgets);
+      setWidgetDropDown(response?.data?.data?.all_widgets);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.log("error-message", error);
-      setError(error.response.message);
+      setError(error?.response?.message);
     }
   };
 

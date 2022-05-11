@@ -1,17 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  BarChart,
-  Bar,
-  Label,
-  Cell,
-  XAxis,
-  LabelList,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -39,6 +26,7 @@ import DailyRating from "./DailyRatings";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import { StyledDivGrid } from "../../../components/common/Basics/DivGrid";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const MonthlyAvaliablity = () => {
   const { getMonthlyAvaliablity, data, error, isLoading, summary } =
@@ -79,8 +67,40 @@ const MonthlyAvaliablity = () => {
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "monthly_availability",
+                    query: {},
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {isExporting ? "Sending......" : " Report Via Email"}
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "monthly_availability",
+                    query: {},
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isDownloading ? "DownLoading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
         <StyledDivFlex

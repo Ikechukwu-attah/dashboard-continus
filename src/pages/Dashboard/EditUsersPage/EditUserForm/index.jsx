@@ -97,7 +97,7 @@ const EditUser = () => {
               <StyledInput
                 type="text"
                 placeholder="Enter last name"
-                value={adminData.lastname}
+                value={adminData?.lastname}
                 onChange={handleChange}
                 // required
                 padding="2.3rem"

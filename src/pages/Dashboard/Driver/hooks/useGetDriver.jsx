@@ -1,32 +1,36 @@
 import { useState } from "react";
 import axios from "../../../../Authorization/Axios";
-import { truckManagementAPI } from "../../../../Authorization/ServerPaths";
+import { driversManagmentAPI } from "../../../../Authorization/ServerPaths";
 
-export const useGetTruckManagement = () => {
+export const useGetDriver = () => {
   const [data, setData] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const getTruckManagement = async (searchFilter) => {
+  const getDriver = async (searchFilter) => {
+    const url = searchFilter
+      ? `${driversManagmentAPI}/${searchFilter}`
+      : driversManagmentAPI;
+
     setIsLoading(true);
     try {
-      const url = `${truckManagementAPI}/${searchFilter}`;
       const response = await axios.get(url);
       setIsLoading(false);
+      // console.log("drivers", response.data.data.records);
       setData(response?.data?.data?.records);
+      // console.log("data driver", data);
       const {
         data: {
           pagination: { total_pages },
         },
-      } = response.data;
+      } = response?.data;
       setTotalPages(total_pages);
-      console.log("response truck--", response?.data?.data?.records);
     } catch (error) {
-      setIsLoading(false);
-      setError(error?.response);
+      setError(error?.response?.data?.message);
+      // console.log("driver error", error.response);
     }
   };
 
-  return { data, isLoading, error, getTruckManagement, totalPages };
+  return { data, getDriver, isLoading, error, totalPages };
 };
