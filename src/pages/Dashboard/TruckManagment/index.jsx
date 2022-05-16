@@ -40,6 +40,10 @@ const TruckManagment = () => {
   console.log("truck management", data);
   const startDate = getPreviousDate(450);
   const endDate = getTodayDate();
+
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
+
   const [pageFilter, setPageFilter] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
@@ -54,7 +58,7 @@ const TruckManagment = () => {
   useFilterGraph(
     truckfilter,
     locationFilter,
-    dateFilter,
+    null,
     pageFilter,
     null,
     getTruckManagement
@@ -72,7 +76,7 @@ const TruckManagment = () => {
                 const data = {
                   export: {
                     entity: "truck_management",
-                    query: {},
+                    query: { truck: truckDownload, location: locationDownload },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -88,7 +92,7 @@ const TruckManagment = () => {
                 const data = {
                   export: {
                     entity: "truck_management",
-                    query: {},
+                    query: { truck: truckDownload, location: locationDownload },
                     as: "download",
                   },
                 };
@@ -96,7 +100,7 @@ const TruckManagment = () => {
                 getCSVExport(data);
               }}
             >
-              {isDownloading ? "DownLoading" : "Download Report"}
+              {isDownloading ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -120,6 +124,7 @@ const TruckManagment = () => {
               resetPagination();
               setLocationFilter(filter);
               resetPagination();
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -133,7 +138,7 @@ const TruckManagment = () => {
             multiSelect={true}
           />
 
-          <PickDate
+          {/* <PickDate
             onChange={(date) => {
               const filter =
                 date &&
@@ -144,7 +149,7 @@ const TruckManagment = () => {
               setDateFilter(filter);
               resetPagination();
             }}
-          />
+          /> */}
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -155,6 +160,7 @@ const TruckManagment = () => {
               const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
               resetPagination();
+              setTruckDownload(truck);
             }}
             minWidth="20rem"
             data={truckDropdownData}

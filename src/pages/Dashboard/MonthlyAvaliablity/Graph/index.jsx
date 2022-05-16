@@ -10,10 +10,12 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+  Brush,
+  // ResponsiveContainer,
 } from "recharts";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
+import { formatDate } from "../../../../utils/FormatDate";
 
 const AvaliablityGraph = ({ data, isLoading }) => {
   console.log("monthly data", data);
@@ -23,48 +25,68 @@ const AvaliablityGraph = ({ data, isLoading }) => {
   useEffect(() => {
     if (data) {
       const newData = data.map((data) => {
-        const day = new Date(data.day);
-        data.getDay = day.getDate();
+        // const day = new Date(data.day);
+        // data.getDay = `${day.getDate()}/${day.getMonth()}`;
+
+        data.getDay = formatDate(data.day)["dd/month"];
+        console.log("format date", data.getDay);
         return data;
       });
       setExtractDay(newData);
-      console.log("newdate ==>", newData);
+      // console.log("newdate ==>", newData);
     }
   }, [data]);
 
   return (
-    <StyledBox marginTop="3rem" padding="1rem 8rem 3rem 8rem" height="55vh">
+    <StyledBox
+      marginTop="3rem"
+      padding="1rem 8rem 3rem 8rem"
+      height="55vh"
+      // background="red"
+      // width="50vw"
+      style={{ maxWidth: "100vw", overflowX: " scroll " }}
+    >
       {data?.length && !isLoading ? (
-        <ResponsiveContainer width="100%">
-          <BarChart
-            // width={1000}
-            // height={500}
-            data={extractDay}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
+        // <ResponsiveContainer width="100%">
+        <BarChart
+          width={2000}
+          height={400}
+          data={extractDay}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="getDay"
+            stroke="#000000"
+            angle={-45}
+            tick={{ fontSize: 10 }}
+            height={60}
+            allowDuplicatedCategory={false}
+            dy={10}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="getDay" stroke="#000000">
-              <Label value="Days" offset={-5} position="insideBottom" />
-            </XAxis>
-            <YAxis
-              label={{
-                value: "Uptime (hours)",
-                angle: -90,
-                position: "insideLeft",
-              }}
-            />
-            <Tooltip />
-            {/* <Legend /> */}
+            <Label value="Days" position="insideBottom" />
+          </XAxis>
 
-            <Bar dataKey="hours" fill="#E8743B" />
-          </BarChart>
-        </ResponsiveContainer>
+          <YAxis
+            label={{
+              value: "Uptime (hours)",
+              angle: -90,
+              position: "insideLeft",
+            }}
+          />
+          <Tooltip />
+          {/* <Legend /> */}
+          {/* <Brush dataKey="getDay" height={12} stroke="#8884d8" /> */}
+
+          <Bar dataKey="hours" fill="#E8743B" barSize={40} />
+        </BarChart>
       ) : (
+        // </ResponsiveContainer>
         !isLoading && (
           <StyledTextHeading
             color="grey"

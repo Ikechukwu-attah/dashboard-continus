@@ -44,7 +44,7 @@ export const sideBarData = [{
 
     {
         id: 7,
-        title: "C02 Reduction",
+        title: "Co2 Reduction",
         link: "/co2-reduction",
     },
 

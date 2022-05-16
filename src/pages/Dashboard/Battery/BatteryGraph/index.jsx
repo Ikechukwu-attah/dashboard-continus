@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import {
   LineChart,
   Line,
@@ -10,21 +11,44 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
+import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 import { Theme } from "../../../../Theme";
+import { formatDate } from "../../../../utils/FormatDate";
 
-const BatteryGraph = ({ data }) => {
+const BatteryGraph = ({ data, isLoading }) => {
+  const [graphData, setGraphData] = useState();
+  console.log("graphData", graphData);
+
+  useEffect(() => {
+    if (data) {
+      const newData = data.map((data) => {
+        data.hour = formatDate(data.data.Time)["hh:mm"];
+        return data;
+      });
+
+      console.log("date", newData);
+      setGraphData(newData);
+    }
+  }, [data]);
+  // const day = new Date();
+  // const result = formatDate("2021-11-17T07:34:26.000Z")["hh:mm"];
+
+  // // const result = day.getHours() + ":" + day.getMinutes();
+  // console.log("result time", result);
   return (
     <StyledBox
       marginTop="3rem"
       padding="1rem 8rem"
       background={Theme.colors.neutralColor}
       height="60vh"
+      style={{ maxWidth: "100vw", overflowX: " scroll " }}
     >
-      <ResponsiveContainer width="100%" height="100%">
+      {/* <ResponsiveContainer width="100%" height="100%"> */}
+      {data?.length && !isLoading ? (
         <LineChart
-          width={500}
-          height={300}
-          data={data}
+          width={2000}
+          height={400}
+          data={graphData}
           margin={{
             top: 5,
             right: 30,
@@ -33,13 +57,13 @@ const BatteryGraph = ({ data }) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" />
-          <YAxis />
+          <XAxis dataKey="hour" />
+          <YAxis dataKey="value" />
           <Tooltip />
           <Legend />
           <Line
             type="monotone"
-            dataKey="bat"
+            dataKey="hour"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
             strokeWidth={2}
@@ -47,14 +71,14 @@ const BatteryGraph = ({ data }) => {
           />
           <Line
             type="monotone"
-            dataKey="critical"
+            dataKey="value"
             stroke="#E8743B"
             strokeWidth={1.5}
             dot={false}
             // strokeDasharray="3 3"
           />
 
-          <Line
+          {/* <Line
             type="monotone"
             dataKey="low"
             stroke="#19A979"
@@ -62,9 +86,22 @@ const BatteryGraph = ({ data }) => {
             dot={false}
 
             // strokeDasharray="3 3"
-          />
+          /> */}
         </LineChart>
-      </ResponsiveContainer>
+      ) : (
+        !isLoading && (
+          <StyledTextHeading
+            color="grey"
+            textAlign="center"
+            fontSize="2rem"
+            paddingTop="1rem"
+          >
+            No Result found
+          </StyledTextHeading>
+        )
+      )}
+
+      {/* </ResponsiveContainer> */}
     </StyledBox>
   );
 };

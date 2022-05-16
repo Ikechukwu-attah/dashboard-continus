@@ -27,7 +27,7 @@ const CardWidget = ({
       alignItems="center"
       position="relative"
     >
-      <StyledDivFlex
+      {/* <StyledDivFlex
         borderRadius="50%"
         height="11.4rem"
         width="11.4rem"
@@ -35,16 +35,16 @@ const CardWidget = ({
         justifyContent="center"
         alignItems="center"
         //   flex="1"
+      > */}
+      <StyledText
+        fontSize="3.6rem"
+        fontWeight="500"
+        color={Theme.colors.primaryColor}
+        //   textAlign="end"
       >
-        <StyledText
-          fontSize="3.6rem"
-          fontWeight="500"
-          color={Theme.colors.primaryColor}
-          //   textAlign="end"
-        >
-          {count}
-        </StyledText>
-      </StyledDivFlex>
+        {count}
+      </StyledText>
+      {/* </StyledDivFlex> */}
       <StyledText
         fontSize="2.2rem"
         fontWeight="400"

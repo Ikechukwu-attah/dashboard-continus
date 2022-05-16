@@ -23,11 +23,15 @@ export const formatDate = (date) => {
         const day = dates.getDate();
         const month = months[dates.getMonth()];
         const year = dates.getFullYear();
+        const hour = dates.getHours();
+        const mintues = dates.getMinutes();
         return {
             ["dd/month/yyyy"]: addZeroToDate(`${day} ${month}, ${year}`),
             ["yyyy-mm-dd"]: addZeroToDate(
                 `${year}-${dates.getMonth() + 1}-${dates.getDate()}`
             ),
+            ["dd/month"]: `${day}/${month}`,
+            ["hh:mm"]: addZeroToDate(`${hour}:${mintues}`),
         };
     }
 };

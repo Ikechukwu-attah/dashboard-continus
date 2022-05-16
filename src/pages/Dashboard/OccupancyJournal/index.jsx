@@ -44,8 +44,11 @@ const OccupancyJournal = () => {
   const { truckDropdownData, locationsDropdownData } = useContext(
     dropdownFilterContext
   );
-  const startDate = getPreviousDate(30);
-  const endDate = getTodayDate();
+
+  const [startDate, setStartDate] = useState(getPreviousDate(30));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [locationFilter, setLocationFilter] = useState();
@@ -97,7 +100,14 @@ const OccupancyJournal = () => {
                 const data = {
                   export: {
                     entity: "occupancy_journal",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -113,7 +123,14 @@ const OccupancyJournal = () => {
                 const data = {
                   export: {
                     entity: "occupancy_journal",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -122,7 +139,7 @@ const OccupancyJournal = () => {
               }}
             >
               {" "}
-              {isLoadingDownload ? "DownLoading" : "Download Report"}
+              {isLoadingDownload ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -146,6 +163,7 @@ const OccupancyJournal = () => {
               setLocationFilter(filter);
               console.log("filter", filter);
               resetPagination();
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -169,6 +187,8 @@ const OccupancyJournal = () => {
               setDateFilter(filter);
               setDateRange(date);
               resetPagination();
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -184,6 +204,7 @@ const OccupancyJournal = () => {
               const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
               resetPagination();
+              setTruckDownload(truck);
               // getOccupancyJournal(filter);
             }}
             data={truckDropdownData}
@@ -209,7 +230,11 @@ const OccupancyJournal = () => {
         </StyledBox>
         <StyledBox>
           {isLoading ? (
-            <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
+            <SpinnerWithText
+              isLoading={isLoading}
+              margin="1rem 0 0 0"
+              spinnerText="Kindly wait. This can take up to 2mins..."
+            />
           ) : (
             <JournalTable data={data} />
           )}

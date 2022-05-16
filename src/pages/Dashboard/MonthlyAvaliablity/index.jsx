@@ -32,14 +32,16 @@ const MonthlyAvaliablity = () => {
   const { getMonthlyAvaliablity, data, error, isLoading, summary } =
     useMonthlyAvaliablity();
 
-  const startDate = getPreviousDate(120);
-  const endDate = getTodayDate();
+  const [startDate, setStartDate] = useState(getPreviousDate(0));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
-  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
-  const [dateRange, setDateRange] = useState([startDate, endDate]);
+  // const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([]);
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
-  const [dateFilter, setDateFilter] = useState(filter);
+  const [dateFilter, setDateFilter] = useState();
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
 
@@ -74,7 +76,14 @@ const MonthlyAvaliablity = () => {
                 const data = {
                   export: {
                     entity: "monthly_availability",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -90,7 +99,14 @@ const MonthlyAvaliablity = () => {
                 const data = {
                   export: {
                     entity: "monthly_availability",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -99,7 +115,7 @@ const MonthlyAvaliablity = () => {
               }}
             >
               {" "}
-              {isDownloading ? "DownLoading" : "Download Report"}
+              {isDownloading ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -119,6 +135,7 @@ const MonthlyAvaliablity = () => {
               const { location } = data;
               const filter = location && `location=${location}`;
               setLocationFilter(filter);
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -141,6 +158,8 @@ const MonthlyAvaliablity = () => {
                `;
               setDateFilter(filter);
               setDateRange(date);
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -152,6 +171,7 @@ const MonthlyAvaliablity = () => {
               const { truck } = data;
               const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
+              setTruckDownload(truck);
             }}
             data={truckDropdownData}
             gap="2rem"

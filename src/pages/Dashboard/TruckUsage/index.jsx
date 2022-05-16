@@ -30,8 +30,10 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 const TruckUsage = () => {
   const { getTruckUsage, data, error, isLoading } = useGetTruckUsage();
 
-  const startDate = getPreviousDate(120);
-  const endDate = getTodayDate();
+  const [startDate, setStartDate] = useState(getPreviousDate(20));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [dateRange, setDateRange] = useState([startDate, endDate]);
@@ -86,7 +88,14 @@ const TruckUsage = () => {
                 const data = {
                   export: {
                     entity: "truck_usage",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -102,7 +111,14 @@ const TruckUsage = () => {
                 const data = {
                   export: {
                     entity: "truck_usage",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -110,7 +126,7 @@ const TruckUsage = () => {
                 getCSVExport(data);
               }}
             >
-              {isDownloading ? "DownLoading" : "Download Report"}
+              {isDownloading ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -131,6 +147,7 @@ const TruckUsage = () => {
               const { location } = data;
               const filter = location && `location=${location}`;
               setLocationFilter(filter);
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -153,6 +170,8 @@ const TruckUsage = () => {
                `;
               setDateFilter(filter);
               setDateRange(date);
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -164,6 +183,7 @@ const TruckUsage = () => {
               const { truck } = data;
               const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
+              setTruckDownload(truck);
             }}
             data={truckDropdownData}
             gap="2rem"
@@ -235,13 +255,22 @@ const TruckUsage = () => {
               </StyledText>
             </StyledDivFlex> */}
           </StyledDivFlex>
-          <TruckUsageGraph data={data} />
+          {isLoading ? (
+            <SpinnerWithText
+              isLoading={isLoading}
+              spinnerText="Kindly wait. This can take up to 2mins..."
+              margin="1rem 0 0 0"
+            />
+          ) : (
+            <TruckUsageGraph data={data} />
+          )}
+
           {/* BARCHART STARTS FROM HERE  */}
 
-          <BusyOverlay
+          {/* <BusyOverlay
             isLoading={isLoading}
             spinnerText={data ? "Updating chart..." : "Loading chart ..."}
-          />
+          /> */}
 
           {/* BARCHART ENDS HERE */}
         </StyledBox>

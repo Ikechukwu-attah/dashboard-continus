@@ -32,8 +32,11 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 
 const Co2Reduction = () => {
-  const startDate = getPreviousDate(10);
-  const endDate = getTodayDate();
+  const [startDate, setStartDate] = useState(getPreviousDate(20));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
+
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
@@ -121,7 +124,14 @@ const Co2Reduction = () => {
                 const data = {
                   export: {
                     entity: "co2_reduction",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -137,7 +147,14 @@ const Co2Reduction = () => {
                 const data = {
                   export: {
                     entity: "co2_reduction",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -168,6 +185,7 @@ const Co2Reduction = () => {
               const { location } = data;
               const filter = location && `location=${location}`;
               setLocationFilter(filter);
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -189,8 +207,10 @@ const Co2Reduction = () => {
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
                `;
               setDateFilter(filter);
-              console.log("date", date);
+              // console.log("date", date);
               setDateRange(date);
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -202,6 +222,7 @@ const Co2Reduction = () => {
               const { truck } = data;
               const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);
+              setTruckDownload(truck);
             }}
             data={truckDropdownData}
             gap="2rem"

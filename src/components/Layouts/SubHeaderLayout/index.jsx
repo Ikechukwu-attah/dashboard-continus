@@ -50,7 +50,7 @@ const SubHeaderLayout = ({ buttons, text, dateRange = [], count, data }) => {
           fontWeight="400"
           color={Theme.colors.neutralColor2}
         >
-          {count ? `${count} Truck${count > 1 ? "s" : ""}` : ""}
+          {/* {count ? `${count} Truck${count > 1 ? "s" : ""}` : ""} */}
         </StyledText>
       </StyledDivFlex>
     </StyledBox>

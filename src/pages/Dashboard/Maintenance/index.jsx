@@ -26,6 +26,7 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import { maintenanceList } from "../../../DUMMYDATA";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
@@ -42,8 +43,10 @@ const Maintenance = () => {
     setActivePage(0);
   };
 
-  const startDate = getPreviousDate(120);
-  const endDate = getTodayDate();
+  const [startDate, setStartDate] = useState(getPreviousDate(120));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
 
@@ -119,7 +122,14 @@ const Maintenance = () => {
                 const data = {
                   export: {
                     entity: "maintenance_report",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -135,7 +145,14 @@ const Maintenance = () => {
                 const data = {
                   export: {
                     entity: "maintenance_report",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -143,7 +160,7 @@ const Maintenance = () => {
                 getCSVExport(data);
               }}
             >
-              {isDownloading ? "DownLoading" : "Download Report"}
+              {isDownloading ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -158,18 +175,20 @@ const Maintenance = () => {
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
-            name="cycle"
-            label="Cycle"
+            name="maintenance"
+            label="Maintenance"
             onChange={(data) => {
               console.log("selection", data);
-              const { cycle } = data;
-              const filter = maintenance ? `cycle=${cycle}` : "";
+              const { maintenance } = data;
+              const filter = maintenance
+                ? `where=data.Maintenance:=:${maintenance}`
+                : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
 
               resetPagination();
             }}
-            data={cycleData}
+            data={maintenanceList}
             minWidth="20rem"
             gap="20rem"
             icon={
@@ -191,7 +210,8 @@ const Maintenance = () => {
               const filter = location ? `location=${location}` : "";
               setLocationFilter(filter);
               resetPagination();
-              console.log("location selection", data);
+              setLocationDownload(location);
+              // console.log("location selection", data);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -229,6 +249,8 @@ const Maintenance = () => {
               setDateFilter(filter);
               setDateRange(date);
               resetPagination();
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -243,6 +265,7 @@ const Maintenance = () => {
               const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
               resetPagination();
+              setTruckDownload(truck);
             }}
             data={truckDropdownData}
             gap="2rem"

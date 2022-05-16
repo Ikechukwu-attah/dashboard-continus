@@ -26,6 +26,7 @@ const Dropdown = ({
   showDropdown,
   value,
   multiSelect,
+  capitalize,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([label]);
@@ -127,6 +128,7 @@ const Dropdown = ({
             padding={padding}
             noHover
             borderRadius="1rem"
+            textTransform={capitalize ? "capitalize" : ""}
             background={background}
             border={`1px solid ${borderColor}`}
             color={textColor}

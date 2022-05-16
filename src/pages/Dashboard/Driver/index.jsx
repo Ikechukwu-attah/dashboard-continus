@@ -31,6 +31,8 @@ const Driver = () => {
 
   const startDate = getPreviousDate(120);
   const endDate = getTodayDate();
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [dateRange, setDateRange] = useState([startDate, endDate]);
@@ -100,7 +102,7 @@ const Driver = () => {
                 const data = {
                   export: {
                     entity: "driver_management",
-                    query: {},
+                    query: { truck: truckDownload, location: locationDownload },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -116,7 +118,7 @@ const Driver = () => {
                 const data = {
                   export: {
                     entity: "driver_management",
-                    query: {},
+                    query: { truck: truckDownload, location: locationDownload },
                     as: "download",
                   },
                 };
@@ -124,7 +126,7 @@ const Driver = () => {
                 getCSVExport(data);
               }}
             >
-              {isDownloading ? "DownLoading" : "Download Report"}
+              {isDownloading ? "Downloading" : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -147,6 +149,7 @@ const Driver = () => {
               const filter = location ? `location=${location}` : null;
               resetPagination();
               setLocationFilter(filter);
+              setLocationDownload(location);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -181,6 +184,7 @@ const Driver = () => {
               const filter = truck ? `truck=${truck}` : "";
               setTruckFilter(filter);
               resetPagination();
+              setTruckDownload(truck);
             }}
             minWidth="20rem"
             data={truckDropdownData}

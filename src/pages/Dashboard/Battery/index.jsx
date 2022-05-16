@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
@@ -15,14 +15,103 @@ import { StyledBox } from "../../../components/common/Basics/DivBox";
 import { batteryUsage } from "../../../DUMMYDATACHART.js";
 import { StyledText } from "../../../components/common/Basics/StyledText";
 import BatteryGraph from "./BatteryGraph";
+import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
+import { useGetBattery } from "./hooks/useGetBattery";
+import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
+import { formatDate } from "../../../utils/FormatDate";
+import PickDate from "../../../components/common/DatePicker";
+import { useFilterGraph } from "../../../hooks/useGraphFilter";
+import SpinnerWithText from "../../../components/common/SpinnerWithText";
+import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 const Battery = () => {
+  const { getBattery, data, error, isLoading } = useGetBattery();
+  console.log("battery data", data);
+
+  const [startDate, setStartDate] = useState(getPreviousDate(450));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
+
+  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
+  const [truckFilter, setTruckFilter] = useState();
+  const [locationFilter, setLocationFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
+  const { getCSVExport, csvData, isDownloading, isExporting } =
+    useGetCSVExport();
+
+  const { truckDropdownData, locationsDropdownData } = useContext(
+    dropdownFilterContext
+  );
+
+  // useEffect(() => {
+  //   getBattery(filter);
+  // }, []);
+
+  useFilterGraph(
+    truckFilter,
+    locationFilter,
+    dateFilter,
+    null,
+    null,
+    getBattery
+  );
+
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
-            <StyledPageHeaderButton>Report Via Email</StyledPageHeaderButton>
-            <StyledPageHeaderButton>Download Report</StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const user = MapTokenToUser();
+                console.log("user export", user.user.email);
+                const data = {
+                  export: {
+                    entity: "battery_management",
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
+                    as: "email",
+                    recipients: [user.user.email],
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isExporting ? "Sending......" : " Report Via Email"}
+            </StyledPageHeaderButton>
+            <StyledPageHeaderButton
+              onClick={() => {
+                const data = {
+                  export: {
+                    entity: "battery_management",
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
+                    as: "download",
+                  },
+                };
+
+                getCSVExport(data);
+              }}
+            >
+              {" "}
+              {isDownloading ? "Downloading" : "Download Report"}
+            </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
 
@@ -38,9 +127,16 @@ const Battery = () => {
             // background={Theme.colors.secondaryColor}
             name="location"
             label="Location"
-            onChange={(data) => console.log("user selection", data)}
-            data={locations}
+            onChange={(data) => {
+              console.log("user selection", data);
+              const { location } = data;
+              const filter = location && `location=${location}`;
+              setLocationFilter(filter);
+              setLocationDownload(location);
+            }}
+            data={locationsDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -48,28 +144,35 @@ const Battery = () => {
               />
             }
           />
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="period"
-            label="Time Period"
-            onChange={(data) => console.log("user selection", data)}
-            data={period}
-            gap="2rem"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
+          <PickDate
+            onChange={(date) => {
+              const filter =
+                date &&
+                `period[start]=${
+                  formatDate(date[0])["yyyy-mm-dd"]
+                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
+               `;
+              setDateFilter(filter);
+              // console.log("date", date);
+              setDateRange(date);
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
+            }}
           />
 
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
             label="Filter Truck"
-            onChange={(data) => console.log("user selection", data)}
-            data={trucks}
+            onChange={(data) => {
+              const { truck } = data;
+              const filter = truck && `truck=${truck}`;
+              setTruckFilter(filter);
+              setTruckDownload(truck);
+            }}
+            data={truckDropdownData}
             gap="2rem"
+            minWidth="20rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -82,7 +185,7 @@ const Battery = () => {
           {/* <SpinningLoader /> */}
           <SubHeaderLayout
             text="Energy for the period:"
-            date="1 Feb, 2022 - 28th Feb, 2022"
+            dateRange={dateRange}
           />
 
           <StyledDivFlex
@@ -122,7 +225,12 @@ const Battery = () => {
           </StyledDivFlex>
 
           {/* BARCHART STARTS FROM HERE  */}
-          <BatteryGraph data={batteryUsage} />
+          {isLoading ? (
+            <SpinnerWithText isLoading={isLoading} margin="2rem 0 0 0" />
+          ) : (
+            <BatteryGraph data={data} isLoading={isLoading} />
+          )}
+
           {/* BARCHART ENDS HERE */}
         </StyledBox>
       </StyledDashboardContentWrapper>

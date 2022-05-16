@@ -28,6 +28,7 @@ const Navbar = () => {
         fontWeight="600"
         fontSize="3.6rem"
         lineHeight="5.4rem"
+        whiteSpace="nowrap"
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
@@ -61,6 +62,7 @@ const Navbar = () => {
             fontSize="1.8rem"
             fontWeight="400"
             lineHeight="2.7rem"
+            whiteSpace="noWrap"
           >
             {/* Bisedge personnel */}{" "}
             {user.user.data.role === "personnel" ||

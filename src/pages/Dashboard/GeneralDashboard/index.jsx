@@ -33,6 +33,14 @@ const GeneralDashboard = () => {
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
 
+  const captializeText = (text) => {
+    return text.replace(
+      /(^\w|\s\w)(\S*)/g,
+      (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
+    );
+  };
+
+  console.log("capitalize", captializeText("james attah"));
   const {
     updateWidget,
     isLoading: isWidgetUpdating,
@@ -193,6 +201,7 @@ const GeneralDashboard = () => {
               addWidget(data);
             }}
             data={widgetsDropdownData}
+            capitalize
             gap="2rem"
             minWidth="25rem"
             icon={
@@ -265,10 +274,10 @@ const GeneralDashboard = () => {
           <StyledDivFlex gap="3rem" marginTop="4rem"></StyledDivFlex>
         </StyledBox>
       </StyledDashboardContentWrapper>
-      <BusyOverlay
+      {/* <BusyOverlay
         isLoading={isWidgetUpdating || isLoading}
         spinnerText="Updating widgets..."
-      />
+      /> */}
     </DashboardLayout>
   );
 };

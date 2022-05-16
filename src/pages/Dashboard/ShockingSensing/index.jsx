@@ -50,8 +50,10 @@ const ShockingSense = () => {
     setActivePage(0);
   };
 
-  const startDate = getPreviousDate(120);
-  const endDate = getTodayDate();
+  const [startDate, setStartDate] = useState(getPreviousDate(20));
+  const [endDate, setEndDate] = useState(getTodayDate());
+  const [truckDownload, setTruckDownload] = useState();
+  const [locationDownload, setLocationDownload] = useState();
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
 
@@ -98,7 +100,14 @@ const ShockingSense = () => {
                 const data = {
                   export: {
                     entity: "shock_sensing",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "email",
                     recipients: [user.user.email],
                   },
@@ -114,7 +123,14 @@ const ShockingSense = () => {
                 const data = {
                   export: {
                     entity: "shock_sensing",
-                    query: {},
+                    query: {
+                      period: {
+                        start: startDate,
+                        end: endDate,
+                      },
+                      truck: truckDownload,
+                      location: locationDownload,
+                    },
                     as: "download",
                   },
                 };
@@ -122,7 +138,7 @@ const ShockingSense = () => {
                 getCSVExport(data);
               }}
             >
-              {isDownloading ? "DownLoading..." : "Download Report"}
+              {isDownloading ? "Downloading..." : "Download Report"}
             </StyledPageHeaderButton>
           </StyledDivFlex>
         </PageHeaderLayout>
@@ -145,6 +161,7 @@ const ShockingSense = () => {
               const filter = location ? `location=${location}` : "";
               setLocationFilter(filter);
               resetPagination();
+              setLocationDownload(location);
 
               // getShockingSensingTable(filter);
               console.log("filter", filter);
@@ -171,6 +188,8 @@ const ShockingSense = () => {
               setDateFilter(filter);
               setDateRange(date);
               resetPagination();
+              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
+              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
           />
 
@@ -184,6 +203,7 @@ const ShockingSense = () => {
               // getShockingSensingTable(filter);
               setTruckFilter(filter);
               resetPagination();
+              setTruckDownload(truck);
             }}
             minWidth="20rem"
             data={truckDropdownData}
@@ -240,7 +260,11 @@ const ShockingSense = () => {
           {activeButton === "Table" ? (
             <>
               {isLoading ? (
-                <SpinnerWithText isLoading={isLoading} margin="1rem 0 0 0" />
+                <SpinnerWithText
+                  isLoading={isLoading}
+                  margin="1rem 0 0 0"
+                  spinnerText="Kindly wait. This can take up to 2mins..."
+                />
               ) : (
                 <ShockSensingTable data={data} />
               )}
