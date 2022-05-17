@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.7c8bb39c.css",
-    "main.js": "/static/js/main.28d91e4a.js",
-    "static/media/BisedgeLogo.png": "/static/media/BisedgeLogo.c7298d7e13e8883601f9.png",
-    "index.html": "/index.html",
-    "main.7c8bb39c.css.map": "/static/css/main.7c8bb39c.css.map",
-    "main.28d91e4a.js.map": "/static/js/main.28d91e4a.js.map"
+    "main.css": "/bisedge/static/css/main.7c8bb39c.css",
+    "main.js": "/bisedge/static/js/main.1ea20308.js",
+    "static/media/BisedgeLogo.png": "/bisedge/static/media/BisedgeLogo.c7298d7e13e8883601f9.png",
+    "index.html": "/bisedge/index.html",
+    "main.7c8bb39c.css.map": "/bisedge/static/css/main.7c8bb39c.css.map",
+    "main.1ea20308.js.map": "/bisedge/static/js/main.1ea20308.js.map"
   },
   "entrypoints": [
     "static/css/main.7c8bb39c.css",
-    "static/js/main.28d91e4a.js"
+    "static/js/main.1ea20308.js"
   ]
 }
