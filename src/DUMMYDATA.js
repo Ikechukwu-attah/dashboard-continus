@@ -16,11 +16,11 @@ export const period = ["2012-2022", "2022-2023", "2022-2035"];
 export const trucks = ["Truck 1", "Truck 2", "Truck 3"];
 
 export const maintenanceList = [
-    "1000 Hours Routine ",
-    "500 Hours Routine ",
-    "3000 Hours Routine ",
-    "6000 Hours Routine ",
-    "Attachment ",
+    "1000 Hours Routine Maintenance  ",
+    "500 Hours Routine Maintenance",
+    "3000 Hours Routine Maintenance",
+    "6000 Hours Routine Maintenance ",
+    "Attachment Maintenance",
 ];
 
 export const Co2DataItem = [

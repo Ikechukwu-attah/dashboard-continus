@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { breakPoint } from "../../../constants/breakPoints";
 import { Theme } from "../../../Theme";
 
 export const StyledList = styled.li `
@@ -33,6 +34,19 @@ export const StyledList = styled.li `
   .active {
     color: red;
     background: #7600dc;
+  }
+
+  @media (max-width: ${breakPoint.tablet}) {
+    width: ${({ widthT }) => widthT};
+    padding: ${({ paddingT }) => paddingT};
+    margin: ${({ marginT }) => marginT};
+    color: red;
+  }
+
+  @media (max-width: ${breakPoint.mobile}) {
+    width: ${({ widthM }) => widthM};
+    padding: ${({ paddingM }) => paddingM};
+    margin: ${({ marginM }) => marginM};
   }
 `;
 

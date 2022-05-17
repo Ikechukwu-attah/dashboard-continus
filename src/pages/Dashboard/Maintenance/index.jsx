@@ -190,6 +190,7 @@ const Maintenance = () => {
             }}
             data={maintenanceList}
             minWidth="20rem"
+            minWidthT="30rem"
             gap="20rem"
             icon={
               <KeyboardArrowDownIcon
@@ -198,7 +199,7 @@ const Maintenance = () => {
               />
             }
             maxWidth="40rem"
-            multiSelect={true}
+            // multiSelect={true}
           />
 
           <Dropdown

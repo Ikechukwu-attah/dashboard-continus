@@ -61,6 +61,7 @@ const SideBar = () => {
                 fontWeight="400"
                 lineHeight="2rem"
                 padding="1rem 1rem 1rem 6vw"
+                paddingT="1rem 1rem 1rem 3vw"
                 color={
                   activeUrl === item.link
                     ? Theme.colors.primaryColor

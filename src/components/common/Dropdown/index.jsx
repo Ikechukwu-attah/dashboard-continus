@@ -23,6 +23,7 @@ const Dropdown = ({
   icon,
   maxWidth,
   minWidth,
+  minWidthT,
   showDropdown,
   value,
   multiSelect,
@@ -97,6 +98,7 @@ const Dropdown = ({
       onClick={() => setIsIOpen(!isOpen)}
       // width={maxWidth}
       minWidth={minWidth}
+      minWidthT={minWidthT}
     >
       <StyledText
         fontSize="1.8rem"

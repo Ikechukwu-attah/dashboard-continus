@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { breakPoint } from "../../../constants/breakPoints";
 
 export const StyledBox = styled.div `
   width: ${({ width }) => width};
@@ -28,4 +29,21 @@ export const StyledBox = styled.div `
   overflow: ${({ overFlow }) => overFlow};
   max-width: ${(maxWidth) => maxWidth};
   overflow-x: ${(overFlowX) => overFlowX};
+
+  /* @media (max-width: ${breakPoint.desktop}) {
+    width: ${({ width }) => width};
+    color: red;
+  } */
+
+  @media (max-width: ${breakPoint.tablet}) {
+    width: ${({ widthT }) => widthT};
+    padding: ${({ paddingT }) => paddingT};
+    margin: ${({ marginT }) => marginT};
+  }
+
+  @media (max-width: ${breakPoint.mobile}) {
+    width: ${({ widthM }) => widthM};
+    padding: ${({ paddingM }) => paddingM};
+    margin: ${({ marginM }) => marginM};
+  }
 `;
