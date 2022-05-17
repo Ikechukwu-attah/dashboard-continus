@@ -14,7 +14,6 @@ export const useLoginClient = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(clientLoginAPI, data);
-      console.log("login=>response", response);
       setIsLoading(false);
       setData(response);
 
@@ -24,7 +23,6 @@ export const useLoginClient = () => {
     } catch (error) {
       setIsLoading(false);
       setError(error?.response?.data?.message);
-      console.log("ErrorMessage", error?.response?.data?.message);
     }
   };
   return { error, data, isLoading, loginClient };

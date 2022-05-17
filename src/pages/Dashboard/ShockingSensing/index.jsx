@@ -57,15 +57,11 @@ const ShockingSense = () => {
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
 
-  console.log("shocking sense", filter);
-
   const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [locationFilter, setLocationFilter] = useState();
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
   const [pageFilter, setPageFilter] = useState();
-
-  console.log("table Data on filter", data);
 
   useFilterGraph(
     truckfilter,
@@ -96,7 +92,6 @@ const ShockingSense = () => {
             <StyledPageHeaderButton
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "shock_sensing",

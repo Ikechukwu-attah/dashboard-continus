@@ -22,9 +22,7 @@ const UserManagement = () => {
   // const{showList,setShowList}  = useContext(globalContext)
   const { showListing, setShowListing } = useContext(globalContext);
 
-  console.log("showUserList", showUserList);
   const { isLoading, getAllUsers, data, totalPages } = useGetAllUsers();
-  console.log("data confirmation", data);
 
   // const filter = "?where=data.role:in:admin,personnel";
 

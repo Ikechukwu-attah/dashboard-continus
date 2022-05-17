@@ -12,7 +12,6 @@ export const useGetMaintenance = () => {
     const url = searchFilter
       ? `${maintenanceAPI}/${searchFilter}`
       : maintenanceAPI;
-    console.log("url", url);
     setIsLoading(true);
     try {
       const response = await axios.get(url);
@@ -25,7 +24,6 @@ export const useGetMaintenance = () => {
         },
       } = response?.data;
       setTotalPages(total_pages);
-      // console.log("data driver", data);
     } catch (error) {
       setError(error?.response?.data?.message);
     }

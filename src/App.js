@@ -14,7 +14,7 @@ import jwt_decode from "jwt-decode";
 import { publicRoutes, protectedRoutes } from "./Routes/Routes";
 import { Login } from "@mui/icons-material";
 
-import { ProtectedRouteGaurd, PublicRouteGaurd } from "./Routes/Gaurd";
+import { PublicRouteGaurd, AdminGuard, ClientGuard } from "./Routes/Gaurd";
 
 function App() {
   // const decodedToken = jwt_decode(
@@ -34,18 +34,23 @@ function App() {
                 element={<PublicRouteGaurd> {component} </PublicRouteGaurd>}
               />
             ))}{" "}
-            {protectedRoutes.map(({ path, component }) => (
+            {protectedRoutes.admin.map(({ path, component }) => (
               <Route
                 path={path}
-                element={
-                  <ProtectedRouteGaurd> {component} </ProtectedRouteGaurd>
-                }
+                element={<AdminGuard> {component} </AdminGuard>}
                 exact={true}
               />
-            ))}{" "}
+            ))}
+            {protectedRoutes.client.map(({ path, component }) => (
+              <Route
+                path={path}
+                element={<ClientGuard> {component} </ClientGuard>}
+                exact={true}
+              />
+            ))}
           </Routes>{" "}
         </BrowserRouter>{" "}
-      </DropdownFilterProvider>
+      </DropdownFilterProvider>{" "}
     </GlobalProvider>
   );
 }

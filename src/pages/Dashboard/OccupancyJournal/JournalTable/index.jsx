@@ -12,8 +12,6 @@ const JournalTable = ({ data }) => {
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
-      console.table("data table", data);
       const newData = data.map((data) => {
         data.Date = data.data.Date;
         data.Truck = data.data.Truck;
@@ -25,8 +23,6 @@ const JournalTable = ({ data }) => {
 
         return data;
       });
-
-      console.log("newData", newData);
 
       setJournalData(newData);
     }
@@ -58,8 +54,6 @@ const JournalTable = ({ data }) => {
 
   const columns = useMemo(() => COLUMN, []);
   const newJournalData = useMemo(() => journalData, [journalData, data]);
-
-  console.log("new journalData", newJournalData);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -107,7 +101,6 @@ const JournalTable = ({ data }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

@@ -40,7 +40,7 @@ const GeneralDashboard = () => {
     );
   };
 
-  console.log("capitalize", captializeText("james attah"));
+  // console.log("capitalize", captializeText("james attah"));
   const {
     updateWidget,
     isLoading: isWidgetUpdating,

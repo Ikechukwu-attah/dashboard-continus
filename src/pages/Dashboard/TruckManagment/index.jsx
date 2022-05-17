@@ -37,7 +37,6 @@ const TruckManagment = () => {
   const { data, isLoading, getTruckManagement, error, totalPages } =
     useGetTruckManagement();
 
-  console.log("truck management", data);
   const startDate = getPreviousDate(450);
   const endDate = getTodayDate();
 

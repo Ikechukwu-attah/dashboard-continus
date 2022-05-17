@@ -21,7 +21,6 @@ export const useGetTruckManagement = () => {
         },
       } = response.data;
       setTotalPages(total_pages);
-      console.log("response truck--", response?.data?.data?.records);
     } catch (error) {
       setIsLoading(false);
       setError(error?.response);

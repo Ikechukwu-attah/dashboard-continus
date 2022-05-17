@@ -29,7 +29,6 @@ const Login = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setClientLoginData({ ...clientLoginData, [name]: value });
-    console.log("client-login-data", clientLoginData);
   };
   const handleLoginSubmit = (event) => {
     // event.preventDefault();

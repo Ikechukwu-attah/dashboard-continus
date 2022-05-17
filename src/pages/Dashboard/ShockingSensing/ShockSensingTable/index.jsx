@@ -9,12 +9,9 @@ import { StyledTextHeading } from "../../../../components/common/Basics/Heading"
 
 const ShockSensingTable = ({ data }) => {
   const [tableShockSensingData, setTableShockSensingData] = useState([]);
-  console.log("table sensing data", tableShockSensingData);
 
   useEffect(() => {
     if (data) {
-      console.log("Is data shocking table working ");
-      console.table("data table", data);
       const newData = data.map((data) => {
         data.Truck = data.data.Truck;
         data["Truck chassis no"] = data.data["Truck chassis no."];
@@ -24,8 +21,6 @@ const ShockSensingTable = ({ data }) => {
 
         return data;
       });
-
-      console.log("newData", newData);
 
       setTableShockSensingData(newData);
     }
@@ -107,7 +102,6 @@ const ShockSensingTable = ({ data }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

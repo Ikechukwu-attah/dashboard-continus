@@ -45,32 +45,35 @@ export const publicRoutes = [
     component: <ContactAdmin />,
   },
 ];
-export const protectedRoutes = [
-  { path: "/home", component: <GeneralDashboard /> },
+export const protectedRoutes = {
+  admin: [
+    { path: "/client-management", component: <ClientManagment /> },
 
-  { path: "/client-management", component: <ClientManagment /> },
+    { path: "/user-management", component: <UserManagement /> },
 
-  { path: "/co2-reduction", component: <Co2Reduction /> },
+    { path: "/user-management/:userType/:id", component: <EditClientsPage /> },
 
-  { path: "/occupancy-journal", component: <OccupancyJournal /> },
+    { path: "/upload-data", component: <UploadData /> },
+  ],
+  client: [
+    { path: "/home", component: <GeneralDashboard /> },
 
-  { path: "/battery", component: <Battery /> },
+    { path: "/co2-reduction", component: <Co2Reduction /> },
 
-  { path: "/maintenance", component: <Maintenance /> },
+    { path: "/occupancy-journal", component: <OccupancyJournal /> },
 
-  { path: "/monthly-avaliablity", component: <MonthlyAvaliablity /> },
+    { path: "/battery", component: <Battery /> },
 
-  { path: "/shocking-sense", component: <ShockingSense /> },
+    { path: "/maintenance", component: <Maintenance /> },
 
-  { path: "/truck-usage", component: <TruckUsage /> },
+    { path: "/monthly-avaliablity", component: <MonthlyAvaliablity /> },
 
-  { path: "/user-management", component: <UserManagement /> },
+    { path: "/shocking-sense", component: <ShockingSense /> },
 
-  { path: "/user-management/:userType/:id", component: <EditClientsPage /> },
+    { path: "/truck-usage", component: <TruckUsage /> },
 
-  { path: "/driver", component: <Driver /> },
+    { path: "/driver", component: <Driver /> },
 
-  { path: "/upload-data", component: <UploadData /> },
-
-  { path: "/truck-management", component: <TruckManagment /> },
-];
+    { path: "/truck-management", component: <TruckManagment /> },
+  ],
+};

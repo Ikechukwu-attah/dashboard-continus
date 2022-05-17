@@ -68,7 +68,6 @@ const MaintenanceTable = ({ data }) => {
     () => maintenanceData,
     [maintenanceData, data]
   );
-  console.log("new maintenanceData", newMaintenanceData);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -116,7 +115,6 @@ const MaintenanceTable = ({ data }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

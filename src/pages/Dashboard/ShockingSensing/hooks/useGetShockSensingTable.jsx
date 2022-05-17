@@ -16,7 +16,6 @@ export const useGetShockingSensingTable = () => {
     try {
       const response = await axios.get(url);
       setData(response?.data?.data?.records);
-      // console.log("shocking sense table", response.data.data.records)
       setIsLoading(false);
       const {
         data: {
@@ -26,7 +25,6 @@ export const useGetShockingSensingTable = () => {
       setTotalPages(total_pages);
     } catch (error) {
       setError(error?.response);
-      // console.log("shocking sense error", error.response);
     }
   };
 

@@ -16,12 +16,9 @@ import {
 
 const ShockSensingBar = ({ data }) => {
   const [graphShockSensingData, setGraphShockSensingData] = useState([]);
-  console.log("graph data", data);
 
   useEffect(() => {
     if (data) {
-      console.log("Is data shocking bar working ");
-      console.table("data table", data);
       const newData = data.map((data) => {
         data.Truck = data.data.Truck;
         data["Total number of shocks"] = data.data["Total number of shocks"];
@@ -31,8 +28,6 @@ const ShockSensingBar = ({ data }) => {
 
         return data;
       });
-
-      console.log("newData graph", newData);
 
       setGraphShockSensingData(newData);
     }

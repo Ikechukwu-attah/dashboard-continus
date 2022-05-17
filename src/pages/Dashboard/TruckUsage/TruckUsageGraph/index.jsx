@@ -17,7 +17,6 @@ import { Theme } from "../../../../Theme";
 const TruckUsageGraph = ({ data }) => {
   const [truckData, setTruckData] = useState([]);
   // console.log("tuck data modified", truckData);
-  console.log("truck now now", data);
 
   // useEffect(() => {
   //   if (data) {

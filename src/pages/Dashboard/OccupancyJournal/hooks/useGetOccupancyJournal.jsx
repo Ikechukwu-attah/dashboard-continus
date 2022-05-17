@@ -28,7 +28,6 @@ export const useOccupancyJournal = () => {
       setTotalPages(total_pages);
     } catch (error) {
       setError(error?.response?.data?.message);
-      // console.log("occupancy error", error.response);
     }
   };
 

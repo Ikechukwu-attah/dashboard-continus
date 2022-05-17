@@ -12,10 +12,7 @@ const TruckManagementTable = ({ data }) => {
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
-      console.table("data table", data);
       const newData = data.map((data) => {
-        // data.Date = data.data.Date;
         data.Truck = data.data.Truck;
         data["Truck chassis no"] = data.data["Truck chassis no."];
         data["Truck type"] = data.data["Truck type"];
@@ -40,8 +37,6 @@ const TruckManagementTable = ({ data }) => {
 
         return data;
       });
-
-      console.log("newData today", newData);
 
       setTruckManagementData(newData);
     }
@@ -158,8 +153,6 @@ const TruckManagementTable = ({ data }) => {
     [truckManagementData, data]
   );
 
-  console.log("new truckmangment", truckManagementData);
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -206,7 +199,6 @@ const TruckManagementTable = ({ data }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

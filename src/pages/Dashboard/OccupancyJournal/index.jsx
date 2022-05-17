@@ -31,7 +31,6 @@ const OccupancyJournal = () => {
   const [pageFilter, setPageFilter] = useState();
   // const [locationData, setLocationData] = useState([]);
   // const [truckData, setTruckData] = useState([]);
-  console.log("data journal", data);
 
   const [activePage, setActivePage] = useState(0);
 
@@ -96,7 +95,6 @@ const OccupancyJournal = () => {
             <StyledPageHeaderButton
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "occupancy_journal",

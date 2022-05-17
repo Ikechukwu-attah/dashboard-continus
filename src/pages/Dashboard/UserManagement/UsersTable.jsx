@@ -25,11 +25,8 @@ const UsersTable = ({ data, getAllUsers }) => {
   const [show, setShow] = useState(false);
   const [idValue, setIdValue] = useState();
 
-  console.log("userData", userData);
   const { error, deleteClient, isLoading } = useDeleteClient();
-  console.log("Is this actually working users table ");
   useEffect(() => {
-    console.log("personnel data", data);
     if (data) {
       console.log("Is this actually working users table ");
       console.table("data table", data);
@@ -41,8 +38,6 @@ const UsersTable = ({ data, getAllUsers }) => {
 
         return data;
       });
-
-      console.log("admin", newData);
 
       setUserData(newData);
     }
@@ -156,7 +151,6 @@ const UsersTable = ({ data, getAllUsers }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

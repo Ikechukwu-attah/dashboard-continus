@@ -26,7 +26,6 @@ export const useGetShockingSensingBarChart = () => {
       setTotalPages(total_pages);
     } catch (error) {
       setError(error?.response);
-      // console.log("shocking sense graph error", error.response);
     }
   };
 

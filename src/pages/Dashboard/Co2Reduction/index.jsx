@@ -50,7 +50,6 @@ const Co2Reduction = () => {
   const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
-  console.log("frontend co2", data?.length);
 
   useFilterGraph(
     truckFilter,

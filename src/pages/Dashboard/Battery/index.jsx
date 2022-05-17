@@ -26,7 +26,6 @@ import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 const Battery = () => {
   const { getBattery, data, error, isLoading } = useGetBattery();
-  console.log("battery data", data);
 
   const [startDate, setStartDate] = useState(getPreviousDate(450));
   const [endDate, setEndDate] = useState(getTodayDate());

@@ -13,11 +13,9 @@ export const useForgetPassword = () => {
       const response = axios.post(forgetPasswordAPI, data);
       setIsLoading(false);
       setData(response?.data);
-      console.log("forgetpassword data===>", data);
     } catch (error) {
       setIsLoading(false);
       setError(error.response?.data?.error?.message);
-      console.log(error?.response?.data?.error?.message);
     }
   };
 

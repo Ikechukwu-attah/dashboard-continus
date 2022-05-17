@@ -13,7 +13,6 @@ export const useDeleteClient = () => {
       const response = await axios.delete(deleteClientAPI, { data });
       setIsLoading(false);
       setData(response?.data);
-      // console.log("delete client data", response.data)
 
       if (callback && typeof callback === "function") {
         await callback();
@@ -21,7 +20,6 @@ export const useDeleteClient = () => {
     } catch (error) {
       setIsLoading(false);
       setError(error?.response?.data?.message);
-      console.log(error);
     }
   };
 
