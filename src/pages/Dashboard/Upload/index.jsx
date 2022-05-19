@@ -35,8 +35,8 @@ const UploadData = () => {
               <StyledInput
                 type="file"
                 placeholder="Upload CSV File"
-                value=""
-                onChange=""
+                // value=""
+                // onChange=""
                 // required
                 // padding="2.3rem"
                 fontSize="2.3rem"

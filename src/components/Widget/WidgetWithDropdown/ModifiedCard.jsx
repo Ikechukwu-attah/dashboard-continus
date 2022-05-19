@@ -7,7 +7,7 @@ import { StyledBox } from "../../common/Basics/DivBox";
 import { StyledText } from "../../common/Basics/StyledText";
 import { widgetContext } from "../../../Context/WidgetContext";
 
-const ModifiedCard = ({ label, count, thresholdCount, onRemove }) => {
+const ModifiedCard = ({ label, count, thresholdCount, onRemove, report }) => {
   const { widgets, widgetsDropdownData } = useContext(widgetContext);
   return (
     <StyledBox>
@@ -19,6 +19,7 @@ const ModifiedCard = ({ label, count, thresholdCount, onRemove }) => {
         // bottom="10rem"
         count={count}
         onRemove={onRemove}
+        report={report}
       />
       <StyledDivFlex
         background={Theme.colors.neutralColor}

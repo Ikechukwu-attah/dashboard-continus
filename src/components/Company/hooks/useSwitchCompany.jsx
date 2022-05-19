@@ -7,14 +7,18 @@ export const useSwitchCompany = () => {
   const [error, setError] = useState();
   const [data, setData] = useState();
 
-  const switchCompany = async (data) => {
+  const switchCompany = async (data, callback) => {
+    console.log("nawa oooo");
     setIsLoading(true);
     try {
       const response = await axios.post(switchCompanyAPI, data);
-      // console.log(
-      //     "switch company response",
-      //     response.data.data.user.company_id
-      // );
+      if (callback && typeof callback === "function") {
+        callback();
+      }
+      console.log(
+        "switch company response",
+        response.data.data.user.company_id
+      );
       setData(response);
       setIsLoading(false);
     } catch (error) {

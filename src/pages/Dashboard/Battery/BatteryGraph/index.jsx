@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import {
   LineChart,
+  Label,
   Line,
   XAxis,
   YAxis,
@@ -57,10 +58,19 @@ const BatteryGraph = ({ data, isLoading }) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="hour" />
-          <YAxis dataKey="value" />
+          <XAxis dataKey="hour" height={60}>
+            <Label value="Hours" offset={0} position="insideBottom" />
+          </XAxis>
+          <YAxis
+            dataKey="value"
+            label={{
+              value: "Value(%)",
+              angle: -90,
+              position: "insideLeft",
+            }}
+          />
           <Tooltip />
-          <Legend />
+          {/* <Legend /> */}
           <Line
             type="monotone"
             dataKey="hour"

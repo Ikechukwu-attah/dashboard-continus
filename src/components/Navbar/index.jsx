@@ -69,7 +69,7 @@ const Navbar = () => {
             user.user.data.role === "admin"
               ? user.user.data.role === "personnel"
                 ? "Bisedge Personnel"
-                : "Bisedge Admin"
+                : "Admin"
               : user?.user?.Company?.data?.official_name}
           </StyledText>
         </StyledDivFlex>

@@ -28,7 +28,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
 
   const handleChange = ({ name, value }) => {
     setSignUpClientData({ ...signUpClientData, [name]: value });
-    console.log("data=>=>=>", signUpClientData);
+    // console.log("data=>=>=>", signUpClientData);
   };
 
   const handleSubmit = (event) => {
@@ -126,54 +126,36 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 }
               />
             </StyledDivFlex>
-            {userType === "client" && (
-              <StyledDivFlex
-                flexDirection="column"
-                fontSize="1.8rem"
-                // gap="1rem"
-              >
-                <StyledLabel
-                  fontSize="1.8rem"
-                  color={Theme.colors.neutralColor2}
-                >
-                  Client Code
-                </StyledLabel>
-                {/* <StyledInput
-                  type="text"
-                  placeholder="Enter Client Code"
-                  padding="2.3rem"
-                  fontSize="2.3rem"
-                  name="company_id"
-                  value={signUpClientData.company_id}
-                  onChange={(event) =>
-                    handleChange({
-                      name: event.target.name,
-                      value: event.target.value,
-                    })
-                  }
-                /> */}
 
-                <Dropdown
-                  background={Theme.colors.secondaryColor}
-                  name="company_id"
-                  Top="6.8rem"
-                  padding="2rem"
-                  label="Client Code"
-                  value={signUpClientData.company_id}
-                  onChange={(data) => {
-                    const { company_id } = data;
-                    handleChange({
-                      name: "company_id",
-                      value: company_id,
-                    });
-                  }}
-                  // console.log("role selection", data);
+            <StyledDivFlex
+              flexDirection="column"
+              fontSize="1.8rem"
+              // gap="1rem"
+            >
+              <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
+                Client Code
+              </StyledLabel>
+              <Dropdown
+                background={Theme.colors.secondaryColor}
+                name="company_id"
+                Top="6.8rem"
+                padding="2rem"
+                label="Client Code"
+                value={signUpClientData.company_id}
+                onChange={(data) => {
+                  const { company_id } = data;
+                  handleChange({
+                    name: "company_id",
+                    value: company_id,
+                  });
+                }}
+                // console.log("role selection", data);
 
-                  data={companyName}
-                  icon={<KeyboardArrowDownIcon fontSize="large" />}
-                />
-              </StyledDivFlex>
-            )}
+                data={companyName}
+                icon={<KeyboardArrowDownIcon fontSize="large" />}
+              />
+            </StyledDivFlex>
+
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
                 Phone number

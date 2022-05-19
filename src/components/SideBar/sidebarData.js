@@ -79,9 +79,21 @@ export const adminNavbarData = [{
         link: "/user-management",
     },
 
+    // {
+    //     id: 3,
+    //     title: "Upload Data ",
+    //     link: "/upload-data",
+    // },
+
     {
-        id: 3,
-        title: "Upload Data ",
-        link: "/upload-data",
+        id: 4,
+        title: "Battery Upload ",
+        link: "/battery-upload",
+    },
+
+    {
+        id: 5,
+        title: "Availability Upload ",
+        link: "/availability-upload",
     },
 ];

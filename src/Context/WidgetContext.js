@@ -6,7 +6,7 @@ import { getPreviousDate, getTodayDate } from "../utils/GetDate";
 export const widgetContext = createContext();
 
 export const WidgetProvider = ({ children }) => {
-  const startDate = getPreviousDate(30);
+  const startDate = getPreviousDate(138);
   const endDate = getTodayDate();
   const filter = `period[start]=${startDate}
     &period[end]=${endDate}`;

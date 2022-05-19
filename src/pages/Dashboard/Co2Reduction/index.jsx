@@ -64,7 +64,7 @@ const Co2Reduction = () => {
     {
       Component: (
         <CardWidget
-          label="Disel saved (liters)"
+          label="Diesel  saved (liters)"
           count={Math.round(data?.diesel_saved_in_litres).toLocaleString()}
           // background="#5899DA"
           icon={<Droplet />}
@@ -97,17 +97,17 @@ const Co2Reduction = () => {
       ),
     },
 
-    {
-      Component: (
-        <CardWidget
-          label="Total Active Usage"
-          count={Math.round(data?.total_active_usage).toLocaleString()}
-          // background="#5899DA"
-          icon={<CloudGreen />}
-          width="100%"
-        />
-      ),
-    },
+    // {
+    //   Component: (
+    //     <CardWidget
+    //       label="Total Active Usage"
+    //       count={Math.round(data?.total_active_usage).toLocaleString()}
+    //       // background="#5899DA"
+    //       icon={<CloudGreen />}
+    //       width="100%"
+    //     />
+    //   ),
+    // },
   ];
 
   console.log("date range", dateRange);

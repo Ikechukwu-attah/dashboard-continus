@@ -132,55 +132,36 @@ const EditClient = ({ setShowClientList }) => {
               />
             </StyledDivFlex>
 
-            {userType === "client" && (
-              <StyledDivFlex
-                flexDirection="column"
-                fontSize="1.8rem"
-                // gap="1rem"
-              >
-                <StyledLabel
-                  fontSize="1.8rem"
-                  color={Theme.colors.neutralColor2}
-                >
-                  Client Code
-                </StyledLabel>
+            {/* {userType === "client" && ( */}
+            <StyledDivFlex
+              flexDirection="column"
+              fontSize="1.8rem"
+              // gap="1rem"
+            >
+              <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
+                Client Code
+              </StyledLabel>
 
-                {/* <StyledInput
-                  type="text"
-                  placeholder="Enter Client Code"
-                  padding="2.3rem"
-                  fontSize="2.3rem"
-                  name="company_id"
-                  value={clientData?.company_id}
-                  onChange={(event) =>
-                    handleChange({
-                      name: event.target.name,
-                      value: event.target.value,
-                    })
-                  }
-                /> */}
+              <Dropdown
+                background={Theme.colors.secondaryColor}
+                name="company_id"
+                Top="6.8rem"
+                padding="2rem"
+                label="Client Code"
+                value={clientData?.company_id}
+                onChange={(data) => {
+                  const { company_id } = data;
+                  handleChange({
+                    name: "company_id",
+                    value: company_id,
+                  });
+                }}
+                // console.log("role selection", data);
 
-                <Dropdown
-                  background={Theme.colors.secondaryColor}
-                  name="company_id"
-                  Top="6.8rem"
-                  padding="2rem"
-                  label="Client Code"
-                  value={clientData?.company_id}
-                  onChange={(data) => {
-                    const { company_id } = data;
-                    handleChange({
-                      name: "company_id",
-                      value: company_id,
-                    });
-                  }}
-                  // console.log("role selection", data);
-
-                  data={companyName}
-                  icon={<KeyboardArrowDownIcon fontSize="large" />}
-                />
-              </StyledDivFlex>
-            )}
+                data={companyName}
+                icon={<KeyboardArrowDownIcon fontSize="large" />}
+              />
+            </StyledDivFlex>
 
             <StyledDivFlex flexDirection="column" fontSize="1.8rem" gap="1rem">
               <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
@@ -266,12 +247,19 @@ const EditClient = ({ setShowClientList }) => {
                   Top="6.8rem"
                   padding="2rem"
                   value={clientData?.role}
-                  onChange={(event) => {
+                  // onChange={(event) => {
+                  //   handleChange({
+                  //     name: event.target.name,
+                  //     value: event.target.value,
+                  //   });
+                  //   console.log("client-role", clientData.role);
+                  // }}
+                  onChange={(data) => {
+                    const { role } = data;
                     handleChange({
-                      name: event.target.name,
-                      value: event.target.value,
+                      name: "role",
+                      value: role,
                     });
-                    console.log("client-role", clientData.role);
                   }}
                   // console.log("role selection", data);
 

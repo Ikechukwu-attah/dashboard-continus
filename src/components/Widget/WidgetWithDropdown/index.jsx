@@ -17,6 +17,7 @@ const WidgetWithDropdown = ({
   label,
   count,
   onView,
+  report,
   // bottom = "1rem",
   // right = "4rem",
   top = "",
@@ -52,7 +53,7 @@ const WidgetWithDropdown = ({
         //   flex="1"
       >
         <StyledText
-          fontSize="3.6rem"
+          fontSize={count.length > 5 ? "2.8rem" : "3.4rem"}
           fontWeight="500"
           color={Theme.colors.primaryColor}
           //   textAlign="end"
@@ -80,7 +81,7 @@ const WidgetWithDropdown = ({
           margin="0 1rem 0 0"
           cursor="pointer"
         >
-          View report
+          {report}
         </StyledText>
       </StyledBox>
       <StyledBox cursor="pointer" position="absolute" Top="2rem" Right="2rem">

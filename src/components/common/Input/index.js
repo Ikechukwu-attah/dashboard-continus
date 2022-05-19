@@ -9,6 +9,7 @@ export const StyledInput = styled.input `
   font-size: ${({ fontSize }) => fontSize};
   transform: scale(${({ scale }) => scale});
   position: ${({ position }) => position};
+  width: ${({ width }) => width};
 
   &:focus {
     outline: none;

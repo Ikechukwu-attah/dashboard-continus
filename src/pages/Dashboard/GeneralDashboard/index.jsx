@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { StyledDashboardContentWrapper } from "../../../components/common/Basics/DashboardContentWrapper";
 import { StyledDivFlex } from "../../../components/common/Basics/DivFlex";
 import { StyledPageHeaderButton } from "../../../components/common/Basics/PageHeaderButton";
@@ -92,6 +93,7 @@ const GeneralDashboard = () => {
           label="Number of Operators"
           count={Math.round(widgetsData?.no_of_operators).toLocaleString()}
           onRemove={() => removeWidget("operators")}
+          report={<Link to="/driver">View Report</Link>}
         />
       ),
     },
@@ -102,6 +104,7 @@ const GeneralDashboard = () => {
           label="Activated Trucks"
           count={Math.round(widgetsData?.no_of_trucks).toLocaleString()}
           onRemove={() => removeWidget("trucks")}
+          report={<Link to="/truck-management">View Report</Link>}
         />
       ),
     },
@@ -112,6 +115,7 @@ const GeneralDashboard = () => {
           label="Overall Uptime (Hours)"
           count={Math.round(widgetsData?.total_uptime).toLocaleString()}
           onRemove={() => removeWidget("uptime")}
+          report={<Link to="/monthly-avaliablity">View Report</Link>}
         />
       ),
     },
@@ -121,6 +125,7 @@ const GeneralDashboard = () => {
         <ModifiedCard
           label="Highest ShockThreshold"
           count={Math.round(widgetsData?.total_no_of_shocks).toLocaleString()}
+          report={<Link to="/shocking-sense">View Report</Link>}
           thresholdCount={Math.round(
             widgetsData?.highest_shock_threshold
           ).toLocaleString()}

@@ -53,4 +53,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+a{
+  color: #5F8050;
+}
+
 `;

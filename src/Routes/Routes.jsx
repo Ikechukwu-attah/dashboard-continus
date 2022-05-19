@@ -18,6 +18,8 @@ import EditClientsPage from "../pages/Dashboard/EditClientsPage";
 import ContactAdmin from "../pages/ContactAdmin";
 import UploadData from "../pages/Dashboard/Upload";
 import TruckManagment from "../pages/Dashboard/TruckManagment";
+import BatteryUpload from "../pages/BatteryUpload";
+import AvailablityUpload from "../pages/MonthlyUpload";
 
 export const publicRoutes = [
   {
@@ -53,7 +55,11 @@ export const protectedRoutes = {
 
     { path: "/user-management/:userType/:id", component: <EditClientsPage /> },
 
-    { path: "/upload-data", component: <UploadData /> },
+    // { path: "/upload-data", component: <UploadData /> },
+
+    { path: "/battery-upload", component: <BatteryUpload /> },
+
+    { path: "/availability-upload", component: <AvailablityUpload /> },
   ],
   client: [
     { path: "/home", component: <GeneralDashboard /> },

@@ -187,7 +187,7 @@ const Battery = () => {
             dateRange={dateRange}
           />
 
-          <StyledDivFlex
+          {/* <StyledDivFlex
             padding="1rem 8rem"
             justifyContent="flex-end"
             gap="2rem"
@@ -221,7 +221,7 @@ const Battery = () => {
                 Critical energy state
               </StyledText>
             </StyledDivFlex>
-          </StyledDivFlex>
+          </StyledDivFlex> */}
 
           {/* BARCHART STARTS FROM HERE  */}
           {isLoading ? (

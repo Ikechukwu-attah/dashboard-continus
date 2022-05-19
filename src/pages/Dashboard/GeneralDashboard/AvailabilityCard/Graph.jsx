@@ -18,71 +18,71 @@ const AvailabilityGraph = () => {
     {
       name: "Jan",
       uv: 80,
-      pv: 80,
+      availability: 80,
       amt: 2400,
     },
     {
       name: "Feb",
       uv: 3000,
-      pv: 90,
+      availability: 90,
       amt: 2210,
     },
     {
       name: "Apr",
       uv: 2000,
-      pv: 80,
+      availability: 80,
       amt: 2290,
     },
     {
       name: "May",
       uv: 2780,
-      pv: 75,
+      availability: 75,
       amt: 2000,
     },
     {
       name: "Jun",
       uv: 1890,
-      pv: 80,
+      availability: 80,
       amt: 2181,
     },
     {
       name: "Jul",
       uv: 2390,
-      pv: 75,
+      availability: 75,
       amt: 2500,
     },
     {
       name: "Aug",
       uv: 3490,
-      pv: 90,
+      availability: 90,
       amt: 2100,
     },
 
     {
       name: "Sep",
       uv: 3490,
-      pv: 84,
+      availability: 84,
       amt: 2100,
     },
 
     {
       name: "Oct",
       uv: 3490,
-      pv: 100,
+      availability: 100,
       amt: 2100,
     },
 
     {
       name: "Nov",
       uv: 3490,
-      pv: 80,
+      availability: 80,
       amt: 2100,
     },
 
     {
       name: "Dec",
       uv: 3490,
-      pv: 100,
+      availability: 100,
       amt: 2100,
     },
   ];
@@ -101,13 +101,22 @@ const AvailabilityGraph = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis dataKey="name" dy={-5}>
+            {" "}
+            <Label value="Month" offset={0} position="insideBottom" />
+          </XAxis>
+          <YAxis
+            label={{
+              value: "Availability (%) ",
+              angle: -90,
+              position: "insideLeft",
+            }}
+          />
           <Tooltip />
-          <Legend />
+          {/* <Legend /> */}
           <Line
             type="monotone"
-            dataKey="pv"
+            dataKey="availability"
             stroke="#E8743B"
             activeDot={{ r: 8 }}
             dot={false}

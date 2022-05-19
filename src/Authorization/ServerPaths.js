@@ -35,3 +35,5 @@ export const updateWidgetAPI = `${baseURL}/api/user/update_widget`;
 export const co2ReductionAPI = `${baseURL}/api/user/co2_reduction`;
 export const truckManagementAPI = `${baseURL}/api/user/truck_management`;
 export const batteryEnergyAPI = `${baseURL}/api/user/battery_management`;
+export const uploadMonthlyAvailabilityAPI = `${baseURL}/api/user/upload_monthly_availability`;
+export const uploadBatteryAPI = `${baseURL}/api/user/upload_battery_management`;

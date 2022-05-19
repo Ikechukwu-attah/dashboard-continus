@@ -3,7 +3,7 @@ import CloudBlue from "./Icons/CloudBlue";
 import CloudGreen from "./Icons/CloudGreen";
 import Droplet from "./Icons/Droplet";
 
-export const roleData = ["admin", "personnel", "user"];
+export const roleData = ["admin", "personnel"];
 
 export const widgets = ["Widget 1", "Widget 2", "Widget 3"];
 
