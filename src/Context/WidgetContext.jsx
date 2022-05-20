@@ -6,17 +6,16 @@ import { getPreviousDate, getTodayDate } from "../utils/GetDate";
 export const widgetContext = createContext();
 
 export const WidgetProvider = ({ children }) => {
-  const startDate = getPreviousDate(138);
-  const endDate = getTodayDate();
+  const year = new Date().getFullYear();
+  const date1 = `${year}-01-01`;
+  const date2 = `${year}-12-31`;
+  const startDate = date1;
+  const endDate = date2;
   const filter = `period[start]=${startDate}
     &period[end]=${endDate}`;
   const { data, getWidgets, isLoading } = useGetWidgets();
-  const [dateRange, setDateRange] = useState([]);
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [dateFilter, setDateFilter] = useState(filter);
-
-  useEffect(() => {
-    setDateRange([startDate, endDate]);
-  }, []);
 
   return (
     <widgetContext.Provider
@@ -29,6 +28,9 @@ export const WidgetProvider = ({ children }) => {
         dateRange,
         setDateRange,
         getWidgets,
+        data,
+        date1,
+        date2,
       }}
     >
       {children}{" "}

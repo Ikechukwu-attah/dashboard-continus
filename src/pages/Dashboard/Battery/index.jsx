@@ -24,16 +24,19 @@ import PickDate from "../../../components/common/DatePicker";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import SingleDatePicker from "../../../components/common/SingleDatePicker";
 const Battery = () => {
   const { getBattery, data, error, isLoading } = useGetBattery();
 
-  const [startDate, setStartDate] = useState(getPreviousDate(450));
+  const [startDate, setStartDate] = useState(getTodayDate());
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();
 
-  const filter = `?period[start]=${startDate}&period[end]=${endDate}`;
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [dateRange, setDateRange] = useState([startDate, endDate]);
+  console.log("dateRage", dateRange);
+
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
@@ -143,7 +146,7 @@ const Battery = () => {
               />
             }
           />
-          <PickDate
+          {/* <PickDate
             onChange={(date) => {
               const filter =
                 date &&
@@ -156,6 +159,26 @@ const Battery = () => {
               setDateRange(date);
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
+            }}
+          /> */}
+
+          <SingleDatePicker
+            onChange={(date) => {
+              console.log("single date", date);
+              const filterDate = date ? date : new Date();
+              console.log("filterDate", filterDate);
+              const filter =
+                filterDate &&
+                `period[start]=${
+                  formatDate(filterDate)["yyyy-mm-dd"]
+                }&period[end]=${formatDate(filterDate)["yyyy-mm-dd"]} 
+               `;
+              setDateFilter(filter);
+              // console.log("confirm", filter);
+
+              setDateRange([filterDate, filterDate]);
+              setStartDate(formatDate(filterDate)["yyyy-mm-dd"]);
+              setEndDate(formatDate(filterDate)["yyyy-mm-dd"]);
             }}
           />
 

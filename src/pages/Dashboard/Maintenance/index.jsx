@@ -43,7 +43,7 @@ const Maintenance = () => {
     setActivePage(0);
   };
 
-  const [startDate, setStartDate] = useState(getPreviousDate(120));
+  const [startDate, setStartDate] = useState(getPreviousDate(31));
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();

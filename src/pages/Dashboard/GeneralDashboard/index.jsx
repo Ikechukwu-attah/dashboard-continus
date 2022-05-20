@@ -28,6 +28,8 @@ import { useFilterGraph } from "../../../hooks/useGraphFilter";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import CalendarCheck from "../../../components/Widget/Calendar";
+import { getYears } from "../../../utils/GetYears";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const GeneralDashboard = () => {
   const [widgets, setWidgets] = useState();
@@ -57,6 +59,9 @@ const GeneralDashboard = () => {
     dateRange,
     setDateRange,
     getWidgets,
+    data,
+    date1,
+    date2,
   } = useContext(widgetContext);
 
   useFilterGraph(null, null, dateFilter, null, null, getWidgets);
@@ -216,7 +221,7 @@ const GeneralDashboard = () => {
               />
             }
           />
-          <PickDate
+          {/* <PickDate
             onChange={(date) => {
               const filter =
                 date &&
@@ -227,6 +232,31 @@ const GeneralDashboard = () => {
               setDateFilter(filter);
               setDateRange(date);
             }}
+          /> */}
+
+          <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="year"
+            label="Filter Year"
+            onChange={(data) => {
+              const { year } = data;
+              const date1 = `${year}-01-01`;
+              const date2 = `${year}-12-31`;
+              const filter =
+                year && `period[start]=${date1}&period[end]=${date2}`;
+              console.log("year", date1);
+              setDateFilter(filter);
+              setDateRange([date1, date2]);
+            }}
+            data={getYears(2010, 2022)}
+            gap="2rem"
+            minWidth="20rem"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
           />
         </StyledDivFlex>
 
@@ -235,6 +265,7 @@ const GeneralDashboard = () => {
             text="General Dashboard  Managment:"
             dateRange={dateRange}
             // count={data?.length}
+            showYear={formatDate(dateRange[0])["yyyy"]}
             data={widgetsData}
           />
           <StyledDivGrid
@@ -269,6 +300,7 @@ const GeneralDashboard = () => {
               <StyledBox gridColumn={"span 2"}>
                 <AvailabilityCard
                   onRemove={() => removeWidget("monthly_availability")}
+                  data={data}
                 />
               </StyledBox>
             )}

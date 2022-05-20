@@ -6,8 +6,16 @@ import { StyledText } from "../../common/Basics/StyledText";
 import { StyledButton } from "../../common/Button/style";
 import { formatDate } from "../../../utils/FormatDate";
 
-const SubHeaderLayout = ({ buttons, text, dateRange = [], count, data }) => {
+const SubHeaderLayout = ({
+  buttons,
+  text,
+  dateRange = [],
+  count,
+  data,
+  showYear,
+}) => {
   const [date1, date2] = dateRange ? dateRange : [];
+  console.log("dateRage", dateRange);
 
   console.log("date=>>>", dateRange);
 
@@ -38,10 +46,14 @@ const SubHeaderLayout = ({ buttons, text, dateRange = [], count, data }) => {
             fontWeight="400"
             color={Theme.colors.neutralColor2}
           >
-            {dateRange?.length
-              ? `${formatDate(date1)["dd/month/yyyy"]} - ${
-                  formatDate(date2)["dd/month/yyyy"]
-                }`
+            {showYear
+              ? `Year ${showYear}`
+              : dateRange?.length
+              ? date1 && date2 && date1 === date2
+                ? formatDate(date1)["dd/month/yyyy"]
+                : `${formatDate(date1)["dd/month/yyyy"]} - ${
+                    formatDate(date2)["dd/month/yyyy"]
+                  }`
               : ""}
           </StyledText>
         </StyledDivFlex>

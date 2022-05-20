@@ -32,16 +32,16 @@ const MonthlyAvaliablity = () => {
   const { getMonthlyAvaliablity, data, error, isLoading, summary } =
     useMonthlyAvaliablity();
 
-  const [startDate, setStartDate] = useState(getPreviousDate(0));
+  const [startDate, setStartDate] = useState(getPreviousDate(31));
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();
 
-  // const filter = `period[start]=${startDate}&period[end]=${endDate}`;
-  const [dateRange, setDateRange] = useState([]);
+  const filter = `period[start]=${startDate}&period[end]=${endDate}`;
+  const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
-  const [dateFilter, setDateFilter] = useState();
+  const [dateFilter, setDateFilter] = useState(filter);
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
 

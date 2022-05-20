@@ -26,11 +26,12 @@ import { dropdownFilterContext } from "../../../Context/DropdownFiltersContext";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
+import SingleDatePicker from "../../../components/common/SingleDatePicker";
 
 const TruckUsage = () => {
   const { getTruckUsage, data, error, isLoading } = useGetTruckUsage();
 
-  const [startDate, setStartDate] = useState(getPreviousDate(20));
+  const [startDate, setStartDate] = useState(getPreviousDate(31));
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();

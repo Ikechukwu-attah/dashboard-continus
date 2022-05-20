@@ -32,6 +32,8 @@ export const formatDate = (date) => {
             ),
             ["dd/month"]: `${day}/${month}`,
             ["hh:mm"]: addZeroToDate(`${hour}:${mintues}`),
+            ["month"]: `${month}`,
+            ["yyyy"]: `${year}`,
         };
     }
 };

@@ -44,7 +44,7 @@ const OccupancyJournal = () => {
     dropdownFilterContext
   );
 
-  const [startDate, setStartDate] = useState(getPreviousDate(30));
+  const [startDate, setStartDate] = useState(getPreviousDate(31));
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();

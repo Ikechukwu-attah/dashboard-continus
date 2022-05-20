@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { formatDate } from "../../../../utils/FormatDate";
 import {
   LineChart,
   Line,
@@ -13,86 +14,100 @@ import {
 import { AvailiablityGraph } from "../../../../DUMMYDATACHART";
 import { StyledBox } from "../../../../components/common/Basics/DivBox";
 
-const AvailabilityGraph = () => {
-  const data = [
-    {
-      name: "Jan",
-      uv: 80,
-      availability: 80,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      uv: 3000,
-      availability: 90,
-      amt: 2210,
-    },
-    {
-      name: "Apr",
-      uv: 2000,
-      availability: 80,
-      amt: 2290,
-    },
-    {
-      name: "May",
-      uv: 2780,
-      availability: 75,
-      amt: 2000,
-    },
-    {
-      name: "Jun",
-      uv: 1890,
-      availability: 80,
-      amt: 2181,
-    },
-    {
-      name: "Jul",
-      uv: 2390,
-      availability: 75,
-      amt: 2500,
-    },
-    {
-      name: "Aug",
-      uv: 3490,
-      availability: 90,
-      amt: 2100,
-    },
+const AvailabilityGraph = ({ data }) => {
+  const [monthlyData, setMonthlyData] = useState();
+  console.log("monthly", data);
+  useEffect(() => {
+    if (data) {
+      const newData = data.monthly_availability.map((data) => {
+        data.getMonth = formatDate(data.month)["month"];
+        data.availability = Math.round(data.avg_availability);
+        return data;
+      });
+      setMonthlyData(newData);
 
-    {
-      name: "Sep",
-      uv: 3490,
-      availability: 84,
-      amt: 2100,
-    },
+      console.log("monthly avil", data);
+    }
+  }, data);
+  // const data = [
+  //   {
+  //     name: "Jan",
+  //     uv: 80,
+  //     availability: 80,
+  //     amt: 2400,
+  //   },
+  //   {
+  //     name: "Feb",
+  //     uv: 3000,
+  //     availability: 90,
+  //     amt: 2210,
+  //   },
+  //   {
+  //     name: "Apr",
+  //     uv: 2000,
+  //     availability: 80,
+  //     amt: 2290,
+  //   },
+  //   {
+  //     name: "May",
+  //     uv: 2780,
+  //     availability: 75,
+  //     amt: 2000,
+  //   },
+  //   {
+  //     name: "Jun",
+  //     uv: 1890,
+  //     availability: 80,
+  //     amt: 2181,
+  //   },
+  //   {
+  //     name: "Jul",
+  //     uv: 2390,
+  //     availability: 75,
+  //     amt: 2500,
+  //   },
+  //   {
+  //     name: "Aug",
+  //     uv: 3490,
+  //     availability: 90,
+  //     amt: 2100,
+  //   },
 
-    {
-      name: "Oct",
-      uv: 3490,
-      availability: 100,
-      amt: 2100,
-    },
+  //   {
+  //     name: "Sep",
+  //     uv: 3490,
+  //     availability: 84,
+  //     amt: 2100,
+  //   },
 
-    {
-      name: "Nov",
-      uv: 3490,
-      availability: 80,
-      amt: 2100,
-    },
+  //   {
+  //     name: "Oct",
+  //     uv: 3490,
+  //     availability: 100,
+  //     amt: 2100,
+  //   },
 
-    {
-      name: "Dec",
-      uv: 3490,
-      availability: 100,
-      amt: 2100,
-    },
-  ];
+  //   {
+  //     name: "Nov",
+  //     uv: 3490,
+  //     availability: 80,
+  //     amt: 2100,
+  //   },
+
+  //   {
+  //     name: "Dec",
+  //     uv: 3490,
+  //     availability: 100,
+  //     amt: 2100,
+  //   },
+  // ];
   return (
     <StyledBox marginTop="3rem">
       <ResponsiveContainer width="100%" height="100%" aspect={6.0 / 3.0}>
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={monthlyData}
           margin={{
             top: 5,
             right: 30,
@@ -101,7 +116,7 @@ const AvailabilityGraph = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" dy={-5}>
+          <XAxis dataKey="getMonth" dy={-5}>
             {" "}
             <Label value="Month" offset={0} position="insideBottom" />
           </XAxis>

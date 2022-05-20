@@ -7,7 +7,7 @@ import WidgetMenu from "../../../../components/Widget/MiniDropDown";
 import { Theme } from "../../../../Theme";
 import AvailabilityGraph from "./Graph";
 
-const AvailabilityCard = ({ width = "100%", onRemove, onView }) => {
+const AvailabilityCard = ({ width = "100%", onRemove, onView, data }) => {
   return (
     <StyledDivFlex
       background={Theme.colors.neutralColor}
@@ -46,7 +46,7 @@ const AvailabilityCard = ({ width = "100%", onRemove, onView }) => {
       >
         Monthly Availability
       </StyledText>
-      <AvailabilityGraph />
+      <AvailabilityGraph data={data} />
     </StyledDivFlex>
   );
 };
