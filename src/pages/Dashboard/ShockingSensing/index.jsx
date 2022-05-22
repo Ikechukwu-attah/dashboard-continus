@@ -69,9 +69,10 @@ const ShockingSense = () => {
     dateFilter,
     pageFilter,
     null,
-    activeButton === "Table"
-      ? getShockingSensingTable
-      : getShockingSensingBarChart
+    // activeButton === "Table"
+    //   ? getShockingSensingTable
+    //   : getShockingSensingBarChart
+    getShockingSensingTable
   );
 
   // console.log("checking shocking graph data", graphdata);
@@ -277,7 +278,7 @@ const ShockingSense = () => {
               )}
             </>
           ) : (
-            <ShockSensingBar data={graphdata} />
+            <ShockSensingBar data={data} />
           )}
 
           {/* BARCHART STARTS FROM HERE  */}

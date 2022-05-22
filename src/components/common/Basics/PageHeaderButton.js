@@ -1,13 +1,11 @@
-import styled from 'styled-components'
-
+import styled from "styled-components";
 
 export const StyledPageHeaderButton = styled.button `
-  padding:1.2rem 1.9rem;
-    background-color:${({theme})=>theme.colors.primaryColor};
-    font-size:1.8rem;
-    color:${({theme})=>theme.colors.secondaryColor};
-    border-radius:3rem;
-    font-weight:500;
-    cursor: pointer;
-
-`
+  padding: 1rem 2rem 1rem 3vw;
+  background-color: ${({ theme }) => theme.colors.primaryColor};
+  font-size: calc(0.5rem + 0.8vw);
+  color: ${({ theme }) => theme.colors.secondaryColor};
+  border-radius: 3rem;
+  font-weight: 500;
+  cursor: pointer;
+`;

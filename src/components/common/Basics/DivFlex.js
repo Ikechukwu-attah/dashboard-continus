@@ -1,5 +1,11 @@
 import styled from "styled-components";
 import { breakPoint } from "../../../constants/breakPoints";
+import {
+    largeDevice,
+    mediumDevice,
+    veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
+// import { breakPoint } from "../../../constants/breakPoints";
 
 export const StyledDivFlex = styled.div `
   display: ${({ display }) => display || "flex"};
@@ -45,24 +51,7 @@ export const StyledDivFlex = styled.div `
   &:hover {
     ${({ onHover }) => onHover}
   }
-
-  @media (max-width: ${breakPoint.tablet}) {
-    width: ${({ widthT }) => widthT};
-    padding: ${({ paddingT }) => paddingT};
-    margin: ${({ marginT }) => marginT};
-    flex-direction: ${({ flexDirectionT }) => flexDirectionT};
-    align-items: ${({ alignItemsT }) => alignItemsT};
-    justify-content: ${({ justifyContentT }) => justifyContentT};
-    min-width: ${({ minWidthT }) => minWidthT};
-  }
-
-  @media (max-width: ${breakPoint.mobile}) {
-    width: ${({ widthM }) => widthM};
-    padding: ${({ paddingM }) => paddingM};
-    margin: ${({ marginM }) => marginM};
-    flex-direction: ${({ flexDirectionM }) => flexDirectionM};
-    align-items: ${({ alignItemsM }) => alignItemsM};
-    justify-content: ${({ justifyContentM }) => justifyContentM};
-    min-width: ${({ minWidthM }) => minWidthM};
-  }
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
 `;

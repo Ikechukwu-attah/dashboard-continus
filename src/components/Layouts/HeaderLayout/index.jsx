@@ -16,7 +16,7 @@ const PageHeaderLayout = ({ children }) => {
     >
       <StyledTextHeading
         color={Theme.colors.primaryColor}
-        fontSize="3.8rem"
+        fontSize="calc(1rem + 1.63vw)"
         fontWeight="500"
       >
         {pageName}

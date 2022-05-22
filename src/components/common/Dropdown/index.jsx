@@ -146,7 +146,7 @@ const Dropdown = ({
               color={textColor}
               htmlFor={item + "_" + index}
             >
-              {item || value}
+              {item.toString().split("_").join(" ") || value}
             </StyledLabel>
             <StyledInput
               checked={selectedItems.includes(item)}

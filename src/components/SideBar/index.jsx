@@ -11,6 +11,7 @@ import { globalContext } from "../../Context/GlobalContext";
 import LogOutIcon from "../../Icons/LogOut";
 import { StyledText } from "../common/Basics/StyledText";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
+import MenuIcon from "@mui/icons-material/Menu";
 // import BisedgeLogo from "../../../public/assets/Bisedge-sidelogo.svg";
 import BisedgeSideLogo from "../Images/BisedgeSideLogo";
 import cookie from "js-cookie";
@@ -29,76 +30,100 @@ const SideBar = () => {
     navigate("/");
     window.location.reload();
   };
+  const [show, setShow] = useState(false);
   return (
-    <StyledBox
-      width="20%"
-      minHeight="100vh"
-      background={Theme.colors.primaryColor}
-    >
-      <StyledDivFlex
-        height="19rem"
-        width="100%"
-        alignItem="center"
-        justifyContent="center"
+    <>
+      <StyledBox
+        width="20%"
+        minHeight="100vh"
+        background={Theme.colors.primaryColor}
+        displayL={show ? "block" : "none"}
+        positionL="fixed"
+        zIndex="1000"
+        widthM="40%"
       >
-        <BisedgeSideLogo />
-      </StyledDivFlex>
+        <StyledDivFlex
+          height="19rem"
+          width="100%"
+          alignItem="center"
+          justifyContent="center"
+        >
+          <BisedgeSideLogo />
+        </StyledDivFlex>
 
-      <StyledUl>
-        {menuData.map((item) => {
-          return (
-            <Link
-              to={item.link}
-              style={{
-                textDecoration: "none",
-                margin: "1rem 0",
-                display: "block",
-              }}
-            >
-              <StyledList
-                key={item.id}
-                fontSize="1.8rem"
-                fontWeight="400"
-                lineHeight="2rem"
-                padding="1rem 1rem 1rem 6vw"
-                paddingT="1rem 1rem 1rem 3vw"
-                color={
-                  activeUrl === item.link
-                    ? Theme.colors.primaryColor
-                    : Theme.colors.secondaryColor
-                }
-                topLeftBorderRadius="3rem"
-                bottomLeftBorderRadius="3rem"
-                background={
-                  activeUrl === item.link && Theme.colors.secondaryColor
-                }
-                onClick={() => {
-                  setPageName(item.title);
+        <StyledUl>
+          {menuData.map((item) => {
+            return (
+              <Link
+                to={item.link}
+                style={{
+                  textDecoration: "none",
+                  margin: "1rem 0",
+                  display: "block",
                 }}
               >
-                {item.title}
-              </StyledList>
-            </Link>
-          );
-        })}
-      </StyledUl>
+                <StyledList
+                  key={item.id}
+                  fontSize="calc(0.5rem + 0.82vw)"
+                  fontWeight="400"
+                  fontSizeM="1.5rem"
+                  lineHeight="2rem"
+                  padding="1rem 1% 1rem 30%"
+                  paddingT="1rem 1rem 1rem 3vw"
+                  color={
+                    activeUrl === item.link
+                      ? Theme.colors.primaryColor
+                      : Theme.colors.secondaryColor
+                  }
+                  topLeftBorderRadius="3rem"
+                  bottomLeftBorderRadius="3rem"
+                  background={
+                    activeUrl === item.link && Theme.colors.secondaryColor
+                  }
+                  onClick={() => {
+                    setPageName(item.title);
+                  }}
+                >
+                  {item.title}
+                </StyledList>
+              </Link>
+            );
+          })}
+        </StyledUl>
 
-      <Link to="/" style={{ textDecoration: "none" }}>
-        <StyledDivFlex
-          alignItems="center"
-          padding="2rem 1rem 1rem 10.5rem"
-          gap="1rem"
-          cursor="pointer"
-          marginBottom="2rem"
-          onClick={handleLogOut}
-        >
-          <LogOutIcon />
-          <StyledText fontSize="1.8rem" fontWeight="500">
-            Logout
-          </StyledText>
-        </StyledDivFlex>
-      </Link>
-    </StyledBox>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <StyledDivFlex
+            alignItems="center"
+            padding="2rem 1rem 1rem 10.5rem"
+            gap="1rem"
+            cursor="pointer"
+            marginBottom="2rem"
+            onClick={handleLogOut}
+          >
+            <LogOutIcon />
+            <StyledText fontSize="1.8rem" fontWeight="500">
+              Logout
+            </StyledText>
+          </StyledDivFlex>
+        </Link>
+      </StyledBox>
+      <StyledDivFlex
+        displayV="none"
+        displayL="flex"
+        position="fixed"
+        Left="1.5rem"
+        Top="1.5rem"
+        zIndex="1500"
+      >
+        <MenuIcon
+          fontSize="large"
+          onClick={(event) => {
+            // event.stopPropagation();
+            setShow(!show);
+          }}
+        />
+      </StyledDivFlex>
+    </>
   );
 };
 

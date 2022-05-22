@@ -21,7 +21,7 @@ const ShockSensingBar = ({ data }) => {
     if (data) {
       const newData = data.map((data) => {
         data.Truck = data.data.Truck;
-        data["Total number of shocks"] = data.data["Total number of shocks"];
+        data["Intensity (%)"] = data.data["Intensity [%]"];
         // data.Driver = data.data.Driver;
         // data["Intensity (%)"] = data.data["Intensity [%]"];
         // data["Shock threshold (%)"] = data.data["Shock threshold [%]"];
@@ -63,12 +63,13 @@ const ShockSensingBar = ({ data }) => {
           angle={-45}
           textAnchor="end"
           height={60}
+          // allowDuplicatedCategory={false}
         >
           <Label value="Trucks" offset={0} position="insideBottom" />
         </XAxis>
         <YAxis
           label={{
-            value: "Total Number of Shock",
+            value: "Intensity (%)",
             angle: -90,
             position: "insideLeft",
           }}
@@ -79,7 +80,7 @@ const ShockSensingBar = ({ data }) => {
         <Tooltip cursor={{ fill: "transparent" }} />
         {/* <Legend /> */}
 
-        <Bar dataKey="Total number of shocks" fill="#E8743B" />
+        <Bar dataKey="Intensity (%)" fill="#E8743B" />
       </BarChart>
       {/* </ResponsiveContainer> */}
     </StyledBox>

@@ -26,7 +26,7 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import { getPreviousDate, getTodayDate } from "../../../utils/GetDate";
 import { useFilterGraph } from "../../../hooks/useGraphFilter";
-import { maintenanceList } from "../../../DUMMYDATA";
+import { maintenanceList, maintenanceListLookup } from "../../../DUMMYDATA";
 
 const Maintenance = () => {
   const { getMaintenance, error, isLoading, data, totalPages } =
@@ -56,7 +56,7 @@ const Maintenance = () => {
   const [truckfilter, setTruckFilter] = useState();
   const [dateFilter, setDateFilter] = useState(filter);
   const [pageFilter, setPageFilter] = useState();
-  const [maintenanceFilter, setMaintenanceFilter] = useState([]);
+  const [maintenanceFilter, setMaintenanceFilter] = useState();
   const [dateRange, setDateRange] = useState([startDate, endDate]);
 
   // const [truckData, setTruckData] = useState([]);
@@ -180,11 +180,12 @@ const Maintenance = () => {
             onChange={(data) => {
               console.log("selection", data);
               const { maintenance } = data;
-              const filter = maintenance
-                ? `where=data.Maintenance:=:${maintenance}`
-                : "";
+              const cycle = maintenanceListLookup[maintenance];
+
+              const filter = maintenance ? `cycle=${cycle}` : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
+              console.log("filter=>>", filter);
 
               resetPagination();
             }}

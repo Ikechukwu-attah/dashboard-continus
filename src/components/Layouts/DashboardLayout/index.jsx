@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }) => {
     <StyledDivFlex maxHeight="100vh" overflow="hidden">
       <SideBar />
 
-      <StyledBox width="80%">
+      <StyledBox width="80%" widthL="100%">
         <Navbar />
 
         {children}

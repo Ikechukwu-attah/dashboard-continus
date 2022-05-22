@@ -26,9 +26,10 @@ const Navbar = () => {
         textTransform="uppercase"
         color={Theme.colors.primaryColor}
         fontWeight="600"
-        fontSize="3.6rem"
+        fontSize="calc(1rem + 1.63vw)"
         lineHeight="5.4rem"
         whiteSpace="nowrap"
+        // whiteSpaceT="normal"
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
@@ -43,11 +44,13 @@ const Navbar = () => {
           width="7.2rem"
           borderRadius="50%"
           position="relative"
+          displayM="none"
         />
         <StyledDivFlex
           alignItems="start"
           flexDirection="column"
           justifyContent="center"
+          displayM="none"
         >
           <StyledText
             color={Theme.colors.neutralColor2}
