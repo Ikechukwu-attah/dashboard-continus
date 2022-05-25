@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {
+    largeDevice,
+    mediumDevice,
+    smallDevice,
+    veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
 
 export const StyledDivGrid = styled.div `
   display: grid;
@@ -8,4 +14,9 @@ export const StyledDivGrid = styled.div `
   width: ${({ width }) => width};
   margin-top: ${({ marginTop }) => marginTop};
   padding: ${({ padding }) => padding};
+
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;

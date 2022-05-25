@@ -54,6 +54,7 @@ const WidgetWithDropdown = ({
       >
         <StyledText
           fontSize={count.length > 5 ? "2.8rem" : "3.4rem"}
+          fontSizeS="1.8rem"
           fontWeight="500"
           color={Theme.colors.primaryColor}
           //   textAlign="end"
@@ -67,7 +68,9 @@ const WidgetWithDropdown = ({
         color={Theme.colors.neutralColor2}
         width="43%"
         margin="0 1rem 0 0"
+        fontSizeS="1.8rem"
         textAlign="end"
+
         // padding="0rem 10rem 0rem 0rem"
       >
         {label}
@@ -80,6 +83,7 @@ const WidgetWithDropdown = ({
           color="#5F8050"
           margin="0 1rem 0 0"
           cursor="pointer"
+          fontSizeS="1.5rem"
         >
           {report}
         </StyledText>

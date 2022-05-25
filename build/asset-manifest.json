@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.7c8bb39c.css",
-    "main.js": "/static/js/main.ef896499.js",
+    "main.js": "/static/js/main.dc54a66d.js",
     "static/media/BisedgeLogo.png": "/static/media/BisedgeLogo.c7298d7e13e8883601f9.png",
     "index.html": "/index.html",
     "main.7c8bb39c.css.map": "/static/css/main.7c8bb39c.css.map",
-    "main.ef896499.js.map": "/static/js/main.ef896499.js.map"
+    "main.dc54a66d.js.map": "/static/js/main.dc54a66d.js.map"
   },
   "entrypoints": [
     "static/css/main.7c8bb39c.css",
-    "static/js/main.ef896499.js"
+    "static/js/main.dc54a66d.js"
   ]
 }

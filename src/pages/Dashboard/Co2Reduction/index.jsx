@@ -174,6 +174,10 @@ const Co2Reduction = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -189,6 +193,7 @@ const Co2Reduction = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -211,6 +216,7 @@ const Co2Reduction = () => {
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -226,6 +232,7 @@ const Co2Reduction = () => {
             data={truckDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -248,6 +255,7 @@ const Co2Reduction = () => {
           gap="2rem"
           width="100%"
           // flexWrap="wrap"
+          paddingS="1rem"
         >
           {/* <CardWidget
             label="Disel saved (liters)"

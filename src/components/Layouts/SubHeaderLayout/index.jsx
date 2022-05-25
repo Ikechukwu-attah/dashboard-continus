@@ -20,10 +20,14 @@ const SubHeaderLayout = ({
   console.log("date=>>>", dateRange);
 
   return (
-    <StyledBox padding="1rem 8rem" background={Theme.colors.neutralColor}>
+    <StyledBox
+      padding="1rem 8rem"
+      background={Theme.colors.neutralColor}
+      paddingS="1rem"
+    >
       <StyledDivFlex justifyContent="space-between">
         <StyledText
-          fontSize="2.4rem"
+          fontSize="calc(1rem + 0.85vw)"
           fontWeight="500"
           color={Theme.colors.neutralColor2}
         >
@@ -35,14 +39,14 @@ const SubHeaderLayout = ({
       <StyledDivFlex justifyContent="space-between" marginTop="2rem">
         <StyledDivFlex flexDirection="column">
           <StyledText
-            fontSize="1.8rem"
+            fontSize="calc(1rem + 0.85vw)"
             fontWeight="500"
             color={Theme.colors.neutralColor2}
           >
             {text}
           </StyledText>
           <StyledText
-            fontSize="1.8rem"
+            fontSize="calc(1rem + 0.85vw)"
             fontWeight="400"
             color={Theme.colors.neutralColor2}
           >

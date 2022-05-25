@@ -71,7 +71,10 @@ const ShockSensingTable = ({ data }) => {
     );
 
   return (
-    <StyledBox style={{ width: "100%" }} padding="1rem 8rem">
+    <StyledBox
+      style={{ maxWidth: "100%", overflowX: " auto " }}
+      padding="1rem 8rem"
+    >
       {tableShockSensingData?.length ? (
         <StyledTable {...getTableProps()} width="100% !important">
           <thead>

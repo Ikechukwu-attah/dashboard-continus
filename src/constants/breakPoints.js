@@ -5,5 +5,5 @@ export const breakPoint = {
 
     mediumScreen: "970px",
 
-    smallScreen: "",
+    smallScreen: "650px",
 };

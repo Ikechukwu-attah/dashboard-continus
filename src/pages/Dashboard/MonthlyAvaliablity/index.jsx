@@ -126,6 +126,10 @@ const MonthlyAvaliablity = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -140,6 +144,7 @@ const MonthlyAvaliablity = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -161,6 +166,7 @@ const MonthlyAvaliablity = () => {
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -176,6 +182,7 @@ const MonthlyAvaliablity = () => {
             data={truckDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -211,6 +218,9 @@ const MonthlyAvaliablity = () => {
                 padding="1rem  8rem 1rem 10rem"
                 marginTop="2rem"
                 gap="4rem"
+                justifyContentS="space-between"
+                paddingS="1rem 3rem 1rem 1rem"
+                gapS="2rem"
               >
                 <DailyRating
                   label="Uptime"

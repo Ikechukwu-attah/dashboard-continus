@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {
     largeDevice,
     mediumDevice,
+    smallDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 
@@ -33,4 +34,5 @@ export const StyledText = styled.span `
   ${veryLargeDevice}
   ${largeDevice}
   ${mediumDevice}
+  ${smallDevice}
 `;

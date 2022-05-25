@@ -70,4 +70,9 @@ export const StyledUl = styled.ul `
   ::-webkit-scrollbar {
     width: ${({ scrollBarWidth, overFlow }) => overFlow && scrollBarWidth};
   }
+
+  ${veryLargeDevice}
+  ${largeDevice}
+${mediumDevice}
+${smallDevice}
 `;

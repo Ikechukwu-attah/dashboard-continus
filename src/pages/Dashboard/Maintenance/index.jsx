@@ -172,6 +172,11 @@ const Maintenance = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          // alignItems="flex-start"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -179,10 +184,13 @@ const Maintenance = () => {
             label="Maintenance"
             onChange={(data) => {
               console.log("selection", data);
-              const { maintenance } = data;
-              const cycle = maintenanceListLookup[maintenance];
+              const cycle = data.maintenance
+                .split(",")
+                .map((item) => maintenanceListLookup[item])
+                .join(",");
+              console.log("cycle", cycle);
 
-              const filter = maintenance ? `cycle=${cycle}` : "";
+              const filter = cycle ? `cycle=${cycle}` : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
               console.log("filter=>>", filter);
@@ -191,16 +199,17 @@ const Maintenance = () => {
             }}
             data={maintenanceList}
             minWidth="20rem"
-            minWidthT="30rem"
-            gap="20rem"
+            // minWidthT="30rem"
+            gap="15rem"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
                 style={{ color: "#606060" }}
               />
             }
-            maxWidth="40rem"
-            // multiSelect={true}
+            maxWidth="100%"
+            multiSelect={true}
+            widthS="90%"
           />
 
           <Dropdown
@@ -218,6 +227,7 @@ const Maintenance = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -254,6 +264,7 @@ const Maintenance = () => {
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -279,6 +290,7 @@ const Maintenance = () => {
               />
             }
             multiSelect={true}
+            widthS="90%"
           />
         </StyledDivFlex>
 

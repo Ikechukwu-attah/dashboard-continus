@@ -20,7 +20,10 @@ const Navbar = () => {
       background={Theme.colors.neutralColor}
       gap="20rem"
       alignItems="center"
-      padding="1rem 8rem "
+      padding="1rem  8rem "
+      justifyContentS="center"
+      paddingS="0"
+      gapS="0rem"
     >
       <StyledTextHeading
         textTransform="uppercase"

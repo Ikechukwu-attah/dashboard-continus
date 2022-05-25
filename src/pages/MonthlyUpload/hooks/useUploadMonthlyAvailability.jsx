@@ -7,7 +7,7 @@ export const useUploadMonthlyAvailability = () => {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
-  const uploadMonthlyAvailability = async (data, callback) => {
+  const uploadMonthlyAvailability = async (data, callback, onError) => {
     try {
       setIsLoading(true);
       const response = await axios.post(uploadMonthlyAvailabilityAPI, data);
@@ -18,8 +18,10 @@ export const useUploadMonthlyAvailability = () => {
       }
     } catch (error) {
       setIsLoading(false);
-
       setError(error.response);
+      if (typeof onError === "function") {
+        onError();
+      }
     }
   };
 

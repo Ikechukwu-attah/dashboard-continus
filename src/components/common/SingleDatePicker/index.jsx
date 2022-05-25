@@ -1,6 +1,12 @@
 import React from "react";
 import { DatePicker } from "rsuite";
 import styled from "styled-components";
+import {
+  largeDevice,
+  mediumDevice,
+  smallDevice,
+  veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
 import { Theme } from "../../../Theme";
 
 const StyledDatePicker = styled(DatePicker)`
@@ -9,6 +15,7 @@ const StyledDatePicker = styled(DatePicker)`
   background-color: white;
   border: ${({ border }) => border};
   outline: none;
+  /* width: 100%; */
 
   & div {
     border-color: none;
@@ -28,9 +35,14 @@ const StyledDatePicker = styled(DatePicker)`
     outline: none !important;
     border: none !important;
   }
+
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;
 
-const SingleDatePicker = ({ onChange }) => {
+const SingleDatePicker = ({ onChange, widthS }) => {
   const handleChange = (dates) => {
     onChange(dates);
   };
@@ -39,6 +51,7 @@ const SingleDatePicker = ({ onChange }) => {
       size="lg"
       placeholder="Select Date"
       style={{ width: 200 }}
+      widthS={`${widthS} !important`}
       padding="0.5rem"
       borderRadius="1rem"
       //   border="2px solid #C4C4C4"

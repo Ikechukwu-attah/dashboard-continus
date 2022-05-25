@@ -66,6 +66,7 @@ const AddClient = ({ setShowList, getList, userType }) => {
   return (
     <StyledBox
       padding="2.5rem 8rem"
+      paddingS="1rem"
       minHeight="max-content"
       background={Theme.colors.neutralColor}
       marginTop="3rem"
@@ -74,15 +75,20 @@ const AddClient = ({ setShowList, getList, userType }) => {
         fontSize="2.4rem"
         color={Theme.colors.neutralColor2}
         style={{ padding: "5rem 0rem" }}
+        fontSizeS="2rem"
       >
         Add user now
       </StyledText>
       <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
-          gap="20rem"
+          gap="15rem"
           width="95%"
           justifyContent="space-between"
           padding="3rem 0rem 1.2rem 0rem"
+          flexDirectionM="column"
+          gapM="2rem"
+          widthS="100%"
+          paddingS="1rem"
         >
           <StyledDivFlex left="1" flexDirection="column" flex="1" gap="2rem">
             <StyledDivFlex flexDirection="column">
@@ -95,6 +101,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="firstname"
                 value={signUpClientData.firstname}
                 onChange={(event) =>
@@ -117,6 +125,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="lastname"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 value={signUpClientData.lastname}
                 onChange={(event) =>
                   handleChange({
@@ -139,8 +149,11 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 background={Theme.colors.secondaryColor}
                 name="company_id"
                 Top="6.8rem"
+                TopS="5.8rem"
                 padding="2rem"
                 label="Client Code"
+                fontSizeS="1.5rem"
+                paddingS="1.5rem !important"
                 value={signUpClientData.company_id}
                 onChange={(data) => {
                   const { company_id } = data;
@@ -166,6 +179,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="phone"
                 value={signUpClientData.phone}
                 onChange={(event) =>
@@ -187,6 +202,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 required
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="email"
                 value={signUpClientData.email}
                 onChange={(event) =>
@@ -212,6 +229,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                   placeholder="Company Address"
                   padding="2.3rem"
                   fontSize="2.3rem"
+                  fontSizeS="1.5rem"
+                  paddingS="2rem"
                   name="company_address"
                   value={signUpClientData.company_adrress}
                   onChange={(event) =>
@@ -237,6 +256,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                   name="role"
                   Top="6.8rem"
                   padding="2rem"
+                  TopS="5.8rem"
+                  paddingS="1.5rem !important"
                   label="Role"
                   value={signUpClientData.role}
                   onChange={(data) => {
@@ -267,6 +288,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                   placeholder="Availability Threshold"
                   padding="2.3rem"
                   fontSize="2.3rem"
+                  fontSizeS="1.5rem"
+                  paddingS="2rem"
                   name="availability_threshold"
                   value={signUpClientData.availability_threshold}
                   onChange={(event) =>
@@ -279,7 +302,11 @@ const AddClient = ({ setShowList, getList, userType }) => {
               </StyledDivFlex>
             )}
 
-            <StyledLabel fontSize="1.8rem" color={Theme.colors.neutralColor2}>
+            <StyledLabel
+              fontSize="1.8rem"
+              fontSizeS="1.7rem"
+              color={Theme.colors.neutralColor2}
+            >
               Upload Image
             </StyledLabel>
 
@@ -296,6 +323,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 background={Theme.colors.neutralColor4}
                 borderRadius="5rem"
                 fontWeight="500"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 color={Theme.colors.neutralColor}
                 onClick={() => setShowList(true)}
               >
@@ -307,6 +336,8 @@ const AddClient = ({ setShowList, getList, userType }) => {
                 fontSize="1.8rem"
                 spinnerHeight="1rem"
                 spinnerWidth="1rem"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 background={Theme.colors.primaryColor}
                 borderRadius="5rem"
                 fontWeight="500"

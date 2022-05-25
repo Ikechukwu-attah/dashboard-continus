@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { useState } from "react";
 import axios from "../../../Authorization/Axios";
 import { uploadBatteryAPI } from "../../../Authorization/ServerPaths";
@@ -7,7 +8,7 @@ export const useUploadBattery = () => {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
-  const uploadBatteryData = async (data, callback) => {
+  const uploadBatteryData = async (data, callback, onError) => {
     try {
       setIsLoading(true);
       const response = await axios.post(uploadBatteryAPI, data);
@@ -18,8 +19,10 @@ export const useUploadBattery = () => {
       }
     } catch (error) {
       setIsLoading(false);
-
       setError(error.response);
+      if (typeof onError === "function") {
+        onError();
+      }
     }
   };
 

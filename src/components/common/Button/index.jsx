@@ -21,6 +21,8 @@ const ButtonGroup = ({
   onClickMessage,
   disabled,
   children,
+  paddingS,
+  fontSizeS,
 }) => {
   return (
     <StyledButton
@@ -29,6 +31,8 @@ const ButtonGroup = ({
       borderRadius={borderRadius}
       fontSize={fontSize}
       width={width}
+      paddingS={paddingS}
+      fontSizeS={fontSizeS}
       background={background}
       fontWeight={fontWeight}
       onClick={onClickMessage}

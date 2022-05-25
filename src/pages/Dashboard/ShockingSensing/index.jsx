@@ -87,7 +87,7 @@ const ShockingSense = () => {
 
   return (
     <DashboardLayout>
-      <StyledDashboardContentWrapper>
+      <StyledDashboardContentWrapper overFlowXS="hidden" overFlowYS="auto">
         <PageHeaderLayout>
           <StyledDivFlex gap="1rem">
             <StyledPageHeaderButton
@@ -146,6 +146,10 @@ const ShockingSense = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -165,6 +169,7 @@ const ShockingSense = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -187,6 +192,7 @@ const ShockingSense = () => {
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -211,6 +217,7 @@ const ShockingSense = () => {
                 style={{ color: "#606060" }}
               />
             }
+            widthS="90%"
           />
         </StyledDivFlex>
         <StyledBox background={Theme.colors.neutralColor}>
@@ -224,8 +231,8 @@ const ShockingSense = () => {
               <StyledDivFlex gap="2rem">
                 {buttons.map((text) => (
                   <StyledButton
-                    borderRadius="3rem"
-                    fontSize="1.8rem"
+                    borderRadius="2.5rem"
+                    fontSize="calc(0.5rem  +  0.8vw)"
                     background={
                       text === activeButton
                         ? Theme.colors.primaryColor
@@ -242,7 +249,7 @@ const ShockingSense = () => {
                         : `1px solid ${Theme.colors.primaryColor}`
                     }
                     fontWeight="500"
-                    padding="1rem 3rem"
+                    padding="1rem 3.2rem 1rem 2.1vw"
                     // color={Theme.colors.neutralColor}
                     onClick={() => setActiveButton(text)}
                   >

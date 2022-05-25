@@ -10,6 +10,8 @@ import { StyledInput, StyledLabel } from "../../../components/common/Input";
 import { globalContext } from "../../../Context/GlobalContext";
 import { Theme } from "../../../Theme";
 import { useUploadMonthlyAvailability } from "../hooks/useUploadMonthlyAvailability";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MonthlyAvailabilityUpload = () => {
   const { data, error, isLoading, uploadMonthlyAvailability } =
@@ -18,11 +20,32 @@ const MonthlyAvailabilityUpload = () => {
   const { setPageName, isAdmin } = useContext(globalContext);
   const [fileName, setFileName] = useState();
 
+  const customId3 = "custom-id-no";
+  const customId2 = "custom-id-error";
+
   const uploadCSV = async (event) => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
     // console.log("csv file", base64);
     return;
+  };
+
+  const successToast = () => {
+    toast.success("File Successfully Uploaded", {
+      toastId: customId3,
+      className: "custom-toast",
+      draggable: true,
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const errorToast = () => {
+    toast.error("File Not Uploaded", {
+      toastId: customId2,
+      className: "custom-toast",
+      draggable: true,
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const convertBase64 = (file) => {
@@ -53,11 +76,19 @@ const MonthlyAvailabilityUpload = () => {
     const data = { ...dataUpload };
     console.log("data today", data);
     const redirect = () => {
-      navigate("/client-management");
-      setPageName("Client Management");
+      successToast();
+
+      setTimeout(() => {
+        navigate("/client-management");
+        setPageName("Client Management");
+      }, 2000);
     };
 
-    uploadMonthlyAvailability(data, redirect);
+    const onError = () => {
+      errorToast();
+    };
+
+    uploadMonthlyAvailability(data, redirect, onError);
   };
   return (
     <StyledBox
@@ -302,6 +333,7 @@ const MonthlyAvailabilityUpload = () => {
           </StyledDivFlex>
         </StyledDivFlex>
       </StyledForm>
+      <ToastContainer draggable={false} transition={Zoom} autoClose={3000} />
     </StyledBox>
   );
 };

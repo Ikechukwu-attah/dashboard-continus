@@ -27,12 +27,14 @@ export const largeDevice = css `
     color: ${({ colorL }) => colorL};
     position: ${({ positionL }) => positionL};
     font-size: ${({ fontSizeL }) => fontSizeL};
+    overflow: ${({ overFlowL }) => overFlowL};
   }
 `;
 
 export const mediumDevice = css `
   @media (max-width: ${breakPoint.mediumScreen}) {
     width: ${({ widthM }) => widthM};
+    gap: ${({ gapM }) => gapM};
     padding: ${({ paddingM }) => paddingM};
     margin: ${({ marginM }) => marginM};
     flex-direction: ${({ flexDirectionM }) => flexDirectionM};
@@ -41,18 +43,28 @@ export const mediumDevice = css `
     min-width: ${({ minWidthM }) => minWidthM};
     display: ${({ displayM }) => displayM};
     font-size: ${({ fontSizeM }) => fontSizeM};
+    grid-column: ${({ gridColumnM }) => gridColumnM};
   }
 `;
 
 export const smallDevice = css `
   @media (max-width: ${breakPoint.smallScreen}) {
     width: ${({ widthS }) => widthS};
+    height: ${({ heightS }) => heightS};
     padding: ${({ paddingS }) => paddingS};
     margin: ${({ marginS }) => marginS};
     flex-direction: ${({ flexDirectionS }) => flexDirectionS};
     align-items: ${({ alignItemsS }) => alignItemsS};
     justify-content: ${({ justifyContentS }) => justifyContentS};
     min-width: ${({ minWidthS }) => minWidthS};
-    font-size: ${({ fontSizeM }) => fontSizeM};
+    font-size: ${({ fontSizeS }) => fontSizeS};
+    white-space: ${({ whiteSpaceS }) => whiteSpaceS};
+    justify-content: ${({ justifyContentS }) => justifyContentS};
+    gap: ${({ gapS }) => gapS};
+    top: ${({ TopS }) => TopS};
+    overflow-x: ${({ overFlowXS }) => overFlowXS};
+    overflow-y: ${({ overFlowYS }) => overFlowYS};
+
+    // color: red;
   }
 `;

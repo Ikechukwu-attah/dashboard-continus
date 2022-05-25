@@ -6,6 +6,13 @@ import { Theme } from "../../../Theme";
 
 import styled from "styled-components";
 import { StyledText } from "../Basics/StyledText";
+import { breakPoint } from "../../../constants/breakPoints";
+import {
+  largeDevice,
+  mediumDevice,
+  smallDevice,
+  veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
 
 const StyledDatePicker = styled(DateRangePicker)`
   padding: ${({ padding }) => padding};
@@ -32,8 +39,13 @@ const StyledDatePicker = styled(DateRangePicker)`
     outline: none !important;
     border: none !important;
   }
+
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;
-const PickDate = ({ onChange }) => {
+const PickDate = ({ onChange, widthS }) => {
   const handleChange = (dates) => {
     onChange(dates);
   };
@@ -44,6 +56,7 @@ const PickDate = ({ onChange }) => {
       style={{ width: 200 }}
       padding="0.5rem"
       borderRadius="1rem"
+      widthS={`${widthS} !important`}
       //   border="2px solid #C4C4C4"
       background={Theme.colors.neutralColor}
       placement="bottomEnd"

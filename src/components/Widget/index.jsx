@@ -39,6 +39,7 @@ const CardWidget = ({
       <StyledText
         fontSize="3.6rem"
         fontWeight="500"
+        fontSizeS="1.8rem"
         color={Theme.colors.primaryColor}
         //   textAlign="end"
       >
@@ -51,6 +52,7 @@ const CardWidget = ({
         color={Theme.colors.primaryColor}
         width="40%"
         margin="0 1rem 0 0"
+        fontSizeS="1.8rem"
         textAlign="end"
         // padding="0rem 10rem 0rem 0rem"
       >

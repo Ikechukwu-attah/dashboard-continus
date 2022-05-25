@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {
+    largeDevice,
+    mediumDevice,
+    smallDevice,
+    veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
 
 export const StyledButton = styled.button `
   padding: ${({ padding }) => padding};
@@ -23,4 +29,9 @@ export const StyledButton = styled.button `
 
   opacity: ${({ disabled }) => (disabled === true ? 0.5 : 1)};
   pointer-events: ${({ disabled }) => (disabled === true ? "none" : "initial")};
+
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;

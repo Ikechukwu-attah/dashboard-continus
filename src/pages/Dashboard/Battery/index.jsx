@@ -124,6 +124,10 @@ const Battery = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -139,6 +143,7 @@ const Battery = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -180,6 +185,7 @@ const Battery = () => {
               setStartDate(formatDate(filterDate)["yyyy-mm-dd"]);
               setEndDate(formatDate(filterDate)["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -195,6 +201,7 @@ const Battery = () => {
             data={truckDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"

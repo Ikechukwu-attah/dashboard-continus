@@ -139,6 +139,10 @@ const TruckUsage = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -153,6 +157,7 @@ const TruckUsage = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -174,6 +179,7 @@ const TruckUsage = () => {
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
             }}
+            widthS="90%"
           />
 
           <Dropdown
@@ -189,6 +195,7 @@ const TruckUsage = () => {
             data={truckDropdownData}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -216,10 +223,13 @@ const TruckUsage = () => {
                 height="28px"
                 width="28px"
                 background="#E8743B"
+                widthS="14px"
+                heightS="14px"
               ></StyledText>
               <StyledText
                 fontSize="1.8rem"
                 fontWeight="500"
+                fontSizeS="1rem"
                 color={Theme.colors.neutralColor2}
               >
                 Driving
@@ -230,10 +240,13 @@ const TruckUsage = () => {
               <StyledText
                 height="28px"
                 width="28px"
+                widthS="14px"
+                heightS="14px"
                 background="#19A979"
               ></StyledText>
               <StyledText
                 fontSize="1.8rem"
+                fontSizeS="1rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor2}
               >

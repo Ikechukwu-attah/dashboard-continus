@@ -10,9 +10,10 @@ const DailyRating = ({ count, label }) => {
       // padding="5rem"
       background={Theme.colors.neutralColor5}
       minWidth="30%"
+      minWidthS="50%"
     >
       <StyledText
-        fontSize="2.4rem"
+        fontSize="calc(1.5rem + 0.5vw)"
         fontWeight="500"
         padding="2rem 0 0 2rem"
         Display="inline-block"
@@ -28,7 +29,7 @@ const DailyRating = ({ count, label }) => {
       </StyledText>
       <StyledDivFlex padding="4rem 0rem 2rem 0rem" justifyContent="flex-end">
         <StyledText
-          fontSize="2.4rem"
+          fontSize="calc(1.5rem + 0.5vw)"
           fontWeight="400"
           color={Theme.colors.primaryColor}
           padding="0 2rem 0rem 0rem"

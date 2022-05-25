@@ -55,6 +55,8 @@ const ImageUpload = ({ name, value, onImageChange }) => {
         <StyledDivFlex
           width="20.8rem"
           height="13.9rem"
+          widthS="15rem"
+          heightS="8rem"
           // background={Theme.colors.primaryColor}
           alignItems="center"
           justifyContent="center"
@@ -74,6 +76,7 @@ const ImageUpload = ({ name, value, onImageChange }) => {
             color={Theme.colors.primaryColor}
             cursor="pointer"
             fontSize="1.8rem"
+            fontSizeS="1.4rem"
           >
             {!imgUrl && "Upload Image ..."}
           </StyledText>

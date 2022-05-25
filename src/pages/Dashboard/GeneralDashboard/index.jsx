@@ -198,10 +198,14 @@ const GeneralDashboard = () => {
         <StyledDivFlex
           // background={Theme.colors.neutralColor}
           padding="1rem 8rem"
-          // marginTop="2rem"
+          marginTop="1rem"
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -214,6 +218,7 @@ const GeneralDashboard = () => {
             capitalize
             gap="2rem"
             minWidth="25rem"
+            widthS="90%"
             icon={
               <AddBoxOutlinedIcon
                 fontSize="large"
@@ -251,6 +256,7 @@ const GeneralDashboard = () => {
             data={getYears(2010, 2022)}
             gap="2rem"
             minWidth="20rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -260,7 +266,14 @@ const GeneralDashboard = () => {
           />
         </StyledDivFlex>
 
-        <StyledBox padding="1rem 8rem" marginTop="2rem" position="relative">
+        <StyledBox
+          // padding="1rem 8rem"
+          marginTop="2rem"
+          // width="100%"
+          paddingS="0"
+          widthS="100%"
+          position="relative"
+        >
           <SubHeaderLayout
             text="General Dashboard  Managment:"
             dateRange={dateRange}
@@ -269,10 +282,11 @@ const GeneralDashboard = () => {
             data={widgetsData}
           />
           <StyledDivGrid
-            // padding="1rem 8rem"
+            padding="1rem 8rem"
             marginTop="3rem"
             gap="2rem"
             width="100%"
+            paddingS="1rem"
           >
             {/* {widgets?.map((item) => {
               return <>{getWidget(item)}</>;
@@ -297,7 +311,7 @@ const GeneralDashboard = () => {
                 />
               ))}{" "}
             {widgets?.includes("monthly_availability") && (
-              <StyledBox gridColumn={"span 2"}>
+              <StyledBox gridColumn={"span 2"} gridColumnM="span 1">
                 <AvailabilityCard
                   onRemove={() => removeWidget("monthly_availability")}
                   data={data}

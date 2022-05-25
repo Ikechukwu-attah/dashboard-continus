@@ -10,6 +10,8 @@ import { StyledInput, StyledLabel } from "../../../components/common/Input";
 import { globalContext } from "../../../Context/GlobalContext";
 import { Theme } from "../../../Theme";
 import { useUploadBattery } from "../hooks/useUploadBattery";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BatteryUploadForm = () => {
   const { data, uploadBatteryData, isLoading, error } = useUploadBattery();
@@ -17,6 +19,9 @@ const BatteryUploadForm = () => {
   const [batteryData, setBatteryData] = useState();
   const { setPageName, isAdmin } = useContext(globalContext);
   const [fileName, setFileName] = useState();
+
+  const customId2 = "custom-id-now";
+  const customId3 = "custom-id-error";
 
   const handleChange = ({ name, value }) => {
     setBatteryData({ ...batteryData, [name]: value });
@@ -43,16 +48,43 @@ const BatteryUploadForm = () => {
     });
   };
 
+  const successToast = () => {
+    toast.success("File Successfully Uploaded", {
+      toastId: customId2,
+      className: "custom-toast",
+      draggable: true,
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const errorToast = () => {
+    toast.error("File Not Uploaded", {
+      toastId: customId3,
+      className: "custom-toast",
+      draggable: true,
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const uploadData = {
       ...batteryData,
     };
     const redirect = () => {
-      navigate("/client-management");
-      setPageName("Client Management");
+      successToast();
+
+      setTimeout(() => {
+        navigate("/client-management");
+        setPageName("Client Management");
+      }, 2000);
     };
-    uploadBatteryData(uploadData, redirect);
+
+    const onError = () => {
+      errorToast();
+    };
+    uploadBatteryData(uploadData, redirect, onError);
+    // setFileName("");
   };
 
   return (
@@ -271,7 +303,9 @@ const BatteryUploadForm = () => {
                 borderRadius="5rem"
                 fontWeight="500"
                 color={Theme.colors.neutralColor}
-                onClick={() => navigate("/client-management")}
+                onClick={() => {
+                  navigate("/client-management");
+                }}
               >
                 Cancel
               </StyledButton>
@@ -289,10 +323,13 @@ const BatteryUploadForm = () => {
               >
                 Submit
               </ButtonGroup>
+              {/* {data && successToast()} */}
             </StyledDivFlex>
           </StyledDivFlex>
         </StyledDivFlex>
       </StyledForm>
+
+      <ToastContainer draggable={false} transition={Zoom} autoClose={3000} />
     </StyledBox>
   );
 };

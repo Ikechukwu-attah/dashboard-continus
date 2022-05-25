@@ -31,16 +31,19 @@ const SideBar = () => {
     window.location.reload();
   };
   const [show, setShow] = useState(false);
+  console.log("show", show);
   return (
     <>
       <StyledBox
         width="20%"
         minHeight="100vh"
         background={Theme.colors.primaryColor}
-        displayL={show ? "block" : "none"}
+        // displayL={show ? "block" : "none"}
         positionL="fixed"
         zIndex="1000"
-        widthM="40%"
+        widthL={show ? "40%" : 0}
+        transition="all .1s"
+        overFlowL="hidden"
       >
         <StyledDivFlex
           height="19rem"
@@ -69,7 +72,7 @@ const SideBar = () => {
                   fontSizeM="1.5rem"
                   lineHeight="2rem"
                   padding="1rem 1% 1rem 30%"
-                  paddingT="1rem 1rem 1rem 3vw"
+                  paddingL="1rem 1rem 1rem 3vw"
                   color={
                     activeUrl === item.link
                       ? Theme.colors.primaryColor
@@ -99,9 +102,10 @@ const SideBar = () => {
             cursor="pointer"
             marginBottom="2rem"
             onClick={handleLogOut}
+            paddingS="2rem 1rem 1rem 2rem"
           >
-            <LogOutIcon />
-            <StyledText fontSize="1.8rem" fontWeight="500">
+            <LogOutIcon fontSizeS="small" />
+            <StyledText fontSize="calc(1.1rem + 0.82vw)" fontWeight="500">
               Logout
             </StyledText>
           </StyledDivFlex>
@@ -121,6 +125,7 @@ const SideBar = () => {
             // event.stopPropagation();
             setShow(!show);
           }}
+          style={{ color: show ? "white" : Theme.colors.primaryColor }}
         />
       </StyledDivFlex>
     </>

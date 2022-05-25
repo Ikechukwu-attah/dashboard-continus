@@ -65,7 +65,10 @@ const DriversTable = ({ data }) => {
     );
 
   return (
-    <StyledBox padding="1rem 8rem">
+    <StyledBox
+      padding="1rem 8rem"
+      style={{ maxWidth: "100%", overflowX: " auto " }}
+    >
       {driverData?.length ? (
         <StyledTable {...getTableProps()} width="100%">
           <thead>

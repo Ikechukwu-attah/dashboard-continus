@@ -137,6 +137,10 @@ const Driver = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -154,6 +158,7 @@ const Driver = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="22rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -189,6 +194,7 @@ const Driver = () => {
             minWidth="20rem"
             data={truckDropdownData}
             gap="2rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"

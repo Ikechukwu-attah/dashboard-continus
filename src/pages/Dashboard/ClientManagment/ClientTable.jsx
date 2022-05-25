@@ -136,7 +136,7 @@ const ClientTable = ({ data, getAllClient }) => {
 
   return (
     <StyledBox
-      // style={{ maxWidth: "100%", overflowX: " auto " }}
+      style={{ maxWidth: "100%", overflowX: " auto " }}
       padding="1rem 8rem"
     >
       {data ? (

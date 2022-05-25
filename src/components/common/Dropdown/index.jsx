@@ -27,7 +27,10 @@ const Dropdown = ({
   showDropdown,
   value,
   multiSelect,
+  paddingS,
   capitalize,
+  widthS,
+  TopS,
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([label]);
@@ -94,11 +97,12 @@ const Dropdown = ({
       // minHeight="7rem"
       // fontSize="3px"
       maxWidth={maxWidth}
+      paddingS={paddingS}
       gap={gap}
       onClick={() => setIsIOpen(!isOpen)}
       // width={maxWidth}
       minWidth={minWidth}
-      minWidthT={minWidthT}
+      widthS={widthS}
     >
       <StyledText
         fontSize="1.8rem"
@@ -116,6 +120,7 @@ const Dropdown = ({
       <StyledUl
         position="absolute"
         Top={Top}
+        TopS={TopS}
         Left="0"
         Right="0"
         background="rgba(0,0,0,0)"
@@ -129,6 +134,7 @@ const Dropdown = ({
           <StyledList
             padding={padding}
             noHover
+            paddingS={paddingS}
             borderRadius="1rem"
             textTransform={capitalize ? "capitalize" : ""}
             background={background}

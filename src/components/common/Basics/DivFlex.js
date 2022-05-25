@@ -3,6 +3,7 @@ import { breakPoint } from "../../../constants/breakPoints";
 import {
     largeDevice,
     mediumDevice,
+    smallDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 // import { breakPoint } from "../../../constants/breakPoints";
@@ -54,4 +55,5 @@ export const StyledDivFlex = styled.div `
   ${veryLargeDevice}
   ${largeDevice}
   ${mediumDevice}
+  ${smallDevice}
 `;

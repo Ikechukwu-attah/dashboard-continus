@@ -3,6 +3,7 @@ import { breakPoint } from "../../../constants/breakPoints";
 import {
     largeDevice,
     mediumDevice,
+    smallDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 
@@ -34,8 +35,10 @@ export const StyledBox = styled.div `
   overflow: ${({ overFlow }) => overFlow};
   max-width: ${(maxWidth) => maxWidth};
   overflow-x: ${(overFlowX) => overFlowX};
+  transition: ${(transition) => transition};
 
+  ${veryLargeDevice}
   ${largeDevice}
   ${mediumDevice}
-  ${veryLargeDevice}
+  ${smallDevice}
 `;

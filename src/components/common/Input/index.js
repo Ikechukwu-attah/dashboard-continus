@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {
+    largeDevice,
+    mediumDevice,
+    smallDevice,
+    veryLargeDevice,
+} from "../../../constants/MediaQuery/MediaQuery";
 
 export const StyledInput = styled.input `
   padding: ${({ padding }) => padding};
@@ -23,6 +29,10 @@ export const StyledInput = styled.input `
     line-height: 2.2rem;
     font-weight: 400;
   }
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;
 
 export const StyledLabel = styled.label `
@@ -35,4 +45,9 @@ export const StyledLabel = styled.label `
   cursor: ${({ cursor }) => cursor};
   padding: ${({ padding }) => padding};
   ${({ customCSS }) => customCSS}
+
+  ${veryLargeDevice}
+  ${largeDevice}
+  ${mediumDevice}
+  ${smallDevice}
 `;
