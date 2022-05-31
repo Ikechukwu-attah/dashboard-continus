@@ -97,6 +97,7 @@ const MonthlyAvailabilityUpload = () => {
       background={Theme.colors.neutralColor}
       marginTop="3rem"
       width="100%"
+      paddingS="1rem"
     >
       <StyledText
         fontSize="2.4rem"
@@ -107,10 +108,12 @@ const MonthlyAvailabilityUpload = () => {
       </StyledText>
       <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
-          gap="20rem"
+          gap="15rem"
           // width="100%"
           justifyContent="space-between"
           padding="3rem 0rem 1.2rem 0rem"
+          flexDirectionM="column"
+          gapM="2rem"
         >
           <StyledDivFlex left="1" flexDirection="column" flex="1" gap="2rem">
             <StyledDivFlex flexDirection="column">
@@ -122,6 +125,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Truck"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Truck"
                 value={dataUpload?.Truck}
                 onChange={(event) =>
@@ -142,6 +147,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder=" Day"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Day"
                 value={dataUpload?.Day}
                 onChange={(event) =>
@@ -162,6 +169,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Location"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Location"
                 value={dataUpload?.Location}
                 onChange={(event) =>
@@ -182,6 +191,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Hours"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Hours"
                 value={dataUpload?.Hours}
                 onChange={(event) =>
@@ -202,6 +213,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Availablity"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Availablity"
                 value={dataUpload?.Availablity}
                 onChange={(event) =>
@@ -229,6 +242,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Days"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Days"
                 value={dataUpload?.Days}
                 onChange={(event) =>
@@ -249,6 +264,8 @@ const MonthlyAvailabilityUpload = () => {
                 placeholder="Time"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="Expected Hours"
                 value={dataUpload?.expected_hours}
                 onChange={(event) =>
@@ -269,6 +286,8 @@ const MonthlyAvailabilityUpload = () => {
               color={Theme.colors.neutralColor2}
               htmlFor="monthly"
               padding="4rem"
+              fontSizeS="1.5rem"
+              paddingS="2rem"
               border="1px dashed #027351"
             >
               {fileName ? fileName : " Upload monthly availability here"}
@@ -279,6 +298,8 @@ const MonthlyAvailabilityUpload = () => {
               placeholder="Time"
               padding="2.3rem"
               fontSize="2.3rem"
+              fontSizeS="1.5rem"
+              paddingS="2rem"
               style={{ display: "none" }}
               id="monthly"
               width="100%"
@@ -307,6 +328,8 @@ const MonthlyAvailabilityUpload = () => {
               <StyledButton
                 padding="1.2rem 6.7rem"
                 fontSize="1.8rem"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 background={Theme.colors.neutralColor4}
                 borderRadius="5rem"
                 fontWeight="500"
@@ -319,6 +342,8 @@ const MonthlyAvailabilityUpload = () => {
               <ButtonGroup
                 padding="1.2rem 5.7rem"
                 fontSize="1.8rem"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 spinnerHeight="1rem"
                 spinnerWidth="1rem"
                 background={Theme.colors.primaryColor}

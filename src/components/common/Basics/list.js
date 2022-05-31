@@ -4,6 +4,7 @@ import {
     largeDevice,
     mediumDevice,
     smallDevice,
+    smallestDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 import { Theme } from "../../../Theme";
@@ -46,6 +47,7 @@ export const StyledList = styled.li `
   ${largeDevice}
 ${mediumDevice}
 ${smallDevice}
+${smallestDevice}
 `;
 
 export const StyledUl = styled.ul `
@@ -75,4 +77,5 @@ export const StyledUl = styled.ul `
   ${largeDevice}
 ${mediumDevice}
 ${smallDevice}
+${smallestDevice}
 `;

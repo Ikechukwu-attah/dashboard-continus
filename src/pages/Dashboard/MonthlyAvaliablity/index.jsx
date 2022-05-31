@@ -68,8 +68,9 @@ const MonthlyAvaliablity = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
                 console.log("user export", user.user.email);
@@ -95,6 +96,7 @@ const MonthlyAvaliablity = () => {
               {isExporting ? "Sending......" : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const data = {
                   export: {
@@ -200,7 +202,13 @@ const MonthlyAvaliablity = () => {
             dateRange={dateRange}
             count={data?.length}
           />
-          <StyledDivGrid width="100%" gap="5rem" padding="1rem 8rem">
+          <StyledDivGrid
+            width="100%"
+            gap="5rem"
+            gapSd="2rem"
+            padding="1rem 8rem"
+            paddingSd="1rem !important"
+          >
             {isLoading &&
               Array.from(Array(3).keys()).map((item) => (
                 <Skeleton

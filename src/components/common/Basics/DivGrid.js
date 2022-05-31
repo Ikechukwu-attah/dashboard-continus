@@ -3,6 +3,7 @@ import {
     largeDevice,
     mediumDevice,
     smallDevice,
+    smallestDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 
@@ -19,4 +20,5 @@ export const StyledDivGrid = styled.div `
   ${largeDevice}
   ${mediumDevice}
   ${smallDevice}
+  ${smallestDevice}
 `;

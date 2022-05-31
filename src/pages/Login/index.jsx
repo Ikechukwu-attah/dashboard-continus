@@ -37,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <StyledDivFlex>
+    <StyledDivFlex flexDirectionM="column" gap="4rem">
       <StyledDivFlex
         flexDirection="column"
         background={Theme.colors.neutralColor}
@@ -52,17 +52,26 @@ const Login = () => {
       >
         <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
-      <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
+      <StyledDivFlex
+        flex="60%"
+        alignItems="center"
+        justifyContent="center"
+        paddingM="0 0 4rem 0"
+      >
         <StyledDivFlex
           flexDirection="column"
           width="70%"
+          widthL="80%"
+          widthM="100%"
           borderRadius="1rem"
           background={Theme.colors.primaryColor}
           padding="4rem 6rem 6rem 6rem"
+          paddingL="1rem 1rem 2.5rem 1rem"
         >
           <StyledTextHeading
             textAlign="center"
             fontSize="3.6rem"
+            fontSizeL="2.8rem"
             fontWeight="400"
             color="#F3EFE9"
           >
@@ -77,14 +86,16 @@ const Login = () => {
               padding="0rem 4rem 0rem 4rem"
             >
               <StyledDivFlex flexDirection="column" gap="1rem">
-                <StyledLabel>Email</StyledLabel>
+                <StyledLabel fontSizeL="1.8rem">Email</StyledLabel>
                 <StyledInput
                   type="email"
                   placeholder="Enter username"
                   // required
                   padding="2.3rem"
+                  paddingL="1.5rem"
                   borderFocus={errors.email && "1.5px solid yellow"}
                   fontSize="2.3rem"
+                  fontSizeL="1.8rem"
                   name="email"
                   {...register("email", { required: "This field is required" })}
                   value={clientLoginData.email}
@@ -96,13 +107,15 @@ const Login = () => {
               </StyledDivFlex>
 
               <StyledDivFlex flexDirection="column" gap="1rem">
-                <StyledLabel>Password</StyledLabel>
+                <StyledLabel fontSizeL="1.8rem">Password</StyledLabel>
                 <StyledInput
                   type="password"
                   placeholder="Enter password"
                   // required
                   padding="2.3rem"
+                  paddingL="1.5rem"
                   fontSize="2.3rem"
+                  fontSizeL="1.8rem"
                   borderFocus={errors.password && "1.5px solid yellow"}
                   name="password"
                   {...register("password", {
@@ -120,7 +133,7 @@ const Login = () => {
                 </StyledText>
               </StyledDivFlex>
 
-              <StyledDivFlex gap="2rem">
+              <StyledDivFlex gap="2rem" alignItems="center">
                 <Link
                   to="/forget-password"
                   style={{
@@ -128,11 +141,19 @@ const Login = () => {
                     color: "#F3EFE9",
                   }}
                 >
-                  <StyledText fontSize="1.5rem" fontWeight="400">
+                  <StyledText
+                    fontSize="1.5rem"
+                    fontWeight="400"
+                    fontSizeL="1.1rem"
+                  >
                     Forget password?{" "}
                   </StyledText>
                 </Link>
-                <StyledText fontSize="1.5rem" fontWeight="400">
+                <StyledText
+                  fontSize="1.5rem"
+                  fontWeight="400"
+                  fontSizeL="1.1rem"
+                >
                   <Link
                     to="/contact-admin"
                     style={{
@@ -158,9 +179,11 @@ const Login = () => {
               <ButtonGroup
                 isLoading={isLoading}
                 padding="1.5rem"
+                paddingL="0.5rem "
                 marginTop="2rem"
                 borderRadius="5rem"
                 fontSize="2.4rem"
+                fontSizeL="2rem"
               >
                 Login
               </ButtonGroup>

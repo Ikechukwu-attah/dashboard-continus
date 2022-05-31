@@ -22,6 +22,7 @@ const ButtonGroup = ({
   disabled,
   children,
   paddingS,
+  paddingL,
   fontSizeS,
 }) => {
   return (
@@ -37,6 +38,7 @@ const ButtonGroup = ({
       fontWeight={fontWeight}
       onClick={onClickMessage}
       disabled={disabled}
+      paddingL={paddingL}
     >
       <StyledDivFlex justifyContent="center" width="100%" gap="2rem">
         {isLoading && (

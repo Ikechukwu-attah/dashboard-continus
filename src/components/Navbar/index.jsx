@@ -19,6 +19,8 @@ const Navbar = () => {
       justifyContent="flex-end"
       background={Theme.colors.neutralColor}
       gap="20rem"
+      gapSd="0"
+      paddingSd="0 1rem !important"
       alignItems="center"
       padding="1rem  8rem "
       justifyContentS="center"
@@ -39,8 +41,8 @@ const Navbar = () => {
       <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
         <StyledImage
           src={
-            user.user.data.avatar
-              ? user.user.Company.data.picture
+            user?.user?.data?.avatar
+              ? user?.user?.Company?.data?.picture
               : "/assets/7Up-logo.jpg"
           }
           height="7.2rem"
@@ -71,9 +73,9 @@ const Navbar = () => {
             whiteSpace="noWrap"
           >
             {/* Bisedge personnel */}{" "}
-            {user.user.data.role === "personnel" ||
-            user.user.data.role === "admin"
-              ? user.user.data.role === "personnel"
+            {user?.user?.data?.role === "personnel" ||
+            user?.user?.data?.role === "admin"
+              ? user?.user?.data?.role === "personnel"
                 ? "Bisedge Personnel"
                 : "Admin"
               : user?.user?.Company?.data?.official_name}

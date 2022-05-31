@@ -64,7 +64,26 @@ export const smallDevice = css `
     top: ${({ TopS }) => TopS};
     overflow-x: ${({ overFlowXS }) => overFlowXS};
     overflow-y: ${({ overFlowYS }) => overFlowYS};
+  }
+`;
 
-    // color: red;
+export const smallestDevice = css `
+  @media (max-width: ${breakPoint.smallestScreen}) {
+    width: ${({ widthSd }) => widthSd};
+    height: ${({ heightSd }) => heightSd};
+    padding: ${({ paddingSd }) => paddingSd};
+    line-height: ${(lineHeightSd) => lineHeightSd};
+    margin: ${({ marginSd }) => marginSd};
+    flex-direction: ${({ flexDirectionSd }) => flexDirectionSd};
+    align-items: ${({ alignItemsSd }) => alignItemsSd};
+    justify-content: ${({ justifyContentSd }) => justifyContentSd};
+    min-width: ${({ minWidthSd }) => minWidthSd};
+    font-size: ${({ fontSizeSd }) => fontSizeSd};
+    white-space: ${({ whiteSpaceSd }) => whiteSpaceSd};
+    justify-content: ${({ justifyContentSd }) => justifyContentSd};
+    gap: ${({ gapSd }) => gapSd};
+    top: ${({ TopSd }) => TopSd};
+    overflow-x: ${({ overFlowXSd }) => overFlowXSd};
+    overflow-y: ${({ overFlowYSd }) => overFlowYSd};
   }
 `;

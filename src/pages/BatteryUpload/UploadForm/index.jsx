@@ -93,6 +93,7 @@ const BatteryUploadForm = () => {
       minHeight="max-content"
       background={Theme.colors.neutralColor}
       marginTop="3rem"
+      paddingS="1rem"
       width="100%"
     >
       <StyledText
@@ -104,10 +105,14 @@ const BatteryUploadForm = () => {
       </StyledText>
       <StyledForm onSubmit={handleSubmit}>
         <StyledDivFlex
-          gap="20rem"
+          gap="15rem"
           width="95%"
           justifyContent="space-between"
           padding="3rem 0rem 1.2rem 0rem"
+          flexDirectionM="column"
+          gapM="2rem"
+          widthS="100%"
+          paddingS="1rem"
         >
           <StyledDivFlex left="1" flexDirection="column" flex="1" gap="2rem">
             <StyledDivFlex flexDirection="column">
@@ -120,6 +125,8 @@ const BatteryUploadForm = () => {
                 padding="2.3rem"
                 fontSize="2.3rem"
                 name="truck"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 value={batteryData?.truck}
                 onChange={(event) =>
                   handleChange({
@@ -139,6 +146,8 @@ const BatteryUploadForm = () => {
                 placeholder=" Truck Chasis Number"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="truck_chasis_number"
                 value={batteryData?.truck_chasis_number}
                 onChange={(event) =>
@@ -159,6 +168,8 @@ const BatteryUploadForm = () => {
                 placeholder="Driver"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="driver"
                 value={batteryData?.driver}
                 onChange={(event) =>
@@ -179,6 +190,8 @@ const BatteryUploadForm = () => {
                 placeholder="Login/Logout"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="login_logout"
                 value={batteryData?.login_logout}
                 onChange={(event) =>
@@ -199,6 +212,8 @@ const BatteryUploadForm = () => {
                 placeholder="Event"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="event"
                 value={batteryData?.event}
                 onChange={(event) =>
@@ -220,6 +235,8 @@ const BatteryUploadForm = () => {
                 placeholder="value"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="value"
                 value={batteryData?.value}
                 onChange={(event) =>
@@ -240,6 +257,8 @@ const BatteryUploadForm = () => {
                 placeholder="Time"
                 padding="2.3rem"
                 fontSize="2.3rem"
+                fontSizeS="1.5rem"
+                paddingS="2rem"
                 name="time"
                 value={batteryData?.time}
                 onChange={(event) =>
@@ -259,6 +278,8 @@ const BatteryUploadForm = () => {
               color={Theme.colors.neutralColor2}
               htmlFor="csv"
               padding="4rem"
+              fontSizeS="1.5rem"
+              paddingS="2rem"
               border="1px dashed #027351"
             >
               {fileName ? fileName : " Upload battery management here"}
@@ -302,6 +323,8 @@ const BatteryUploadForm = () => {
                 background={Theme.colors.neutralColor4}
                 borderRadius="5rem"
                 fontWeight="500"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 color={Theme.colors.neutralColor}
                 onClick={() => {
                   navigate("/client-management");
@@ -315,6 +338,8 @@ const BatteryUploadForm = () => {
                 fontSize="1.8rem"
                 spinnerHeight="1rem"
                 spinnerWidth="1rem"
+                fontSizeS="1.5rem"
+                paddingS="1rem 4rem"
                 background={Theme.colors.primaryColor}
                 borderRadius="5rem"
                 fontWeight="500"

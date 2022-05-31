@@ -3,6 +3,7 @@ import {
     largeDevice,
     mediumDevice,
     smallDevice,
+    smallestDevice,
     veryLargeDevice,
 } from "../../../constants/MediaQuery/MediaQuery";
 
@@ -34,4 +35,5 @@ export const StyledButton = styled.button `
   ${largeDevice}
   ${mediumDevice}
   ${smallDevice}
+  ${smallestDevice}
 `;

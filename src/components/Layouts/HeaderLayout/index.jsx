@@ -15,6 +15,8 @@ const PageHeaderLayout = ({ children }) => {
       alignItems="center"
       paddingS="0 1rem 0 1rem"
       marginS="1.5rem 0 0 0"
+      flexDirectionSd="column"
+      paddingSd="1rem !important"
     >
       <StyledTextHeading
         color={Theme.colors.primaryColor}

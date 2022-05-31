@@ -81,8 +81,9 @@ const TruckUsage = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
                 console.log("user export", user.user.email);
@@ -108,6 +109,7 @@ const TruckUsage = () => {
               {isExporting ? "Sending..." : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const data = {
                   export: {

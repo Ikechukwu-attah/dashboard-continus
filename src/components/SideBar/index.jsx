@@ -44,6 +44,7 @@ const SideBar = () => {
         widthL={show ? "40%" : 0}
         transition="all .1s"
         overFlowL="hidden"
+        widthSd={show ? "60%" : 0}
       >
         <StyledDivFlex
           height="19rem"
@@ -71,6 +72,9 @@ const SideBar = () => {
                   fontWeight="400"
                   fontSizeM="1.5rem"
                   lineHeight="2rem"
+                  lineHeightSd="1 !important"
+                  // fontSizeSd="1rem"
+                  paddingSd="0.5rem 1rem 0.5rem 1rem !important"
                   padding="1rem 1% 1rem 30%"
                   paddingL="1rem 1rem 1rem 3vw"
                   color={

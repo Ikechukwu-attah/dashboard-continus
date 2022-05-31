@@ -67,8 +67,9 @@ const TruckManagment = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
                 console.log("user export", user.user.email);
@@ -87,6 +88,7 @@ const TruckManagment = () => {
               {isExporting ? "Sending......" : " Report Via Email"}
             </StyledPageHeaderButton>
             <StyledPageHeaderButton
+              fontSizeSd="1.2rem"
               onClick={() => {
                 const data = {
                   export: {
@@ -110,6 +112,10 @@ const TruckManagment = () => {
           justifyContent="flex-end"
           gap="4rem"
           alignItems="center"
+          paddingM="1rem 0"
+          gapM="1.5rem"
+          justifyContentM="center"
+          flexDirectionS="column"
         >
           <Dropdown
             // background={Theme.colors.secondaryColor}
@@ -128,6 +134,7 @@ const TruckManagment = () => {
             data={locationsDropdownData}
             gap="2rem"
             minWidth="22rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
@@ -164,6 +171,7 @@ const TruckManagment = () => {
             minWidth="20rem"
             data={truckDropdownData}
             gap="2rem"
+            widthS="90%"
             icon={
               <KeyboardArrowDownIcon
                 fontSize="large"
