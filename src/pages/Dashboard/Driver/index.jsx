@@ -94,7 +94,7 @@ const Driver = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%" paddingS="2rem">
             <StyledPageHeaderButton
               fontSizeSd="1.2rem"
               onClick={() => {

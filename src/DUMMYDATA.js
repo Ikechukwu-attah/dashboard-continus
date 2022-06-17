@@ -46,7 +46,7 @@ export const generalDashbordCardItem = [{
 
     {
         id: 2,
-        label: "Activated Trucks",
+        label: "Active Trucks",
         count: "70",
     },
 

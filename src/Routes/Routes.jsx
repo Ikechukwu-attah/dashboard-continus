@@ -76,7 +76,7 @@ export const protectedRoutes = {
 
     { path: "/shocking-sense", component: <ShockingSense /> },
 
-    { path: "/truck-usage", component: <TruckUsage /> },
+    // { path: "/truck-usage", component: <TruckUsage /> },
 
     { path: "/driver", component: <Driver /> },
 

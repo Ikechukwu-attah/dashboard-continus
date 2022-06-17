@@ -95,7 +95,7 @@ const GeneralDashboard = () => {
       widgetName: "operators",
       Component: (
         <WidgetWithDropdown
-          label="Number of Operators"
+          label="Operators (Active)"
           count={Math.round(widgetsData?.no_of_operators).toLocaleString()}
           onRemove={() => removeWidget("operators")}
           report={<Link to="/driver">View Report</Link>}
@@ -106,7 +106,7 @@ const GeneralDashboard = () => {
       widgetName: "trucks",
       Component: (
         <WidgetWithDropdown
-          label="Activated Trucks"
+          label="Trucks (Active)"
           count={Math.round(widgetsData?.no_of_trucks).toLocaleString()}
           onRemove={() => removeWidget("trucks")}
           report={<Link to="/truck-management">View Report</Link>}
@@ -117,7 +117,7 @@ const GeneralDashboard = () => {
       widgetName: "uptime",
       Component: (
         <WidgetWithDropdown
-          label="Overall Uptime (Hours)"
+          label="Overall Uptime"
           count={Math.round(widgetsData?.total_uptime).toLocaleString()}
           onRemove={() => removeWidget("uptime")}
           report={<Link to="/monthly-avaliablity">View Report</Link>}
@@ -286,7 +286,7 @@ const GeneralDashboard = () => {
             marginTop="3rem"
             gap="2rem"
             width="100%"
-            paddingS="1rem"
+            paddingS="2rem"
           >
             {/* {widgets?.map((item) => {
               return <>{getWidget(item)}</>;
@@ -318,9 +318,9 @@ const GeneralDashboard = () => {
                 />
               </StyledBox>
             )}
-            {widgets?.includes("calendar") && (
+            {/* {widgets?.includes("calendar") && (
               <CalendarCheck onRemove={() => removeWidget("calendar")} />
-            )}
+            )} */}
           </StyledDivGrid>
           <StyledDivFlex gap="3rem" marginTop="4rem"></StyledDivFlex>
         </StyledBox>

@@ -23,7 +23,7 @@ const SubHeaderLayout = ({
     <StyledBox
       padding="1rem 8rem"
       background={Theme.colors.neutralColor}
-      paddingS="1rem"
+      paddingS="2rem"
     >
       <StyledDivFlex justifyContent="space-between">
         <StyledText

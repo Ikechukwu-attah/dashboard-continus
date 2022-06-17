@@ -37,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <StyledDivFlex flexDirectionM="column" gap="4rem">
+    <StyledDivFlex flexDirectionM="column" gap="4rem" overflow="hidden">
       <StyledDivFlex
         flexDirection="column"
         background={Theme.colors.neutralColor}

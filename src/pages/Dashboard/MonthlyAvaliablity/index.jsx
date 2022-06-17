@@ -68,7 +68,7 @@ const MonthlyAvaliablity = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%" paddingS="2rem">
             <StyledPageHeaderButton
               fontSizeSd="1.2rem"
               onClick={() => {
@@ -228,6 +228,8 @@ const MonthlyAvaliablity = () => {
                 gap="4rem"
                 justifyContentS="space-between"
                 paddingS="1rem 3rem 1rem 1rem"
+                flexDirectionSd="column"
+                paddingSd="2rem"
                 gapS="2rem"
               >
                 <DailyRating

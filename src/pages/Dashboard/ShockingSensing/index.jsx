@@ -89,7 +89,7 @@ const ShockingSense = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper overFlowXS="hidden" overFlowYS="auto">
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%" paddingS="2rem">
             <StyledPageHeaderButton
               fontSizeSd="1.2rem"
               onClick={() => {
@@ -235,6 +235,7 @@ const ShockingSense = () => {
                   <StyledButton
                     borderRadius="2.5rem"
                     fontSize="calc(0.5rem  +  0.8vw)"
+                    fontSizeSd="1.2rem"
                     background={
                       text === activeButton
                         ? Theme.colors.primaryColor
@@ -252,6 +253,7 @@ const ShockingSense = () => {
                     }
                     fontWeight="500"
                     padding="1rem 3.2rem 1rem 2.1vw"
+                    paddingSd="1rem 2rem !important"
                     // color={Theme.colors.neutralColor}
                     onClick={() => setActiveButton(text)}
                   >

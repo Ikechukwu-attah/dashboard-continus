@@ -115,7 +115,7 @@ const Co2Reduction = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%">
+          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%" paddingS="2rem">
             <StyledPageHeaderButton
               fontSizeSd="1.2rem"
               onClick={() => {
@@ -257,7 +257,7 @@ const Co2Reduction = () => {
           gap="2rem"
           width="100%"
           // flexWrap="wrap"
-          paddingS="1rem"
+          paddingS="2rem"
         >
           {/* <CardWidget
             label="Disel saved (liters)"

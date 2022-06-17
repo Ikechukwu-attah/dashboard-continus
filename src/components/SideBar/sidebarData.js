@@ -24,11 +24,11 @@ export const sideBarData = [{
         link: "/driver",
     },
 
-    {
-        id: 4,
-        title: "Truck Usage",
-        link: "/truck-usage",
-    },
+    // {
+    //     id: 4,
+    //     title: "Truck Usage",
+    //     link: "/truck-usage",
+    // },
 
     {
         id: 5,

@@ -14,7 +14,7 @@ const ModifiedCard = ({ label, count, thresholdCount, onRemove, report }) => {
       <WidgetWithDropDown
         borderBottomRight="1px"
         borderBottomLeft="1px"
-        label="Total Shocks"
+        label="Co2 Reduction"
         top="28.3rem"
         // bottom="10rem"
         count={count}

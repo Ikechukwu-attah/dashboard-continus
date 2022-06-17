@@ -102,6 +102,7 @@ const SideBar = () => {
           <StyledDivFlex
             alignItems="center"
             padding="2rem 1rem 1rem 10.5rem"
+            paddingSd="2rem 1rem 1rem 2rem !important"
             gap="1rem"
             cursor="pointer"
             marginBottom="2rem"
@@ -109,7 +110,11 @@ const SideBar = () => {
             paddingS="2rem 1rem 1rem 2rem"
           >
             <LogOutIcon fontSizeS="small" />
-            <StyledText fontSize="calc(1.1rem + 0.82vw)" fontWeight="500">
+            <StyledText
+              fontSize="calc(0.5rem + 0.82vw)"
+              fontWeight="500"
+              fontSizeSd="1.5rem"
+            >
               Logout
             </StyledText>
           </StyledDivFlex>

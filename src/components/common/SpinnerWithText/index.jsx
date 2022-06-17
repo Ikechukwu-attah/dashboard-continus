@@ -19,7 +19,8 @@ const SpinnerWithText = ({ isLoading, margin, spinnerText }) => {
           <StyledText
             color={Theme.colors.neutralColor2}
             fontSize="2.5rem"
-            fontSizeS="1.5rem"
+            fontSizeS="1rem"
+            fontSizeSd="1.3rem"
           >
             {spinnerText || "Loading ...."}
           </StyledText>

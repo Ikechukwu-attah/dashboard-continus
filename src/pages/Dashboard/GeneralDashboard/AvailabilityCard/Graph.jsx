@@ -116,7 +116,7 @@ const AvailabilityGraph = ({ data }) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="getMonth" dy={-5}>
+          <XAxis dataKey="getMonth" dy={-5} textAnchor="center">
             {" "}
             <Label value="Month" offset={0} position="insideBottom" />
           </XAxis>
