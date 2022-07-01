@@ -20,9 +20,7 @@ import { StyledTextHeading } from "../../../../components/common/Basics/Heading"
 import { formatDate } from "../../../../utils/FormatDate";
 
 const AvaliablityGraph = ({ data, isLoading }) => {
-  console.log("monthly data", data);
   const [extractDay, setExtractDay] = useState();
-  console.log("extracted data", extractDay);
 
   useEffect(() => {
     if (data) {
@@ -31,11 +29,9 @@ const AvaliablityGraph = ({ data, isLoading }) => {
         // data.getDay = `${day.getDate()}/${day.getMonth()}`;
 
         data.getDay = formatDate(data.day)["dd/month"];
-        console.log("format date", data.getDay);
         return data;
       });
       setExtractDay(newData);
-      // console.log("newdate ==>", newData);
     }
   }, [data]);
 

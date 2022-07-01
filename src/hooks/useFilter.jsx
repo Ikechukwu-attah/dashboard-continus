@@ -25,7 +25,6 @@ export const useFilter = (
 
     const filter = allFilter === "?where=" ? null : allFilter;
 
-    console.log("all filter =>>>", refineFilter(filter));
 
     getData(refineFilter(filter));
     // getGraph(refineFilter(filter));

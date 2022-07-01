@@ -27,16 +27,12 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { ...adminData, guard: "admin" };
-    console.log("data...............", data);
     loginAdmin(data);
 
     // navigate("/home");
   };
 
-  // useEffect(() => {
-  //   console.log("called");
-  //   successMessage(error);
-  // }, [error]);
+  
 
   return (
     <StyledDivFlex>

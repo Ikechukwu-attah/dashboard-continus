@@ -7,13 +7,14 @@ import { Theme } from "../../Theme";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
 import Profile from "../Profile/Profile";
 import Companies from "../Company";
+import MenuIcon from "@mui/icons-material/Menu";
 import { StyledBox } from "../common/Basics/DivBox";
 import { useDropDown } from "../../hooks/useHideDropDown";
 
 const Navbar = () => {
   const [showCompany, setShowCompany] = useState(false);
   const user = MapTokenToUser();
-  console.log("user", user);
+
   return (
     <StyledDivFlex
       justifyContent="flex-end"
@@ -38,7 +39,7 @@ const Navbar = () => {
       >
         FLEET MANAGEMENT SYSTEM
       </StyledTextHeading>
-      <StyledDivFlex gap="1.5rem" onClick={() => setShowCompany(!showCompany)}>
+      <StyledDivFlex gap="1.5rem">
         <StyledImage
           src={
             user?.user?.data?.avatar
@@ -87,6 +88,7 @@ const Navbar = () => {
           zIndex="5"
           minWidth="12%"
           Right="10rem"
+          widthS="50%"
           display={
             user?.user?.data?.role === "personnel" && showCompany
               ? "block"
@@ -97,6 +99,19 @@ const Navbar = () => {
         </StyledBox>
 
         {/* <StyledImage /> */}
+        {user?.user?.data?.role === "personnel" ? (
+          <StyledDivFlex
+            onClick={() => setShowCompany(!showCompany)}
+            position="absolute"
+            Right="4rem"
+            Top="2rem"
+            cursor="pointer"
+          >
+            <MenuIcon fontSize="large" />
+          </StyledDivFlex>
+        ) : (
+          ""
+        )}
       </StyledDivFlex>
     </StyledDivFlex>
   );

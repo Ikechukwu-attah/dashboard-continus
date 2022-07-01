@@ -18,7 +18,6 @@ export const useGetAllClient = () => {
       const response = await axios.get(url);
       setIsLoading(false);
       setData(response?.data?.data?.clients);
-      console.log("response=>clients", response?.data?.data?.clients);
       const {
         data: {
           pagination: { total_pages },

@@ -9,7 +9,7 @@ const MapTokenToUser = () => {
         const token = cookie.get('userToken');
         return jwt_decode(token);
     } catch (error) {
-        console.log(error);
+
         return false;
     }
 

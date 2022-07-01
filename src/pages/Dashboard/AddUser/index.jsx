@@ -27,7 +27,6 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
 
   const handleChange = ({ name, value }) => {
     setSignUpData({ ...signUpData, [name]: value });
-    // console.log("value", value);
   };
 
   const onHandleSubmit = () => {
@@ -36,7 +35,6 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
     createUser(data);
   };
   useEffect(() => {
-    console.log("data444", data);
     if (data) {
       setShowUserList(true);
       getAllUsers();
@@ -194,7 +192,6 @@ const AddUser = ({ setShowUserList, getAllUsers }) => {
                     value: event.target.value,
                   })
                 }
-                // console.log("role selection", data);
 
                 data={roleData}
                 icon={<KeyboardArrowDownIcon fontSize="large" />}

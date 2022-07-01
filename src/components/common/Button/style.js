@@ -18,6 +18,7 @@ export const StyledButton = styled.button `
   font-style: normal;
   margin: ${({ margin }) => margin};
   width: ${({ width }) => width};
+  min-width: ${({ minWidth }) => minWidth};
   display: block;
   font-weight: ${({ fontWeight }) => fontWeight || "600"};
   cursor: pointer;

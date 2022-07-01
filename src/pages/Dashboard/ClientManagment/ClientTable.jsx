@@ -23,12 +23,9 @@ const ClientTable = ({ data, getAllClient }) => {
   const [clientData, setClientData] = useState([]);
   const [show, setShow] = useState(false);
   const [idValue, setIdValue] = useState();
-  //   console.log("client delete", data);
-  console.log("id", idValue);
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
       console.table("data table", data);
       const newData = data.map((data) => {
         data.firstname = data.data.firstname;
@@ -39,14 +36,12 @@ const ClientTable = ({ data, getAllClient }) => {
         return data;
       });
 
-      console.log("newData client", newData);
 
       setClientData(newData);
     }
   }, [data]);
 
   const handleEdit = (row) => {
-    console.log("editing values", row);
   };
 
   const handleDelete = () => {
@@ -89,7 +84,6 @@ const ClientTable = ({ data, getAllClient }) => {
             onClick={() => {
               setShow(true);
               setIdValue(row.values.id);
-              console.log("rowsssss", row.values.id);
             }}
             fontWeight="400"
             fontSize="1.5rem"
@@ -132,7 +126,6 @@ const ClientTable = ({ data, getAllClient }) => {
   //   }
   // };
 
-  console.log("all client data2", data);
 
   return (
     <StyledBox
@@ -169,7 +162,6 @@ const ClientTable = ({ data, getAllClient }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

@@ -67,14 +67,14 @@ const MonthlyAvailabilityUpload = () => {
 
   const handleChange = ({ name, value }) => {
     setDataUpload({ ...dataUpload, [name]: value });
-    console.log("handle", dataUpload);
+   
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = { ...dataUpload };
-    console.log("data today", data);
+   
     const redirect = () => {
       successToast();
 
@@ -306,11 +306,11 @@ const MonthlyAvailabilityUpload = () => {
               name="file"
               // value={dataUpload?.file}
               onChange={async (event) => {
-                console.log("mekus");
+              
                 const file = event.target.files[0];
                 setFileName(file.name);
                 const base64 = await convertBase64(file);
-                // console.log("mekus");
+              
                 handleChange({
                   name: event.target.name,
                   value: base64,

@@ -18,7 +18,6 @@ import BisedgeLogo from "../../components/Images/BisedgeLogo.png";
 
 const ResetPassword = () => {
   const { token } = useParams();
-  console.log("params", token);
   const navigate = useNavigate();
 
   const [passwordRestData, setPasswordResetData] = useState({});
@@ -27,7 +26,6 @@ const ResetPassword = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setPasswordResetData({ ...passwordRestData, [name]: value });
-    console.log("passwordrestData", passwordRestData);
   };
 
   const handleSubmit = (e) => {

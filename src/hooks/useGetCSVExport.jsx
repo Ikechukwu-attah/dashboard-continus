@@ -25,7 +25,6 @@ export const useGetCSVExport = () => {
           .pop()
           .split("#")[0]
           .split("?")[0];
-        console.log("filename=>", fileName.slice(-21));
         const file = fileName.slice(-21);
         const link = document.createElement("a");
         link.href = downloadLink;
@@ -41,9 +40,7 @@ export const useGetCSVExport = () => {
         //     });
       }
       setCsvData(response);
-      console.log("assssss", as);
 
-      console.log("export data", response);
     } catch (error) {
       setError(error?.response);
       setIsLoading(false);

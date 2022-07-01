@@ -64,15 +64,15 @@ const ShockingSense = () => {
   const [pageFilter, setPageFilter] = useState();
 
   useFilterGraph(
-    truckfilter,
+   { truckfilter,
     locationFilter,
     dateFilter,
     pageFilter,
-    null,
+    
     // activeButton === "Table"
     //   ? getShockingSensingTable
     //   : getShockingSensingBarChart
-    getShockingSensingTable
+   getData: getShockingSensingTable}
   );
 
   // console.log("checking shocking graph data", graphdata);
@@ -158,7 +158,6 @@ const ShockingSense = () => {
             name="location"
             label="Location"
             onChange={(data) => {
-              console.log("user selection", data);
               const { location } = data;
               const filter = location ? `location=${location}` : "";
               setLocationFilter(filter);
@@ -166,7 +165,6 @@ const ShockingSense = () => {
               setLocationDownload(location);
 
               // getShockingSensingTable(filter);
-              console.log("filter", filter);
             }}
             data={locationsDropdownData}
             gap="2rem"

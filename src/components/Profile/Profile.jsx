@@ -9,7 +9,7 @@ import MapTokenToUser from "../../Authorization/MapTokenToUser";
 
 const Profile = () => {
   const user = MapTokenToUser();
-  console.log("userMapped", user);
+  
   return (
     <StyledBox
       //   width="100%"

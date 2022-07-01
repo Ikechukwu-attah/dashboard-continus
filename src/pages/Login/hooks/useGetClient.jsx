@@ -16,8 +16,7 @@ export const useGetClient = () => {
 
       const clientData = { email, company_id, ...data };
       delete clientData?.guard;
-      // console.log("client datattt", clientData)
-      // console.log("item to edit =>>", clientData);
+     
       setData(clientData);
       if (callback && typeof callback === "function") {
         callback(clientData);

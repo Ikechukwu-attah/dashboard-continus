@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 
 export const useFilterGraph = (
-  truckFilter,
+ { truckFilter,
   locationFilter,
   dateFilter,
   pageFilter,
   maintenanceFilter,
-  getData
+  companyFilter,
+  getData}
 ) => {
   useEffect(() => {
     const refineFilter = (filter) => {
@@ -19,13 +20,10 @@ export const useFilterGraph = (
       truckFilter ? `&${truckFilter}` : ""
     }${locationFilter ? `&${locationFilter}` : ""}${
       pageFilter
-        ? `&${pageFilter}${maintenanceFilter ? `&${maintenanceFilter}` : ""}`
-        : ""
-    }`;
+        ? `&${pageFilter} `:""}${maintenanceFilter ? `&${maintenanceFilter}` : ""}${companyFilter?`&${companyFilter}`:""}
+      
+    `;
 
-    console.log("truck filter concat", filter);
-    console.log("pageFilter", pageFilter);
     getData(refineFilter(filter));
-    console.log("getData", getData);
-  }, [truckFilter, locationFilter, dateFilter, pageFilter, maintenanceFilter]);
+  }, [truckFilter, locationFilter, dateFilter, pageFilter,companyFilter, maintenanceFilter]);
 };

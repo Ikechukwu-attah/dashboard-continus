@@ -4,7 +4,7 @@ import { Theme } from "../../Theme";
 import { StyledBox } from "../common/Basics/DivBox";
 import { StyledDivFlex } from "../common/Basics/DivFlex";
 import { StyledList, StyledUl } from "../common/Basics/list";
-import { StyledImage } from "../common/Basics/StyledImage";
+
 import { sideBarData, adminNavbarData } from "./sidebarData";
 
 import { globalContext } from "../../Context/GlobalContext";
@@ -12,7 +12,7 @@ import LogOutIcon from "../../Icons/LogOut";
 import { StyledText } from "../common/Basics/StyledText";
 import MapTokenToUser from "../../Authorization/MapTokenToUser";
 import MenuIcon from "@mui/icons-material/Menu";
-// import BisedgeLogo from "../../../public/assets/Bisedge-sidelogo.svg";
+
 import BisedgeSideLogo from "../Images/BisedgeSideLogo";
 import cookie from "js-cookie";
 
@@ -31,7 +31,6 @@ const SideBar = () => {
     window.location.reload();
   };
   const [show, setShow] = useState(false);
-  console.log("show", show);
   return (
     <>
       <StyledBox

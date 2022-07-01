@@ -14,12 +14,9 @@ export const useMonthlyAvaliablity = () => {
     try {
       const response = await axios.get(url);
       setIsLoading(false);
-      // console.log("monthlyAvaliablity ", response.data.data.records);
 
-      console.log("james", response?.data?.data?.summary[0]?.total_days);
       setData(response?.data?.data?.records);
       setSummary(response?.data?.data?.summary[0]);
-      // console.log("data driver", data);
     } catch (error) {
       setError(error?.response?.data?.message);
     }

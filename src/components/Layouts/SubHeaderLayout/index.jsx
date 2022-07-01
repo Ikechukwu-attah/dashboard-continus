@@ -15,9 +15,7 @@ const SubHeaderLayout = ({
   showYear,
 }) => {
   const [date1, date2] = dateRange ? dateRange : [];
-  console.log("dateRage", dateRange);
 
-  console.log("date=>>>", dateRange);
 
   return (
     <StyledBox

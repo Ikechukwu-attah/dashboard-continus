@@ -14,7 +14,6 @@ export const removeDuplicate = (data, filteredItem) => {
         }
     })
 
-    console.log("dropdown data2222", dropdownData)
 
     return dropdownData
 };

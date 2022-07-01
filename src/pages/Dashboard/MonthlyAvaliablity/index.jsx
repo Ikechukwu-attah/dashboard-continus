@@ -50,15 +50,12 @@ const MonthlyAvaliablity = () => {
   );
 
   useFilterGraph(
-    truckFilter,
+   { truckFilter,
     locationFilter,
     dateFilter,
-    null,
-    null,
-    getMonthlyAvaliablity
+   getData: getMonthlyAvaliablity}
   );
-  console.log("summary", summary);
-  console.log("data avail", data);
+
   // useEffect(() => {
   //   getMonthlyAvaliablity(
   //     "?period[start]=2022-03-01&truck=BIS/NB/002&period[end]=2022-04-01"
@@ -73,7 +70,7 @@ const MonthlyAvaliablity = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
+               
                 const data = {
                   export: {
                     entity: "monthly_availability",

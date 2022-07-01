@@ -12,8 +12,7 @@ const GlobalProvider = ({ children }) => {
   );
 
   const [showListing, setShowListing] = useState(true);
-  console.log("pageName", pageName);
-  console.log("showListing...", showListing);
+ 
 
   return (
     <globalContext.Provider

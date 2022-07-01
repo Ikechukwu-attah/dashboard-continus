@@ -34,7 +34,7 @@ const Dropdown = ({
 }) => {
   const [isOpen, setIsIOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([label]);
-  console.log("dropdown value", value);
+
   const removeItem = (item) => {
     const allItems = [...selectedItems];
     return allItems.filter((selectedItem) => selectedItem !== item);
@@ -83,7 +83,7 @@ const Dropdown = ({
     }
   }, [value]);
 
-  console.log("selected", selectedItems);
+ 
 
   return (
     <StyledDivFlex

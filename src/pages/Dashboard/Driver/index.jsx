@@ -54,16 +54,13 @@ const Driver = () => {
     dropdownFilterContext
   );
 
-  console.log("truck dropdown==>", truckDropdownData);
 
   // useFilter(truckfilter, null, locationFilter, null, pageFilter, getDriver);
   useFilterGraph(
-    truckfilter,
+   { truckfilter,
     locationFilter,
-    null,
     pageFilter,
-    null,
-    getDriver
+    getData:getDriver}
   );
 
   // useEffect(() => {
@@ -99,7 +96,6 @@ const Driver = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "driver_management",
@@ -151,7 +147,6 @@ const Driver = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              console.log("location", location);
               const filter = location ? `location=${location}` : null;
               resetPagination();
               setLocationFilter(filter);

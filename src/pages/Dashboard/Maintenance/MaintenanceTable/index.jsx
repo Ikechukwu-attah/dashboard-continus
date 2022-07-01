@@ -10,15 +10,12 @@ import { StyledBox } from "../../../../components/common/Basics/DivBox";
 import { StyledTextHeading } from "../../../../components/common/Basics/Heading";
 
 const MaintenanceTable = ({ data }) => {
-  console.log("is loading", data);
 
   const [maintenanceData, setMaintenanceData] = useState([]);
-  console.log("maintenance", maintenanceData);
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
-      console.table("data table", data);
+      
       const newData = data.map((data) => {
         data.Truck = data.data.Truck;
         data["Truck chassis no"] = data.data["Truck chassis no."];
@@ -34,7 +31,6 @@ const MaintenanceTable = ({ data }) => {
         return data;
       });
 
-      console.log("newData", newData);
 
       setMaintenanceData(newData);
     }

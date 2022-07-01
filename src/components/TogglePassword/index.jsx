@@ -13,7 +13,7 @@ const TogglePassword = () => {
   ) : (
     <Icon size={30} onClick={() => setIsVisible(!isVisible)} icon={eye} />
   );
-  console.log("visible", isVisible);
+  
   const InputType = isVisible ? "text" : "password";
   return [icons, InputType];
 };

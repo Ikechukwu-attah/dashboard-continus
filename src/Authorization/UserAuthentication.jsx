@@ -12,10 +12,9 @@ export const CheckLoginStatus = () => {
   if (!accessToken) return false;
 
   try {
-    console.log("jwt+>decode", jwt_decode(accessToken));
+    
     return jwt_decode(accessToken);
   } catch (error) {
-    console.log("Auth error", error);
     return false;
   }
 };

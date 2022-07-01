@@ -24,13 +24,12 @@ const Paginations = ({
   const handlePageChange = (data) => {
     const filterCriteria = `page=${data.selected + 1}`;
     setActivePage(data.selected);
-    console.log("paginations,", filterCriteria);
 
     onPageSelected(filterCriteria);
     // getDriver(filterCriteria);
-    // console.log("getDriver", getDriver(filterCriteria));
+ 
   };
-  console.log("datum", data);
+  
   return (
     <StyledBox display={isLoading || !data?.length ? "none" : "block"}>
       <ReactPaginate

@@ -18,7 +18,6 @@ import { formatDate } from "../../../../utils/FormatDate";
 
 const BatteryGraph = ({ data, isLoading }) => {
   const [graphData, setGraphData] = useState();
-  console.log("graphData", graphData);
 
   useEffect(() => {
     if (data) {
@@ -27,7 +26,6 @@ const BatteryGraph = ({ data, isLoading }) => {
         return data;
       });
 
-      console.log("date", newData);
       setGraphData(newData);
     }
   }, [data]);
@@ -35,7 +33,6 @@ const BatteryGraph = ({ data, isLoading }) => {
   // const result = formatDate("2021-11-17T07:34:26.000Z")["hh:mm"];
 
   // // const result = day.getHours() + ":" + day.getMinutes();
-  // console.log("result time", result);
   return (
     <StyledBox
       marginTop="3rem"

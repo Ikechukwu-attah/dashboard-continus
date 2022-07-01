@@ -12,8 +12,7 @@ const DriversTable = ({ data }) => {
 
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working ");
-      console.table("data table", data);
+      
       const newData = data.map((data) => {
         data["First name"] = data.data["First name"];
         data["Last name"] = data.data["Last name"];
@@ -25,7 +24,6 @@ const DriversTable = ({ data }) => {
         return data;
       });
 
-      console.log("newData driver", newData);
 
       setDriverData(newData);
     }
@@ -99,7 +97,6 @@ const DriversTable = ({ data }) => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
-              console.log("row", row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {

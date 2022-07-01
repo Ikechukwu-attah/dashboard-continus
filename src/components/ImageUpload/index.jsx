@@ -16,7 +16,6 @@ const ImageUpload = ({ name, value, onImageChange }) => {
     setImgUrl(objectUrl);
 
     if (!file) {
-      console.log("image is required");
       return setErrorMessage("Valid image is required");
     }
 
@@ -37,7 +36,6 @@ const ImageUpload = ({ name, value, onImageChange }) => {
     };
 
     reader.onerror = () => {
-      console.log("There is a problem while uploading...");
     };
 
     setErrorMessage("");

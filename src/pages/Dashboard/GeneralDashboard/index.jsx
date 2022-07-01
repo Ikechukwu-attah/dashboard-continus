@@ -30,20 +30,17 @@ import { useGetCSVExport } from "../../../hooks/useGetCSVExport";
 import CalendarCheck from "../../../components/Widget/Calendar";
 import { getYears } from "../../../utils/GetYears";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Theme } from "../../../Theme";
 
 const GeneralDashboard = () => {
   const [widgets, setWidgets] = useState();
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
 
-  const captializeText = (text) => {
-    return text.replace(
-      /(^\w|\s\w)(\S*)/g,
-      (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
-    );
-  };
+  const user = MapTokenToUser();
+  console.log("user",user.user.data.role)
+  
 
-  // console.log("capitalize", captializeText("james attah"));
   const {
     updateWidget,
     isLoading: isWidgetUpdating,
@@ -62,9 +59,15 @@ const GeneralDashboard = () => {
     data,
     date1,
     date2,
+    companyId,
+    setCompanyId,
   } = useContext(widgetContext);
 
-  useFilterGraph(null, null, dateFilter, null, null, getWidgets);
+
+  
+  const [companyFilter, setCompanyFilter] = useState(`company=${user?.user.Company.id}`) 
+
+      useFilterGraph({ dateFilter, companyFilter,getData: getWidgets});
 
   const addWidget = ({ widget }) => {
     const allWidgets = [...widgets];
@@ -249,7 +252,7 @@ const GeneralDashboard = () => {
               const date2 = `${year}-12-31`;
               const filter =
                 year && `period[start]=${date1}&period[end]=${date2}`;
-              console.log("year", date1);
+              console.log("kudos", filter);
               setDateFilter(filter);
               setDateRange([date1, date2]);
             }}
@@ -264,6 +267,26 @@ const GeneralDashboard = () => {
               />
             }
           />
+
+           {user.user.data.role==="personnel"&& <StyledButton
+            background={Theme.colors.primaryColor}
+            color={Theme.colors.secondaryColor}
+            padding="1rem"
+            borderRadius="1rem"
+            widthS="90%"
+            minWidth="20rem"
+            onClick={() => {
+              const filter =  `company=all`;
+              // const dateFilter = `period[start]=${"startDate"}}
+              // &period[end]=${"endDate"}${companyId==="all"?"":`&company=${"all"}`}`
+              // setCompanyId("all");
+              setCompanyFilter(filter);
+              // setDateFilter(dateFilter)
+            }}
+          >
+            All Clients
+          </StyledButton>}
+         
         </StyledDivFlex>
 
         <StyledBox

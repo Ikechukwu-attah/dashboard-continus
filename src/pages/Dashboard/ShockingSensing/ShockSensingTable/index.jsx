@@ -57,7 +57,6 @@ const ShockSensingTable = ({ data }) => {
     () => tableShockSensingData,
     [tableShockSensingData, data]
   );
-  console.log("new newShockingSensingTableData", newShockingSensingTableData);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(

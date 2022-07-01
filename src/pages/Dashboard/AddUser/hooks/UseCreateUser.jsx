@@ -10,14 +10,12 @@ export const useCreateUser = () => {
   const [error, setError] = useState();
 
   const createUser = async (data) => {
-    console.log("loading........");
     setIsLoading(true);
     try {
       const response = await axios.post(createAdminAPI, data);
       setIsLoading(false);
       setData(response);
 
-      console.log("data----set", data);
     } catch (error) {
       setIsLoading(false);
       setError(error?.response?.data?.message);

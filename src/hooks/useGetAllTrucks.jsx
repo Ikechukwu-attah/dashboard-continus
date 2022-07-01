@@ -16,7 +16,7 @@ export const useGetAllTruck = () => {
     } catch (error) {
       setIsLoading(false);
       return error;
-      // console.log("driver error", error.response);
+  
     }
   };
 
@@ -28,12 +28,12 @@ export const useGetAllTruck = () => {
       return response;
     } catch (error) {
       return error;
-      // console.log("driver error", error.response);
+   
     }
   };
 
   const getDropdownFiltersData = async () => {
-    console.log("calledddd");
+   
 
     try {
       setIsLoading(true);
@@ -47,7 +47,7 @@ export const useGetAllTruck = () => {
 
       setDropdownFilterData({ truckDropdownData, locationsDropdownData });
       setIsLoading(false);
-      console.log("data444", truckDropdownData, locationsDropdownData);
+     
     } catch (error) {
       setError(error?.response?.data?.message);
       setIsLoading(false);

@@ -29,7 +29,6 @@ const EditClient = ({ setShowClientList }) => {
   const { updateClient, isLoading: isUserUpdating } = useUpdateClient();
   const { id, userType } = useParams();
 
-  console.log("user type", userType);
 
   const handleChange = ({ name, value }) => {
     setClientData({ ...clientData, [name]: value });
@@ -43,12 +42,10 @@ const EditClient = ({ setShowClientList }) => {
 
   useEffect(() => {
     if (companyData) {
-      console.log("checking ooooooooooooooooooo");
       const newData = companyData?.map((data) => {
         return data.name;
       });
       setCompanyName(newData);
-      console.log("companyName=>>> ", newData);
     }
   }, [companyData]);
 
@@ -156,7 +153,6 @@ const EditClient = ({ setShowClientList }) => {
                     value: company_id,
                   });
                 }}
-                // console.log("role selection", data);
 
                 data={companyName}
                 icon={<KeyboardArrowDownIcon fontSize="large" />}
@@ -252,7 +248,6 @@ const EditClient = ({ setShowClientList }) => {
                   //     name: event.target.name,
                   //     value: event.target.value,
                   //   });
-                  //   console.log("client-role", clientData.role);
                   // }}
                   onChange={(data) => {
                     const { role } = data;
@@ -261,7 +256,6 @@ const EditClient = ({ setShowClientList }) => {
                       value: role,
                     });
                   }}
-                  // console.log("role selection", data);
 
                   data={roleData}
                   icon={<KeyboardArrowDownIcon fontSize="large" />}

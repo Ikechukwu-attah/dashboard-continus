@@ -18,7 +18,6 @@ export const useUpdateAdmin = () => {
             const response = await axios.put(updateAdminAPI, adminData);
             setIsLoading(false);
             setData(response.data);
-            console.log("response data update", data);
 
             if (callback && typeof callback === "function") {
                 callback()

@@ -86,7 +86,6 @@ const TruckUsage = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "truck_usage",

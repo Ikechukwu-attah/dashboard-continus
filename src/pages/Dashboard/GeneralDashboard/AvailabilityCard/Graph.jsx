@@ -16,7 +16,6 @@ import { StyledBox } from "../../../../components/common/Basics/DivBox";
 
 const AvailabilityGraph = ({ data }) => {
   const [monthlyData, setMonthlyData] = useState();
-  console.log("monthly", data);
   useEffect(() => {
     if (data) {
       const newData = data.monthly_availability.map((data) => {
@@ -26,7 +25,6 @@ const AvailabilityGraph = ({ data }) => {
       });
       setMonthlyData(newData);
 
-      console.log("monthly avil", data);
     }
   }, data);
   // const data = [

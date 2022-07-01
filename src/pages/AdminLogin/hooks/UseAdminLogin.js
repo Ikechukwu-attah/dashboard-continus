@@ -20,7 +20,6 @@ export const useAdminLogin = () => {
         setIsLoading(true);
         try {
             const response = await axios.post(adminLoginAPI, data)
-            console.log("response---", response.data.data.token);
             setIsLoading(false);
             setData(response);
             cookie.set('userToken', response.data.data.token);

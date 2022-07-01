@@ -12,11 +12,9 @@ export const useGetAllCompanies = () => {
         try {
             const response = await axios.get(allCompanyAPI);
             setData(response.data.data.records);
-            console.log("company response", response.data.data.records);
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
-            console.log(error.response);
             setError(error.response.data.message);
         }
     };

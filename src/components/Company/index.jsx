@@ -7,6 +7,7 @@ import { StyledText } from "../common/Basics/StyledText";
 import { useGetAllCompanies } from "./hooks/useGetAllCompanies";
 import { useSwitchCompany } from "./hooks/useSwitchCompany";
 import jsCookie from "js-cookie";
+import { StyledDivFlex } from "../common/Basics/DivFlex";
 
 const Companies = () => {
   const [getCompanies, setGetCompanies] = useState([]);
@@ -19,28 +20,23 @@ const Companies = () => {
     isLoading: switchCompanyIsLoading,
   } = useSwitchCompany();
 
-  console.log("company names", getCompanies);
   useEffect(() => {
     getAllCompany();
   }, []);
 
-  console.log("response data", data);
 
   useEffect(() => {
     if (data) {
-      console.log("checking ooooooooooooooooooo");
       const newData = data.map((data) => {
         return data?.name;
       });
       setGetCompanies(newData);
-      console.log("new data ", newData);
     }
   }, [data]);
 
   const navigate = useNavigate();
 
   const handleLogOut = (event) => {
-    console.log("loged out");
     event?.preventDefault();
     jsCookie.remove("userToken");
     navigate("/");
@@ -48,24 +44,26 @@ const Companies = () => {
   };
 
   return (
-    <Dropdown
+    <StyledDivFlex  widthS="100%" >
+       <Dropdown
       data={getCompanies}
       name="company_name"
       label="Clients"
+   
       showDropdown={true}
       onChange={(item) => {
-        console.log("sirk", item);
         const { company_name } = item;
-        console.log("james");
         const data = { company_name };
-        console.log("james");
-        console.log("company result name", data);
         switchCompany(data, handleLogOut);
-      }}
-      minWidth="30%"
 
-      // maxWidth="100%"
+      }}
+      widthS="100%"
+      gapS="2rem"
+      minWidth="70%"
+
     />
+    </StyledDivFlex> 
+   
   );
 };
 

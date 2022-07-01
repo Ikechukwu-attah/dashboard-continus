@@ -19,7 +19,6 @@ export const useGetAdmin = () => {
 
             delete adminData.guard
 
-            console.log("item to edit =>>", adminData);
             setData(adminData);
             if (callback && typeof callback === "function") {
                 callback(adminData)

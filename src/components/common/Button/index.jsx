@@ -24,6 +24,7 @@ const ButtonGroup = ({
   paddingS,
   paddingL,
   fontSizeS,
+  widthS
 }) => {
   return (
     <StyledButton
@@ -39,6 +40,7 @@ const ButtonGroup = ({
       onClick={onClickMessage}
       disabled={disabled}
       paddingL={paddingL}
+      widthS={widthS}
     >
       <StyledDivFlex justifyContent="center" width="100%" gap="2rem">
         {isLoading && (

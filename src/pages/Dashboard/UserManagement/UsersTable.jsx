@@ -28,8 +28,7 @@ const UsersTable = ({ data, getAllUsers }) => {
   const { error, deleteClient, isLoading } = useDeleteClient();
   useEffect(() => {
     if (data) {
-      console.log("Is this actually working users table ");
-      console.table("data table", data);
+      
       const newData = data.map((data) => {
         data.firstname = data.data.firstname;
         data.lastname = data.data.lastname;
@@ -82,7 +81,7 @@ const UsersTable = ({ data, getAllUsers }) => {
             onClick={() => {
               setShow(true);
               setIdValue(row.values.id);
-              console.log("rowsssss", row.values.id);
+             
             }}
             fontWeight="400"
             fontSize="1.5rem"

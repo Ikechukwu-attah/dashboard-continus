@@ -16,7 +16,6 @@ export const useGetTruckUsage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(url);
-      console.log("still not working");
 
       setIsLoading(false);
       setData(response?.data?.data?.records);

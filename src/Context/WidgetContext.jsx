@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import WidgetWithDropdown from "../components/Widget/WidgetWithDropdown";
 import { useGetWidgets } from "../pages/Dashboard/GeneralDashboard/hooks/useGetWidgets";
-import { getPreviousDate, getTodayDate } from "../utils/GetDate";
+import MapTokenToUser from "../Authorization/MapTokenToUser";
 
 export const widgetContext = createContext();
 
@@ -11,8 +11,19 @@ export const WidgetProvider = ({ children }) => {
   const date2 = `${year}-12-31`;
   const startDate = date1;
   const endDate = date2;
+
+
+  const user = MapTokenToUser();
+ 
+  const [companyId, setCompanyId] = useState(user?.user?.Company?.id);
+
+
+
   const filter = `period[start]=${startDate}
-    &period[end]=${endDate}`;
+    &period[end]=${endDate}$`
+  
+
+
   const { data, getWidgets, isLoading } = useGetWidgets();
   const [dateRange, setDateRange] = useState([startDate, endDate]);
   const [dateFilter, setDateFilter] = useState(filter);
@@ -31,6 +42,8 @@ export const WidgetProvider = ({ children }) => {
         data,
         date1,
         date2,
+        companyId,
+        setCompanyId
       }}
     >
       {children}{" "}

@@ -7,7 +7,7 @@ toast.configure();
 const useMessages = () => {
   const notify = ({ errorMessage }) => {
     toast(errorMessage);
-    console.log("notify", errorMessage);
+  
   };
 
   return { ToastContainer, notify };

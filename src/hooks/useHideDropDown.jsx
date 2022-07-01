@@ -20,7 +20,7 @@ export const useDropDown = (selector) => {
 
             } while (targetElelment)
 
-            console.log("reachedS", flyOutElelment, targetElelment)
+        
             setShowDropDown(false)
         })
     }, [])

@@ -62,12 +62,11 @@ const OccupancyJournal = () => {
   } = useGetCSVExport();
 
   useFilterGraph(
-    truckfilter,
+   { truckfilter,
     locationFilter,
     dateFilter,
     pageFilter,
-    null,
-    getOccupancyJournal
+    getData:getOccupancyJournal}
   );
 
   // useEffect(() => {
@@ -161,11 +160,9 @@ const OccupancyJournal = () => {
             name="location"
             label="Location"
             onChange={(data) => {
-              console.log("user selection", data);
               const { location } = data;
               const filter = location && `location=${location}`;
               setLocationFilter(filter);
-              console.log("filter", filter);
               resetPagination();
               setLocationDownload(location);
             }}
@@ -203,9 +200,7 @@ const OccupancyJournal = () => {
             name="truck"
             label="Filter Truck"
             onChange={(data) => {
-              console.log("user selection", data);
               const { truck } = data;
-              console.log("truck", truck);
               // const filter = truck ? `data.Truck:=:${truck}` : "";
               const filter = truck && `truck=${truck}`;
               setTruckFilter(filter);

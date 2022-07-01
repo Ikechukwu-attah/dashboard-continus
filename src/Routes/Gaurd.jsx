@@ -5,16 +5,13 @@ import { CheckLoginStatus } from "../Authorization/UserAuthentication";
 //  Route protection
 
 const isLoggedIn = CheckLoginStatus();
-console.log("isLoggedin=>>>>>", isLoggedIn?.user?.data?.role);
 
 // If a user is not logged in he/she will not access certain pages............
 
 export const AdminGuard = ({ children }) => {
   const navigate = useNavigate();
-  console.log("role=>>", isLoggedIn.user?.data?.role);
 
   useEffect(() => {
-    console.log("role=>>", isLoggedIn.user?.data?.role);
     const role = isLoggedIn.user?.data?.role;
     if (!isLoggedIn) return navigate("/");
     if (role !== "admin") return navigate("/home");
@@ -27,7 +24,6 @@ export const ClientGuard = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("role=>>", isLoggedIn.user?.data?.role);
     const role = isLoggedIn.user?.data?.role;
     if (!isLoggedIn) return navigate("/");
     if (role === "admin") return navigate("/client-management");

@@ -30,7 +30,6 @@ const BatteryUploadForm = () => {
   const uploadCSV = async (event) => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
-    // console.log("csv file", base64);
   };
 
   const convertBase64 = (file) => {
@@ -295,12 +294,9 @@ const BatteryUploadForm = () => {
               name="file"
               // value={batteryData?.file}
               onChange={async (event) => {
-                console.log("mekus");
                 const file = event.target.files[0];
                 setFileName(file.name);
-                console.log("finename", file.name);
                 const base64 = await convertBase64(file);
-                // console.log("mekus");
                 handleChange({
                   name: event.target.name,
                   value: base64,

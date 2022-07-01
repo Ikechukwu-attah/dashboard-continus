@@ -52,12 +52,10 @@ const Co2Reduction = () => {
   const [locationFilter, setLocationFilter] = useState();
 
   useFilterGraph(
-    truckFilter,
+    {truckFilter,
     locationFilter,
     dateFilter,
-    null,
-    null,
-    getCo2Reduction
+    getData:getCo2Reduction}
   );
 
   const widgetCardComponents = [
@@ -110,7 +108,6 @@ const Co2Reduction = () => {
     // },
   ];
 
-  console.log("date range", dateRange);
   return (
     <DashboardLayout>
       <StyledDashboardContentWrapper>
@@ -120,7 +117,6 @@ const Co2Reduction = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "co2_reduction",
@@ -186,7 +182,6 @@ const Co2Reduction = () => {
             name="location"
             label="Location"
             onChange={(data) => {
-              console.log("user selection", data);
               const { location } = data;
               const filter = location && `location=${location}`;
               setLocationFilter(filter);
@@ -213,7 +208,6 @@ const Co2Reduction = () => {
                 }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
                `;
               setDateFilter(filter);
-              // console.log("date", date);
               setDateRange(date);
               setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
               setEndDate(formatDate(date[1])["yyyy-mm-dd"]);

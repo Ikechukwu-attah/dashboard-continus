@@ -4,7 +4,7 @@ import { StyledBox } from "../../common/Basics/DivBox";
 import { StyledDivFlex } from "../../common/Basics/DivFlex";
 import { StyledText } from "../../common/Basics/StyledText";
 import WidgetMenu from "../MiniDropDown";
-// import "react-calendar/dist/Calendar.css";
+
 import "./style.css";
 
 const CalendarCheck = ({ onRemove, onView }) => {
@@ -25,8 +25,8 @@ const CalendarCheck = ({ onRemove, onView }) => {
         maxHeight="35rem"
       >
         <Calendar selectRange={true} onChange={onChange} value={date} />
-        {console.log("date", date)}
-        {/* <StyledText color="black">{date.toString()}</StyledText> */}
+      
+      
       </StyledDivFlex>
 
       <StyledBox cursor="pointer" position="absolute" Top="2rem" Right="2rem">

@@ -19,16 +19,13 @@ import { useGetAllCompanies } from "../../../components/Company/hooks/useGetAllC
 const AddClient = ({ setShowList, getList, userType }) => {
   // const [imgUrl, setImgUrl] = useState(null);
   const { data: companyData, getAllCompany } = useGetAllCompanies();
-  // console.log("company data==>", companyData[1]);
 
   const [companyName, setCompanyName] = useState();
-  console.log("company==>", companyName);
   const [signUpClientData, setSignUpClientData] = useState({});
   const { createClient, isLoading, data, error } = useCreateClient();
 
   const handleChange = ({ name, value }) => {
     setSignUpClientData({ ...signUpClientData, [name]: value });
-    // console.log("data=>=>=>", signUpClientData);
   };
 
   const handleSubmit = (event) => {
@@ -46,17 +43,14 @@ const AddClient = ({ setShowList, getList, userType }) => {
 
   useEffect(() => {
     if (companyData) {
-      console.log("checking ooooooooooooooooooo");
       const newData = companyData?.map((data) => {
         return data.name;
       });
       setCompanyName(newData);
-      console.log("companyName=>>> ", newData);
     }
   }, [companyData]);
 
   useEffect(() => {
-    // console.log("data444", data);
     if (data) {
       setShowList(true);
       getList();
@@ -162,7 +156,6 @@ const AddClient = ({ setShowList, getList, userType }) => {
                     value: company_id,
                   });
                 }}
-                // console.log("role selection", data);
 
                 data={companyName}
                 icon={<KeyboardArrowDownIcon fontSize="large" />}
@@ -267,7 +260,6 @@ const AddClient = ({ setShowList, getList, userType }) => {
                       value: role,
                     });
                   }}
-                  // console.log("role selection", data);
 
                   data={roleData}
                   icon={<KeyboardArrowDownIcon fontSize="large" />}

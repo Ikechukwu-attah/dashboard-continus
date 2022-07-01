@@ -55,12 +55,11 @@ const TruckManagment = () => {
     useGetCSVExport();
 
   useFilterGraph(
-    truckfilter,
+   { truckfilter,
     locationFilter,
-    null,
     pageFilter,
-    null,
-    getTruckManagement
+    
+    getData:getTruckManagement}
   );
 
   return (
@@ -72,7 +71,6 @@ const TruckManagment = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "truck_management",
@@ -124,7 +122,6 @@ const TruckManagment = () => {
             label="Location"
             onChange={(data) => {
               const { location } = data;
-              console.log("location", location);
               const filter = location ? `location=${location}` : null;
               resetPagination();
               setLocationFilter(filter);

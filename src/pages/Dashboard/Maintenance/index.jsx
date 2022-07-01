@@ -72,12 +72,12 @@ const Maintenance = () => {
   // );
 
   useFilterGraph(
-    truckfilter,
+   { truckfilter,
     locationFilter,
     dateFilter,
     pageFilter,
     maintenanceFilter,
-    getMaintenance
+    getData:getMaintenance}
   );
 
   // useEffect(() => {
@@ -119,7 +119,6 @@ const Maintenance = () => {
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-                console.log("user export", user.user.email);
                 const data = {
                   export: {
                     entity: "maintenance_report",
@@ -185,17 +184,14 @@ const Maintenance = () => {
             name="maintenance"
             label="Maintenance"
             onChange={(data) => {
-              console.log("selection", data);
               const cycle = data.maintenance
                 .split(",")
                 .map((item) => maintenanceListLookup[item])
                 .join(",");
-              console.log("cycle", cycle);
 
               const filter = cycle ? `cycle=${cycle}` : "";
               setMaintenanceFilter(filter);
               // getMaintenance(filter);
-              console.log("filter=>>", filter);
 
               resetPagination();
             }}
@@ -224,7 +220,6 @@ const Maintenance = () => {
               setLocationFilter(filter);
               resetPagination();
               setLocationDownload(location);
-              // console.log("location selection", data);
             }}
             data={locationsDropdownData}
             gap="2rem"
@@ -274,7 +269,6 @@ const Maintenance = () => {
             name="truck"
             label="Filter Truck"
             onChange={(data) => {
-              console.log("truck selection", data);
               // setSelectedTruckFilter(data);
               const { truck } = data;
               const filter = truck ? `truck=${truck}` : "";

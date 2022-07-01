@@ -3,7 +3,7 @@ import React from 'react'
 const validation = (values) => {
 
     let checkErrors = {};
-    console.log("values", values)
+
 
     if (!values.firstname) {
         checkErrors.firstname = "Firstname is required"
