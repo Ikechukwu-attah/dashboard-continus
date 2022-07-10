@@ -129,7 +129,7 @@ const AvaliablityGraph = ({ data, isLoading }) => {
         //   </LineChart>
         // </ResponsiveContainer>
 
-        // <ResponsiveContainer width="100%">
+        <ResponsiveContainer width="100%">
           <LineChart
             width={2000}
             height={400}
@@ -166,9 +166,10 @@ const AvaliablityGraph = ({ data, isLoading }) => {
             {/* <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} /> */}
             <Line type="monotone" dataKey="hours" stroke="#E8743B" />
           </LineChart>
+          </ResponsiveContainer>
       
       ) : (
-        // </ResponsiveContainer>
+       
         !isLoading && (
           <StyledTextHeading
             color="grey"

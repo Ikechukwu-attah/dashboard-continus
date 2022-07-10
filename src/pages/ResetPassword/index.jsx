@@ -46,7 +46,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <StyledDivFlex>
+    <StyledDivFlex flexDirectionM="column" gap="4rem" overflow="hidden">
       <StyledDivFlex
         flexDirection="column"
         background={Theme.colors.neutralColor}
@@ -61,7 +61,8 @@ const ResetPassword = () => {
       >
         <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
-      <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
+      <StyledDivFlex flex="60%" alignItems="center" justifyContent="center"   paddingM="0 0 4rem 0"
+        paddingSd="0 !important">
         {data ? (
           <PasswordResetSuccess />
         ) : (
@@ -71,12 +72,18 @@ const ResetPassword = () => {
             borderRadius="1rem"
             background={Theme.colors.primaryColor}
             padding="4rem 6rem 6rem 6rem"
+            widthL="80%"
+          widthM="100%"
+          widthSd="100% !important"
+          paddingSd="0 !important"
+          paddingL="1rem 1rem 2.5rem 1rem"
           >
             <StyledTextHeading
               textAlign="center"
               fontSize="3.6rem"
               fontWeight="400"
               color="#F3EFE9"
+              fontSizeL="2.8rem"
             >
               Reset Your Password
             </StyledTextHeading>
@@ -87,13 +94,14 @@ const ResetPassword = () => {
                 justifyContent="center"
                 marginTop="2rem"
                 padding="0rem 4rem 0rem 4rem"
+                paddingSd="0rem 4rem 4rem 6rem !important"
               >
                 <StyledDivFlex
                   flexDirection="column"
                   gap="1rem"
                   // postion="relative"
                 >
-                  <StyledLabel>Password</StyledLabel>
+                  <StyledLabel fontSizeL="1.8rem">Password</StyledLabel>
                   <StyledDivFlex position="relative" flexDirection="column">
                     <StyledInput
                       type={InputType}
@@ -101,6 +109,8 @@ const ResetPassword = () => {
                       required
                       padding="2.3rem"
                       fontSize="2.3rem"
+                      paddingL="1.5rem"
+                      fontSizeL="1.8rem"
                       name="new_password"
                       value={passwordRestData.new_password}
                       onChange={handleChange}
@@ -110,6 +120,7 @@ const ResetPassword = () => {
                       color="#606060"
                       Right="3rem"
                       Top="2.5rem"
+                      TopS="1.5rem"
                       //   fontSize="1rem"
                     >
                       {icons}
@@ -118,13 +129,15 @@ const ResetPassword = () => {
                 </StyledDivFlex>
 
                 <StyledDivFlex flexDirection="column" gap="1rem">
-                  <StyledLabel>Confirm Password</StyledLabel>
+                  <StyledLabel fontSizeL="1.8rem">Confirm Password</StyledLabel>
                   <StyledInput
                     type="password"
                     placeholder="confirm password"
                     required
                     padding="2.3rem"
                     fontSize="2.3rem"
+                    paddingL="1.5rem"
+                    fontSizeL="1.8rem"
                     name="confirmPassword"
                     value={passwordRestData.confirmPassword}
                     onChange={handleChange}
@@ -137,6 +150,9 @@ const ResetPassword = () => {
                   marginTop="2rem"
                   borderRadius="5rem"
                   fontSize="2.4rem"
+                  paddingL="0.5rem "
+                  fontSizeL="2rem"
+                  fontSizeS="1.5rem"
                   disabled={!validatePassword()}
                 >
                   Reset Password

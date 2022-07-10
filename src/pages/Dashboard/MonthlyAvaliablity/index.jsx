@@ -27,6 +27,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import { StyledDivGrid } from "../../../components/common/Basics/DivGrid";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
+import { monthLookUp, months, quarter, quarterLookUp } from "../../../constants/DropDownData";
+import { getYears } from "../../../utils/GetYears";
+import { StyledButton } from "../../../components/common/Button/style";
 
 const MonthlyAvaliablity = () => {
   const { getMonthlyAvaliablity, data, error, isLoading, summary } =
@@ -36,6 +39,7 @@ const MonthlyAvaliablity = () => {
   const [endDate, setEndDate] = useState(getTodayDate());
   const [truckDownload, setTruckDownload] = useState();
   const [locationDownload, setLocationDownload] = useState();
+  
 
   const filter = `period[start]=${startDate}&period[end]=${endDate}`;
   const [dateRange, setDateRange] = useState([startDate, endDate]);
@@ -49,12 +53,28 @@ const MonthlyAvaliablity = () => {
     dropdownFilterContext
   );
 
-  useFilterGraph(
-   { truckFilter,
+  const startYear = 2010
+  const endYear = new Date().getFullYear()
+
+  const filterByDate = (start, end) => {
+    const filter =
+    start && end &&
+    `period[start]=${
+      formatDate(start)["yyyy-mm-dd"]
+    }&period[end]=${formatDate(end)["yyyy-mm-dd"]} 
+   `;
+  setDateFilter(filter);
+  setDateRange([start, end]);
+  setStartDate(formatDate(start)["yyyy-mm-dd"]);
+  setEndDate(formatDate(end)["yyyy-mm-dd"]);
+  }
+
+  useFilterGraph({
+    truckFilter,
     locationFilter,
     dateFilter,
-   getData: getMonthlyAvaliablity}
-  );
+    getData: getMonthlyAvaliablity,
+  });
 
   // useEffect(() => {
   //   getMonthlyAvaliablity(
@@ -65,12 +85,17 @@ const MonthlyAvaliablity = () => {
     <DashboardLayout>
       <StyledDashboardContentWrapper>
         <PageHeaderLayout>
-          <StyledDivFlex gap="1rem" flexDirectionSd="column" widthSd="100%" paddingS="2rem">
+          <StyledDivFlex
+            gap="1rem"
+            flexDirectionSd="column"
+            widthSd="100%"
+            paddingS="2rem"
+          >
             <StyledPageHeaderButton
               fontSizeSd="1.2rem"
               onClick={() => {
                 const user = MapTokenToUser();
-               
+
                 const data = {
                   export: {
                     entity: "monthly_availability",
@@ -123,51 +148,13 @@ const MonthlyAvaliablity = () => {
           padding="1rem 8rem"
           // marginTop="1rem"
           justifyContent="flex-end"
-          gap="4rem"
+          gap="2rem"
           alignItems="center"
           paddingM="1rem 0"
           gapM="1.5rem"
           justifyContentM="center"
           flexDirectionS="column"
         >
-          <Dropdown
-            // background={Theme.colors.secondaryColor}
-            name="location"
-            label="Location"
-            onChange={(data) => {
-              const { location } = data;
-              const filter = location && `location=${location}`;
-              setLocationFilter(filter);
-              setLocationDownload(location);
-            }}
-            data={locationsDropdownData}
-            gap="2rem"
-            minWidth="20rem"
-            widthS="90%"
-            icon={
-              <KeyboardArrowDownIcon
-                fontSize="large"
-                style={{ color: "#606060" }}
-              />
-            }
-            // multiSelect={true}
-          />
-          <PickDate
-            onChange={(date) => {
-              const filter =
-                date &&
-                `period[start]=${
-                  formatDate(date[0])["yyyy-mm-dd"]
-                }&period[end]=${formatDate(date[1])["yyyy-mm-dd"]} 
-               `;
-              setDateFilter(filter);
-              setDateRange(date);
-              setStartDate(formatDate(date[0])["yyyy-mm-dd"]);
-              setEndDate(formatDate(date[1])["yyyy-mm-dd"]);
-            }}
-            widthS="90%"
-          />
-
           <Dropdown
             // background={Theme.colors.secondaryColor}
             name="truck"
@@ -180,7 +167,7 @@ const MonthlyAvaliablity = () => {
             }}
             data={truckDropdownData}
             gap="2rem"
-            minWidth="20rem"
+            minWidth="16%"
             widthS="90%"
             icon={
               <KeyboardArrowDownIcon
@@ -190,6 +177,113 @@ const MonthlyAvaliablity = () => {
             }
             // multiSelect={true}
           />
+
+          <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="location"
+            label="Location"
+            onChange={(data) => {
+              const { location } = data;
+              const filter = location && `location=${location}`;
+              setLocationFilter(filter);
+              setLocationDownload(location);
+            }}
+            data={locationsDropdownData}
+            gap="2rem"
+            minWidth="8%"
+            widthS="90%"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
+            // multiSelect={true}
+          />
+         
+
+          <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="month"
+            label="Months"
+            onChange={(data) => {
+              const { month } = data;
+              const {start, end} = monthLookUp[month]
+              filterByDate(start, end)
+            }}
+            data={months}
+            gap="2rem"
+            minWidth="3%"
+            widthS="90%"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
+            // multiSelect={true}
+          />
+
+          <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="quarter"
+            label="Quarter"
+            onChange={(data) => {
+              const { quarter } = data;
+              const {start, end} = quarterLookUp[quarter]
+              filterByDate(start, end)
+            }}
+            data={quarter}
+            gap="2rem"
+            minWidth="20%"
+            widthS="90%"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
+            // multiSelect={true}
+          />
+
+          <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="year"
+            label="Year"
+            onChange={(data) => {
+              const { year } = data;
+              const start = `${year}-01-01`
+              const end = `${year}-12-31`
+              filterByDate(start, end)
+            }}
+            data={getYears(startYear, endYear)}
+            gap="2rem"
+            minWidth="5%"
+            widthS="90%"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
+            // multiSelect={true}
+          />
+
+          <StyledButton
+            background={Theme.colors.primaryColor}
+            color={Theme.colors.secondaryColor}
+            padding="1rem"
+            borderRadius="1rem"
+            widthS="90%"
+            minWidth="5%"
+            onClick={() => {
+              const start = `${startYear}-01-01`
+              const end = `${endYear}-12-31`
+              filterByDate(start, end)
+            }}
+          >
+            All
+          </StyledButton>
         </StyledDivFlex>
 
         <StyledBox background={Theme.colors.neutralColor}>

@@ -183,10 +183,11 @@ const Login = () => {
               <ButtonGroup
                 isLoading={isLoading}
                 padding="1.5rem"
-                paddingL="0.5rem "
+                
                 marginTop="2rem"
                 borderRadius="5rem"
                 fontSize="2.4rem"
+                paddingL="0.5rem "
                 fontSizeL="2rem"
               >
                 Login

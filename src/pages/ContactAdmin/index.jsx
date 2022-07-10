@@ -33,7 +33,7 @@ const ContactAdmin = () => {
   //     navigate("/");
   //   };
   return (
-    <StyledDivFlex>
+    <StyledDivFlex flexDirectionM="column" gap="4rem" overflow="hidden">
       <StyledDivFlex
         flexDirection="column"
         background={Theme.colors.neutralColor}
@@ -48,19 +48,27 @@ const ContactAdmin = () => {
       >
         <StyledImage src={BisedgeLogo} alt="bisedge logo" />
       </StyledDivFlex>
-      <StyledDivFlex flex="60%" alignItems="center" justifyContent="center">
+      <StyledDivFlex flex="60%" alignItems="center" justifyContent="center"   paddingM="0 0 4rem 0"
+        paddingSd="0 !important">
         <StyledDivFlex
           flexDirection="column"
           width="70%"
+          widthL="80%"
+          widthM="100%"
+          widthSd="100% !important"
           borderRadius="1rem"
           background={Theme.colors.primaryColor}
           padding="4rem 6rem 6rem 6rem"
+          paddingSd="0 !important"
+          paddingL="1rem 1rem 2.5rem 1rem"
         >
           <StyledTextHeading
             textAlign="center"
             fontSize="3.6rem"
             fontWeight="400"
             color="#F3EFE9"
+            fontSizeL="2.8rem"
+
           >
             Contact Administrator
           </StyledTextHeading>
@@ -84,6 +92,7 @@ const ContactAdmin = () => {
                   padding="2.3rem"
                   fontSize="2.3rem"
                   name="email"
+                  fontSizeL="1.8rem"
                   //   value={forgetPasswordData.email}
                   //   onChange={handleChange}
                 />
@@ -94,6 +103,8 @@ const ContactAdmin = () => {
                 marginTop="2rem"
                 borderRadius="5rem"
                 fontSize="2.4rem"
+                paddingL="0.5rem "
+                fontSizeL="2rem"
               >
                 Contact Admin
               </StyledButton>
