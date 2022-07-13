@@ -47,3 +47,5 @@ console.log("quater", quarterLookUp)
 export const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 export const quarter = ['First Quarter', 'Second Quarter', 'Third Quarter', 'Fourth Quarter']
+
+export const batteryInterval = ['minute', 'hour']

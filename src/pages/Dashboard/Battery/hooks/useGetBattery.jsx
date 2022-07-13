@@ -13,7 +13,8 @@ export const useGetBattery = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(url);
-      setData(response?.data?.data?.records);
+      // console.log("response", response?.data?.data?.results)
+      setData(response?.data?.data?.results);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

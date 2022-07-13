@@ -25,6 +25,7 @@ import { useFilterGraph } from "../../../hooks/useGraphFilter";
 import SpinnerWithText from "../../../components/common/SpinnerWithText";
 import MapTokenToUser from "../../../Authorization/MapTokenToUser";
 import SingleDatePicker from "../../../components/common/SingleDatePicker";
+import { batteryInterval } from "../../../constants/DropDownData";
 const Battery = () => {
   const { getBattery, data, error, isLoading } = useGetBattery();
 
@@ -38,6 +39,7 @@ const Battery = () => {
 
   const [truckFilter, setTruckFilter] = useState();
   const [locationFilter, setLocationFilter] = useState();
+  const [intervalFilter, setIntervalFilter] = useState('interval=minute')
   const [dateFilter, setDateFilter] = useState(filter);
   const { getCSVExport, csvData, isDownloading, isExporting } =
     useGetCSVExport();
@@ -54,6 +56,7 @@ const Battery = () => {
    { truckFilter,
     locationFilter,
     dateFilter,
+    intervalFilter,
     getData:getBattery}
   );
 
@@ -192,6 +195,30 @@ const Battery = () => {
               setTruckDownload(truck);
             }}
             data={truckDropdownData}
+            gap="2rem"
+            minWidth="20rem"
+            widthS="90%"
+            icon={
+              <KeyboardArrowDownIcon
+                fontSize="large"
+                style={{ color: "#606060" }}
+              />
+            }
+          />
+
+            <Dropdown
+            // background={Theme.colors.secondaryColor}
+            name="interval"
+            label="Interval"
+            onChange={(data) => {
+              const { interval } = data;
+          
+              const filter = interval && `interval=${interval}`;
+              setIntervalFilter(filter);
+            
+              // setLocationDownload(location);
+            }}
+            data={batteryInterval}
             gap="2rem"
             minWidth="20rem"
             widthS="90%"

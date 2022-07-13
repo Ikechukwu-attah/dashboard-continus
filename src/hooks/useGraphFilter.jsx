@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 
-export const useFilterGraph = (
- { truckFilter,
+export const useFilterGraph = ({
+  truckFilter,
   locationFilter,
   dateFilter,
   pageFilter,
   maintenanceFilter,
   companyFilter,
-  getData}
-) => {
+  intervalFilter,
+  getData,
+}) => {
   useEffect(() => {
     const refineFilter = (filter) => {
       if (filter && filter[1] === "&") {
@@ -19,11 +20,21 @@ export const useFilterGraph = (
     const filter = `?${dateFilter ? dateFilter : ""}${
       truckFilter ? `&${truckFilter}` : ""
     }${locationFilter ? `&${locationFilter}` : ""}${
-      pageFilter
-        ? `&${pageFilter} `:""}${maintenanceFilter ? `&${maintenanceFilter}` : ""}${companyFilter?`&${companyFilter}`:""}
+      pageFilter ? `&${pageFilter} ` : ""
+    }${maintenanceFilter ? `&${maintenanceFilter}` : ""}${
+      companyFilter ? `&${companyFilter}` : ""
+    }${intervalFilter ? `&${intervalFilter}` : ""}
       
     `;
 
     getData(refineFilter(filter));
-  }, [truckFilter, locationFilter, dateFilter, pageFilter,companyFilter, maintenanceFilter]);
+  }, [
+    truckFilter,
+    locationFilter,
+    dateFilter,
+    pageFilter,
+    companyFilter,
+    maintenanceFilter,
+    intervalFilter,
+  ]);
 };

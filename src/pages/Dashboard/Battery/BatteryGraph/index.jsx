@@ -17,12 +17,14 @@ import { Theme } from "../../../../Theme";
 import { formatDate } from "../../../../utils/FormatDate";
 
 const BatteryGraph = ({ data, isLoading }) => {
+  console.log("data", data)
   const [graphData, setGraphData] = useState();
+  // console.log("graphData", graphData)
 
   useEffect(() => {
     if (data) {
       const newData = data.map((data) => {
-        data.hour = formatDate(data.data.Time)["hh:mm"];
+        data.hour = formatDate(data?.daytime)["hh:mm"];
         return data;
       });
 
@@ -55,7 +57,7 @@ const BatteryGraph = ({ data, isLoading }) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="hour" height={60}>
+          <XAxis dataKey="x" height={60}>
             <Label value="Hours" offset={0} position="insideBottom" />
           </XAxis>
           <YAxis
@@ -70,7 +72,7 @@ const BatteryGraph = ({ data, isLoading }) => {
           {/* <Legend /> */}
           <Line
             type="monotone"
-            dataKey="hour"
+            dataKey="x"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
             strokeWidth={2}
